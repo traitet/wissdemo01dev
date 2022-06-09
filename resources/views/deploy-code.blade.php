@@ -105,7 +105,7 @@ if ($_GET){
     echo "<h4>ผลการ Deploy Code เป็นดังนี้ <span>$k</span></h4>  ";
     // $runCmd1 = "cd C:\xampp\htdocs\wissdemo01";
     // $runCmd2 = "git pull";
-    $runCMD = "c:\DeployWissdemo01.bat";
+    $runCMD = "c:\DeployWissdemo01dev.bat";
     $output = shell_exec($runCMD);
     echo '<pre>' . $output . '</pre>';
 }
