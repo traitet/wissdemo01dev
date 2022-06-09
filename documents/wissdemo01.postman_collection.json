@@ -1,0 +1,364 @@
+{
+	"variables": [],
+	"info": {
+		"name": "wissdemo01",
+		"_postman_id": "dc133fb3-0892-a8b7-8ef9-98ad7011e346",
+		"description": "interface_sap_po\r\ninterface_sap_rec\r\ninterface_sap_inv\r\nemfg_shipping_log_ok\r\nemfg_shipping_log_ng\r\nemfg_shipping_log_event\r\neps_interface_pr_po_to_planner\r\neps_interface_sap_pr_outstanding\r\nreport_budget_checking\r\nemfg_shipping_order_status\r\nwiss_sa_edrawing_authentication\r\nwiss_sa_eps_pr_issue_error\r\nwiss_sa_eps_pr_productionid_error\r\nwiss_sa_emfg_inventory_stock_out_error\r\neps_pr_for_cp_report",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1.wiss reports",
+			"description": "",
+			"item": [
+				{
+					"name": "1.interface_sap_po",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/interface_sap_po_obj/doc_num=PO19007289&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "2.interface_sap_rec",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/interface_sap_rec_obj/doc_num=PO20&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "3.interface_sap_inv",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/interface_sap_inv_obj/doc_num=PO19&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PoNum: doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "4.emfg_shipping_log_ok",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/emfg_shipping_log_ok_obj/doc_num=SA11AD1C5079&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PdsNum: doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "5.emfg_shipping_log_ng",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/emfg_shipping_log_ng_obj/doc_num=SA11AYHA4660&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PdsNum: doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "6.emfg_shipping_log_event",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/emfg_shipping_log_event_obj/doc_num=&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PdsNum: doc_num (most log PdsNum is blank )"
+					},
+					"response": []
+				},
+				{
+					"name": "7.eps_interface_pr_po_to_planner",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/eps_interface_pr_po_to_planner_obj/doc_num=&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum: doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "8.eps_interface_sap_pr_outstanding",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/eps_interface_sap_pr_outstanding_obj/doc_num=PR21&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum: doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "9.report_budget_checking",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/report_budget_checking_obj/doc_num=F400&start_date=20190101&end_date=20220225&max_record=100/doc_type=0",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "EXPENSE or INVESTMENT ID: doc_num\ndoc_type:\n1 = EXPENSE\n2 = INVESTMENT\n0,3, any both"
+					},
+					"response": []
+				},
+				{
+					"name": "10.emfg_shipping_order_status",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/emfg_shipping_order_status_obj/doc_num=SA11AP1M0147&start_date=20210101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PdsNum : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "11.edrawing_check_password",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/edrawing_check_password_obj/doc_num=aunchulee_ph&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "UserName : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "12.eps_pr_issue_error_report",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/eps_pr_issue_error_report_obj/doc_num=PR22&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "13.eps_pr_productionid_error_report",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/eps_pr_productionid_error_report_obj/doc_num=PR19008402&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "14.emfg_inventory_stock_out_error",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/emfg_inventory_stock_out_error_obj/doc_num=T344&start_date=20220101&end_date=20990101&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PartCode : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "15.eps_interface_pr_po_to_planner",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/eps_interface_pr_po_to_planner_obj/doc_num=PR22&start_date=20190101&end_date=20220225&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "16.eps_report_budget_checking_pr_detail.",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/emfg_inventory_stock_out_error_obj/doc_num=T344&start_date=20220101&end_date=20990101&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "17.eps_report_budget_checking_investment.",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_eps_report_budget_checking_investment/doc_num=Y22IT017CO01&period=SAP",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "18.eps_report_budget_checking_expense.",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_eps_report_budget_checking_expense/doc_num=61830-B200&period=SAP",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum : doc_num"
+					},
+					"response": []
+				},
+				{
+					"name": "19.atac_emfg_shopping_log.",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_shopping_log/doc_num=P325A559860&start_date=20190101&end_date=20220525&max_record=100",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "PrNum : doc_num"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. wiss fix programs",
+			"description": "1. fixed programs\n2. Additional features",
+			"item": [
+				{
+					"name": "1.wiss_sa_add_ibg_dept",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_add_ibg_dept/emp_id=999&dept_code=A100&is_readonly=N",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @emp_id varchar(8),\r\n    @dept_code varchar(30),\r\n    @is_readonly varchar(2)"
+					},
+					"response": []
+				},
+				{
+					"name": "2. wiss_sa_add_ibg_user",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_add_ibg_user/emp_id=9999&username=satit_po&name=satit&surname=pongpimol&level=LV0040&sect_id=A100&email=satit_po@aisin-ap.com&role=1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @emp_id varchar(8),\r\n    @username varchar(30),\r\n    @name varchar(30),\r\n    @surname varchar(30),\r\n    @level varchar(30),\r\n    @sect_id varchar(30),\r\n    @email varchar(30),\r\n    @role int"
+					},
+					"response": []
+				},
+				{
+					"name": "3.wiss_sa_add_eps_investment",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_add_eps_investment/investment_id=S21PE064AS01",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @investment_id varchar(10)"
+					},
+					"response": []
+				},
+				{
+					"name": "4. wiss_emfg_add_model",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_add_model/model_code=MD00000170&model_name=TCC [D41E]&pdt_grp_code=PG00000001",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @model_code varchar(50),\r\n    @model_name varchar(50),\r\n    @pdt_grp_code varchar(50)"
+					},
+					"response": []
+				},
+				{
+					"name": "5. emfg_add_shelf",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_add_shelf/sloc_code=ATA400S01&shelf_name=MA0450&shelf_code=SH-MA450",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @emp_id sloc_code varchar(50),\r\n    @shelf_name varchar(50),\r\n    @shelf_code varchar(50)"
+					},
+					"response": []
+				},
+				{
+					"name": "6. ifin_revert_doc",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_ifin_revert_doc/doc_num=AV20000001",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @doc_num varchar(50)"
+					},
+					"response": []
+				},
+				{
+					"name": "7. ifin_register_admin",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_ifin_register_admin/group_code=CP03&username=SUCHART_AU",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @group_code varchar(50),\r\n    @username varchar(50)"
+					},
+					"response": []
+				},
+				{
+					"name": "8. emfg_add_shelf",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_emfg_add_shelf/sloc_code=SARSE5200&shelf_name=T999&shelf_code=T999",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @sloc_code varchar(50),\r\n    @shelf_name varchar(50),\r\n    @shelf_code varchar(50)"
+					},
+					"response": []
+				},
+				{
+					"name": "9. ibg_update_inf_schedule",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_ibg_update_inf_schedule/fiscal_year=2022&period=1&inf_date=20220501&inf_time=230000",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @fiscal_year varchar(50),\r\n    @period varchar(50),\r\n    @inf_date varchar(50),\r\n   @inf_time varchar(50)"
+					},
+					"response": []
+				},
+				{
+					"name": "10. emfg_revert_shopping_status",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_revert_shopping_status/picking_list_num=P301A841520&pallet_Number=PL-01-1162",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @picking_list_num varchar(25),\r\n    @pallet_Number varchar(25)"
+					},
+					"response": []
+				},
+				{
+					"name": "11. emfg_complete_pkl",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_complete_pkl/picking_list_num=P323A470640&pallet_Number=PAL-01|0117|20191029",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @picking_list_num varchar(25),\r\n    @pallet_Number varchar(25)"
+					},
+					"response": []
+				},
+				{
+					"name": "12. emfg_create_pallet_data_from_shopping",
+					"request": {
+						"url": "http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_create_pallet_data_from_shopping/picking_list_num=P325A567860&pallet_Number=R008-0|00|20200822",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "    @picking_list_num varchar(25),\r\n    @pallet_Number varchar(25)"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
