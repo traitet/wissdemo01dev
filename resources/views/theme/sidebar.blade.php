@@ -2,7 +2,7 @@
        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
            <!-- Sidebar - Brand -->
-           <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
+           <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index">
                <div class="sidebar-brand-icon rotate-n-15">
                    <i class="fas fa-laugh-wink"></i>
                </div>
@@ -18,7 +18,7 @@
 
            <!-- Nav Item - Dashboard -->
            <li class="nav-item active">
-               <a class="nav-link" href="dashboard">
+               <a class="nav-link" href="index">
                    <i class="fas fa-fw fa-tachometer-alt"></i>
                    <span>Dashboard</span></a>
            </li>
@@ -55,7 +55,14 @@
                </a>
                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="emfg-shipping-status">Oder Status SA</a>
+                    <?php
+                        // The above is identical to this if/else statement
+                        if (!empty(Auth::user()->name)) {
+                    ?>
+                            <a class="collapse-item" href="emfg-shipping-status">Oder Status SA</a>
+                    <?php
+                        }
+                    ?>
                         <a class="collapse-item" href="emfg-shipping-log-ok">OK Log SA</a>
                         <a class="collapse-item" href="emfg-shipping-log-ng">NG Log SA</a>
                         <a class="collapse-item" href="emfg-shipping-log-event">Event Log SA</a>

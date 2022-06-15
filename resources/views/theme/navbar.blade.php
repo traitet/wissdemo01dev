@@ -116,34 +116,79 @@
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Suchart Au</span>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+
+            <?php
+                    // The above is identical to this if/else statement
+                    if (empty(Auth::user()->name)) {
+                        $username = '';
+                    } else {
+                        $username = Auth::user()->name;
+                    }
+                    echo $username;
+            ?>
+
+            </span>
+
             <img class="img-profile rounded-circle"
                 src="theme/img/undraw_profile.svg">
         </a>
     {{-- ===================================================================================== --}}
     {{-- NAV ITEM - USER INFORMATION DETAILS --}}
     {{-- ===================================================================================== --}}
-        <!-- Dropdown - User Information -->
-        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-            aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profile
-            </a>
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                Settings
-            </a>
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                Activity Log
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Logout
-            </a>
-        </div>
+
+        <!-- Add check user authen 11/06/2022 -->
+        <?php
+                    // The above is identical to this if/else statement
+                    if (empty(Auth::user()->name)) {
+                        $username = '';
+                    } else {
+                    ?>
+                        <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                @if (Route::has('profile.edit'))
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                @endif
+                                <a class="dropdown-item" href="{{ route('password.change') }}">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Change Password
+                                </a>
+                                <a class="dropdown-item" href="{{ route('permission.create') }}">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Add Authorization
+                                </a>
+                                <a class="dropdown-item" href="{{ route('permission.show') }}">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Authorization
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <!-- Remove 11/06/2022 -->
+                                {{-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a> --}}
+
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-dropdown-link :href="route('logout')"
+                                            onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </div>
+                    <?php
+                    }
+
+        ?>
+
+
+
     </li>
 
 </ul>

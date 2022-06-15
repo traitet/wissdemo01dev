@@ -51,7 +51,7 @@ Route::get('interface_sap_po_obj/{obj}', function ($obj) {
     $start_date = $myArray['start_date'];
     $end_date = $myArray['end_date'];
     $max_record = $myArray['max_record'];
-    $result = DB::select("EXEC interface_sap_po '$start_date','$end_date','$doc_num',$max_record");
+    $result = DB::connection('sqlsrv_epsinfdb_db')->select("EXEC interface_sap_po '$start_date','$end_date','$doc_num',$max_record");
     return json_encode($result);
 });
 
@@ -65,7 +65,7 @@ Route::get('interface_sap_rec_obj/{obj}', function ($obj) {
     $start_date = $myArray['start_date'];
     $end_date = $myArray['end_date'];
     $max_record = $myArray['max_record'];
-    $result = DB::select("EXEC interface_sap_rec '$start_date','$end_date','$doc_num',$max_record");
+    $result = DB::connection('sqlsrv_epsinfdb_db')->select("EXEC interface_sap_rec '$start_date','$end_date','$doc_num',$max_record");
     // print($obj);
     // error_log($obj);
     return json_encode($result);
@@ -81,7 +81,7 @@ Route::get('interface_sap_inv_obj/{obj}', function ($obj) {
     $start_date = $myArray['start_date'];
     $end_date = $myArray['end_date'];
     $max_record = $myArray['max_record'];
-    $result = DB::select("EXEC interface_sap_inv '$start_date','$end_date','$doc_num',$max_record");
+    $result = DB::connection('sqlsrv_epsinfdb_db')->select("EXEC interface_sap_inv '$start_date','$end_date','$doc_num',$max_record");
     return json_encode($result);
 });
 

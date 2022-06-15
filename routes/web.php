@@ -1,11 +1,5 @@
 <?php
 
-//##################################################################################################################
-//#                                            Import Controller                                                   #
-//##################################################################################################################
-//==================================================================================================================
-//                                                    Reports
-//==================================================================================================================
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\BasicReportApiController;
@@ -43,6 +37,50 @@ use App\Http\Controllers\IfinRegisterAdminApiController;
 use App\Http\Controllers\EmfgRevertShoppingStatusApiController;
 use App\Http\Controllers\EmfgCompletePKLApiController;
 use App\Http\Controllers\EmfgCreatePalletDataFromShoppingApiController;
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\UserPermissionController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+|    Protected routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth'])->group(function(){
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/profile/edit',[ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/update',[ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/password/change',[ChangePasswordController::class, 'create'])->name('password.change');
+    Route::post('/password/store',[ChangePasswordController::class, 'store'])->name('password.store');
+    Route::get('/permission/create',[UserPermissionController::class, 'create'])->name('permission.create');
+    Route::post('/permission/store',[UserPermissionController::class, 'store'])->name('permission.store');
+
+    Route::get('/permission/index',[UserPermissionController::class, 'index'])->name('permission.show');
+
+});
+
+require __DIR__.'/auth.php';
+
+/*
+|--------------------------------------------------------------------------
+|    Public routes
+|--------------------------------------------------------------------------
+*/
 //##################################################################################################################
 //#                                                    Report                                                      #
 //##################################################################################################################
@@ -197,19 +235,20 @@ Route::get('/menu', function () {
 // ==========================================================================
 // ROUTE VIEW DASHBOARD
 // ==========================================================================
-Route::view('dashboard','dashboard');
 Route::get('/', function () {
-    return view('dashboard');
+    return view('index');
 });
+// Add index 11/06/2022
+Route::get('/index', function () {
+    return view('index');
+});
+Route::get('/index', function () {
+    return view('index');
+})->name('index');
 
 Route::get('/demo', function () {
     return view('demo');
 });
-
-Route::get('/nick-main', function () {
-    return view('nick-main');
-});
-
 
 Route::get('/basic-report', function () {
     return view('basic-report');
@@ -219,11 +258,6 @@ Route::get('/basic-report-api', function () {
     return view('basic-report-api');
 });
 
-Route::get('/test', function () {
-    return view('test');
-});
-
 Route::get('/deploy-code', function () {
     return view('deploy-code');
 });
-
