@@ -40,6 +40,7 @@ use App\Http\Controllers\EmfgCreatePalletDataFromShoppingApiController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\NavGroupController;
 use App\Http\Controllers\UserPermissionController;
 
 /*
@@ -70,7 +71,12 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/permission/create',[UserPermissionController::class, 'create'])->name('permission.create');
     Route::post('/permission/store',[UserPermissionController::class, 'store'])->name('permission.store');
 
-    Route::get('/permission/index',[UserPermissionController::class, 'index'])->name('permission.show');
+    Route::get('/permissions',[UserPermissionController::class, 'index'])->name('permission.show');
+
+
+    Route::get('/navgroup/create',[NavGroupController::class, 'create'])->name('navgroup.create');
+    Route::post('/navgroup/store',[NavGroupController::class, 'store'])->name('navgroup.store');
+
 
 });
 
@@ -261,3 +267,11 @@ Route::get('/basic-report-api', function () {
 Route::get('/deploy-code', function () {
     return view('deploy-code');
 });
+
+
+// ==========================================================================
+// TEST ROUTE VIEW DASHBOARD
+// ==========================================================================
+// Route::get('/userpermissions', function () {
+//     return view('userpermissions');
+// });

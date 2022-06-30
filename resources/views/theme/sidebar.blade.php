@@ -276,7 +276,7 @@
                     <a class="collapse-item" href="assets/WISSDEMO01_Manual.pdf">Developing Manual</a>
                     <a class="collapse-item" href="https://aisingroupap01.sharepoint.com/:x:/s/ITM/EdGCycUJhoVJvGWKfUm5Y-EBog7ZRNksxqD2dvF-bVD6Ow?e=huZZMY">Develop Spec Excel Online</a>
                     <a class="collapse-item" href="dashboard">Dashboard</a>
-                    <a class="collapse-item" href="login">Login</a>
+                    <a class="collapse-item" href="{{ route('navgroup.create') }}">Add Nav Group</a>
              </div>
          </div>
          </li>

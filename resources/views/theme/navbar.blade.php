@@ -157,10 +157,6 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
-                                <a class="dropdown-item" href="{{ route('permission.create') }}">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Add Authorization
-                                </a>
                                 <a class="dropdown-item" href="{{ route('permission.show') }}">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Authorization

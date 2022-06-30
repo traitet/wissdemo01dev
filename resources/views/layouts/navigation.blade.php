@@ -53,10 +53,6 @@
                         <x-dropdown-link :href="route('password.change')">
                             {{ __('Change Password') }}
                         </x-dropdown-link>
-                        <!-- Add permission-->
-                        <x-dropdown-link :href="route('permission.create')">
-                            {{ __('Add Permission') }}
-                        </x-dropdown-link>
                         <!-- Show permission-->
                         <x-dropdown-link :href="route('permission.show')">
                             {{ __('Permission') }}
@@ -111,15 +107,10 @@
                 <x-dropdown-link :href="route('password.change')">
                     {{ __('Change Password') }}
                 </x-dropdown-link>
-                <!-- Add permission-->
-                <x-dropdown-link :href="route('permission.create')">
-                    {{ __('Add Authorization') }}
-                </x-dropdown-link>
                 <!-- Show permission -->
                 <x-dropdown-link :href="route('permission.show')">
-                    {{ __('Authorization') }}
+                    {{ __('Permission') }}
                 </x-dropdown-link>
-
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
