@@ -58,37 +58,6 @@
         <a class="btn btn-success" href="{{ route('userpermissions.showauthorize') }}">Permission Table</a>
     </div>
 
-
-    {{-- Get Permission, Navigation Item, Navigation Group --}}
-    <h3>{{ __('Menu') }}</h3>
-    <?php
-        if(!empty($userpermission)){
-        $navigationGroupMenus = $userpermission->getNavigationGroup("satit_po@aisin-ap.com");
-    ?>
-        @foreach ($navigationGroupMenus as $navigationGroupMenu)
-            {{ __('Navigation Group') }}
-            {{  $navigationGroupMenu->navigation_group_name }} <br>
-                @php
-                $navigationGroup = $navigationGroupMenu->navigation_group_name;
-                $navigationItemMenus = $userpermission->getNavigationItem($navigationGroup, "satit_po@aisin-ap.com");
-                @endphp
-                    @foreach ($navigationItemMenus as $navigationItemMenu)
-                        {{ __('Navigation Item') }}
-                        {{ $navigationItemMenu->navigation_item_name }} <br>
-                        @php
-                        $navigationItem = $navigationItemMenu->navigation_item_name;
-                        $permissionMenus = $userpermission->getPermission($navigationItem, "satit_po@aisin-ap.com");
-                        @endphp
-                            @foreach ($permissionMenus as $permissionMenu)
-                                {{ __('Permission') }}
-                                {{ $permissionMenu->permission_name }} <br>
-                            @endforeach
-                    @endforeach
-        @endforeach
-    <?php
-    }
-    ?>
-
     {{-- <h3>{{ __('Navigation Group') }}</h3>
     <?php
         if(!empty($userpermission)){

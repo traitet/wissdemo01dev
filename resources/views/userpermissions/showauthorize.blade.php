@@ -38,24 +38,24 @@
     </div>
 
       {{-- Get Permission, Navigation Item, Navigation Group --}}
-      <h3>{{ __('Menu') }}</h3>
-      <?php
+    <h4>{{ __('Menu') }}</h4>
+    <?php
           if(!empty($userpermission)){
-          $navigationGroupMenus = $userpermission->getNavigationGroup("satit_po@aisin-ap.com");
-      ?>
+          $navigationGroupMenus = $userpermission->getNavigationGroup("suchart_au@aisin-ap.com");
+    ?>
           @foreach ($navigationGroupMenus as $navigationGroupMenu)
               <b>{{ __('Navigation Group') }} </b>
               {{  $navigationGroupMenu->navigation_group_name }} <br>
                   @php
                   $navigationGroup = $navigationGroupMenu->navigation_group_name;
-                  $navigationItemMenus = $userpermission->getNavigationItem($navigationGroup, "satit_po@aisin-ap.com");
+                  $navigationItemMenus = $userpermission->getNavigationItem($navigationGroup, "suchart_au@aisin-ap.com");
                   @endphp
                       @foreach ($navigationItemMenus as $navigationItemMenu)
                       <b>{{ __('Navigation Item') }}</b>
                           {{ $navigationItemMenu->navigation_item_name }} <br>
                           @php
                           $navigationItem = $navigationItemMenu->navigation_item_name;
-                          $permissionMenus = $userpermission->getPermission($navigationItem, "satit_po@aisin-ap.com");
+                          $permissionMenus = $userpermission->getPermission($navigationItem, "suchart_au@aisin-ap.com");
                           @endphp
                               @foreach ($permissionMenus as $permissionMenu)
                               <b>{{ __('Permission') }}</b>
@@ -63,7 +63,7 @@
                               @endforeach
                       @endforeach
           @endforeach
-      <?php
+    <?php
       }
-      ?>
+    ?>
 @endsection
