@@ -41,8 +41,16 @@ use App\Http\Controllers\EmfgCreatePalletDataFromShoppingApiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\NavGroupController;
-use App\Http\Controllers\UserPermissionController;
 
+
+//==================================================================================================================
+//                                                     Permission Master
+//==================================================================================================================
+use App\Http\Controllers\NavigationGroupController;
+use App\Http\Controllers\NavigationItemController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserPermissionController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,15 +76,68 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/profile/update',[ProfileController::class, 'update'])->name('profile.update');
     Route::get('/password/change',[ChangePasswordController::class, 'create'])->name('password.change');
     Route::post('/password/store',[ChangePasswordController::class, 'store'])->name('password.store');
-    Route::get('/permission/create',[UserPermissionController::class, 'create'])->name('permission.create');
-    Route::post('/permission/store',[UserPermissionController::class, 'store'])->name('permission.store');
 
-    Route::get('/permissions',[UserPermissionController::class, 'index'])->name('permission.show');
+    /*
+    /-----------------------------------------------------------------------------
+    // Navigation Group
+    /-----------------------------------------------------------------------------
+    */
+    Route::prefix('navigationgroups')->name('navigationgroups')->group(function(){
+        Route::get('/',[NavigationGroupController::class,'index'])->name('.index');
+        Route::get('show/{navigationGroup}',[NavigationGroupController::class,'show'])->name('.show');
+        Route::get('create',[NavigationGroupController::class,'create'])->name('.create');
+        Route::post('/',[NavigationGroupController::class,'store'])->name('.store');
+        Route::get('edit/{navigationGroup}',[NavigationGroupController::class,'edit'])->name('.edit');
+        Route::put('update/{navigationGroup}',[NavigationGroupController::class,'update'])->name('.update');
+        Route::delete('destroy/{navigationGroup}',[NavigationGroupController::class,'destroy'])->name('.destroy');
+        // Route::post('/action',[NavigationGroupController::class,'action'])->name('.action');
+    });
+    /*
+    /-----------------------------------------------------------------------------
+    // Navigation Item
+    /-----------------------------------------------------------------------------
+    */
+    Route::prefix('navigationitems')->name('navigationitems')->group(function(){
+        Route::get('/',[NavigationItemController::class,'index'])->name('.index');
+        Route::get('show/{navigationItem}',[NavigationItemController::class,'show'])->name('.show');
+        Route::get('create',[NavigationItemController::class,'create'])->name('.create');
+        Route::post('/',[NavigationItemController::class,'store'])->name('.store');
+        Route::get('edit/{navigationItem}',[NavigationItemController::class,'edit'])->name('.edit');
+        Route::put('update/{navigationItem}',[NavigationItemController::class,'update'])->name('.update');
+        Route::delete('destroy/{navigationItem}',[NavigationItemController::class,'destroy'])->name('.destroy');
+        // Route::post('/action',[NavigationItemController::class,'action'])->name('.action');
+    });
+    /*
+    /-----------------------------------------------------------------------------
+    // Permisson
+    /-----------------------------------------------------------------------------
+    */
+    Route::prefix('permissions')->name('permissions')->group(function(){
+        Route::get('/',[PermissionController::class,'index'])->name('.index');
+        Route::get('show/{permission}',[PermissionController::class,'show'])->name('.show');
+        Route::get('create',[PermissionController::class,'create'])->name('.create');
+        Route::post('/',[PermissionController::class,'store'])->name('.store');
+        Route::get('edit/{permission}',[PermissionController::class,'edit'])->name('.edit');
+        Route::put('update/{permission}',[PermissionController::class,'update'])->name('.update');
+        Route::delete('destroy/{permission}',[PermissionController::class,'destroy'])->name('.destroy');
+    });
+    /*
+    /-----------------------------------------------------------------------------
+    // User Permission
+    /-----------------------------------------------------------------------------
+    */
+    Route::prefix('userpermissions')->name('userpermissions')->group(function(){
+        Route::get('/',[UserPermissionController::class,'index'])->name('.index');
+        Route::get('show/{userPermission}',[UserPermissionController::class,'show'])->name('.show');
+        Route::get('create',[UserPermissionController::class,'create'])->name('.create');
+        Route::post('/',[UserPermissionController::class,'store'])->name('.store');
+        Route::get('edit/{userPermission}',[UserPermissionController::class,'edit'])->name('.edit');
+        Route::put('update/{userPermission}',[UserPermissionController::class,'update'])->name('.update');
+        Route::delete('destroy/{userPermission}',[UserPermissionController::class,'destroy'])->name('.destroy');
 
+        Route::get('showauthorize',[UserPermissionController::class,'showauthorize'])->name('.showauthorize');
 
-    Route::get('/navgroup/create',[NavGroupController::class, 'create'])->name('navgroup.create');
-    Route::post('/navgroup/store',[NavGroupController::class, 'store'])->name('navgroup.store');
-
+    });
 
 });
 

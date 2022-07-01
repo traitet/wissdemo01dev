@@ -36,15 +36,6 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        {{-- <!-- Add dropdown add permission id-->
-                        <x-dropdown-link :href="route('permission.create')">
-                            {{ __('Add Permission') }}
-                        </x-dropdown-link>
-                        <!-- Add dropdown show permission id-->
-                        <x-dropdown-link :href="route('permission.show')">
-                            {{ __('Show Permission') }}
-                        </x-dropdown-link>
-                         --}}
                         <!-- Add dropdown edit profile-->
                         <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Edit Profile') }}
@@ -53,11 +44,7 @@
                         <x-dropdown-link :href="route('password.change')">
                             {{ __('Change Password') }}
                         </x-dropdown-link>
-                        <!-- Show permission-->
-                        <x-dropdown-link :href="route('permission.show')">
-                            {{ __('Permission') }}
-                        </x-dropdown-link>
-                        <!-- Authentication -->
+                        <!-- Log out-->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -107,11 +94,7 @@
                 <x-dropdown-link :href="route('password.change')">
                     {{ __('Change Password') }}
                 </x-dropdown-link>
-                <!-- Show permission -->
-                <x-dropdown-link :href="route('permission.show')">
-                    {{ __('Permission') }}
-                </x-dropdown-link>
-                <!-- Authentication -->
+                <!-- Log Out -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 

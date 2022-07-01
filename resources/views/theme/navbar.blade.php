@@ -157,10 +157,10 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
                                 </a>
-                                <a class="dropdown-item" href="{{ route('permission.show') }}">
+                                {{-- 30/06/2022 <a class="dropdown-item" href="{{ route('permission.show') }}">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Authorization
-                                </a>
+                                </a> --}}
                                 <div class="dropdown-divider"></div>
                                 <!-- Remove 11/06/2022 -->
                                 {{-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
