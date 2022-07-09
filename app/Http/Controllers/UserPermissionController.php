@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\User;
 use App\Models\UserPermission;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,10 @@ class UserPermissionController extends Controller
     public function index()
     {
         $userpermissions = UserPermission::join('permissions', 'user_permissions.permission_id', '=', 'permissions.id')
-        ->orderBy('user_permissions.email', 'asc')
-        ->get(['user_permissions.*','permissions.name as permission_name']);
+            ->orderBy('user_permissions.email', 'asc')
+            ->get(['user_permissions.*', 'permissions.name as permission_name']);
 
-        return view('userpermissions.index',compact('userpermissions'));
+        return view('userpermissions.index', compact('userpermissions'));
     }
 
     /**
@@ -30,9 +31,9 @@ class UserPermissionController extends Controller
     public function create()
     {
         $permissions = Permission::where('active', '1')
-        ->orderBy('name')
-        ->get(['id','name']);
-        return view('userpermissions.create',compact('permissions'));
+            ->orderBy('name')
+            ->get(['id', 'name']);
+        return view('userpermissions.create', compact('permissions'));
     }
 
     /**
@@ -49,10 +50,14 @@ class UserPermissionController extends Controller
             'active' => 'required',
         ]);
 
-        UserPermission::create($request->all());
-
-        return redirect()->route('userpermissions.index')
-                        ->with('success','User permission created successfully.');
+        try {
+            UserPermission::create($request->all());
+            return redirect()->route('User-Permission')
+                ->with('success', 'User permission created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('User-Permission')
+                ->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -63,7 +68,7 @@ class UserPermissionController extends Controller
      */
     public function show(UserPermission $userPermission)
     {
-        return view('userpermissions.show',compact('userPermission'));
+        return view('userpermissions.show', compact('userPermission'));
     }
 
     /**
@@ -76,9 +81,9 @@ class UserPermissionController extends Controller
     {
         // return view('userpermissions.edit',compact('userPermission'));
         $permissions = Permission::where('active', '1')
-        ->orderBy('name')
-        ->get(['id','name']);
-        return view('userpermissions.edit',compact('userPermission','permissions'));
+            ->orderBy('name')
+            ->get(['id', 'name']);
+        return view('userpermissions.edit', compact('userPermission', 'permissions'));
     }
 
     /**
@@ -96,10 +101,14 @@ class UserPermissionController extends Controller
             'active' => 'required',
         ]);
 
-        $userPermission->update($request->all());
-
-        return redirect()->route('userpermissions.index')
-                        ->with('success','User ermission updated successfully');
+        try {
+            $userPermission->update($request->all());
+            return redirect()->route('User-Permission')
+                ->with('success', 'User ermission updated successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('User-Permission')
+                ->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -110,21 +119,73 @@ class UserPermissionController extends Controller
      */
     public function destroy(UserPermission $userPermission)
     {
-        $userPermission->delete();
 
-        return redirect()->route('userpermissions.index')
-                        ->with('success','User permission deleted successfully');
+        try {
+            $userPermission->delete();
+            return redirect()->route('User-Permission')
+                ->with('success', 'User permission deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()->route('User-Permission')
+                ->with('error', $e->getMessage());
+        }
     }
-
     public function showauthorize()
     {
-        $permissiontables = UserPermission::join('permissions', 'user_permissions.permission_id', '=', 'permissions.id')
-        ->join('navigation_items', 'permissions.navigation_item_id', '=', 'navigation_items.id')
-        ->join('navigation_groups', 'navigation_items.navigation_group_id', '=', 'navigation_groups.id')
-        ->orderBy('user_permissions.email', 'asc')
-        ->get(['user_permissions.*','permissions.name as permission_name', 'navigation_items.name as navigation_item_name', 'navigation_groups.name as navigation_group_name']);
+        $permissions = Permission::where('active', '1')
+            ->orderByRaw('LENGTH(sequence) ASC')
+            ->orderBy('sequence', 'ASC')
+            ->get(['permissions.*']);
 
-        return view('userpermissions.showauthorize',compact('permissiontables'));
+        $users = User::orderBy('email', 'ASC')->get();
+
+        return view('authorizations.index', compact('users', 'permissions'));
+    }
+    public function updateauthorize(Request $request, UserPermission $userPermission)
+    {
+        $permissions = Permission::where('active', '1')
+            ->orderByRaw('LENGTH(sequence) ASC')
+            ->orderBy('sequence', 'ASC')
+            ->get(['permissions.*']);
+
+        $users = User::orderBy('email', 'ASC')->get();
+        // Set to inactive
+        $userpermission = UserPermission::query()->delete();
+
+        foreach ($users as $user) {
+            $fname = $user->first_name; // First Name
+            $permissionarrays = $request->get($fname);
+
+            if (!empty($permissionarrays)) {
+
+                foreach ($permissionarrays as $permissid) {
+
+                    UserPermission::insert([
+                        'email' => $user->email,
+                        'permission_id' => $permissid,
+                        'active' => 1
+
+                    ]);
+                }
+            }
+        }
+
+        return view('authorizations.index', compact('users', 'permissions'));
     }
 
+    public function insertpermission(Request $request)
+    {
+        UserPermission::insert([
+            'email' => $request->email,
+            'permission_id' => $request->id,
+            'active' => 1
+
+        ]);
+    }
+
+    public function deletepermission(Request $request)
+    {
+        UserPermission::where('permission_id','=',$request->id)
+        ->where('email','=',$request->email)
+        ->delete();
+    }
 }

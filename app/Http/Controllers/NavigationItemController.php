@@ -63,10 +63,10 @@ class NavigationItemController extends Controller
 
         try {
             NavigationItem::create($request->all());
-            return redirect()->route('navigationitems.index')
+            return redirect()->route('Navigation-Item')
                         ->with('success','Navigatioin group created successfully.');
         } catch (\Exception $e) {
-              return redirect()->route('navigationitems.index')
+              return redirect()->route('Navigation-Item')
                         ->with('error',$e->getMessage());
         }
 
@@ -117,10 +117,10 @@ class NavigationItemController extends Controller
 
         try {
             $navigationItem->update($request->all());
-            return redirect()->route('navigationitems.index')
+            return redirect()->route('Navigation-Item')
                         ->with('success','Navigatioin item update successfully.');
         } catch (\Exception $e) {
-              return redirect()->route('navigationitems.index')
+              return redirect()->route('Navigation-Item')
                         ->with('error',$e->getMessage());
         }
     }
@@ -135,10 +135,10 @@ class NavigationItemController extends Controller
     {
         try {
             $navigationItem->delete();
-            return redirect()->route('navigationitems.index')
+            return redirect()->route('Navigation-Item')
                         ->with('success','Navigatioin item delete successfully.');
         } catch (\Exception $e) {
-              return redirect()->route('navigationitems.index')
+              return redirect()->route('Navigation-Item')
                         ->with('error',$e->getMessage());
         }
     }

@@ -49,10 +49,14 @@ class PermissionController extends Controller
             'active' => 'required',
         ]);
 
-        Permission::create($request->all());
-
-        return redirect()->route('permissions.index')
+        try {
+            Permission::create($request->all());
+        return redirect()->route('Permission')
                         ->with('success','Permission group created successfully.');
+        } catch (\Exception $e) {
+              return redirect()->route('Permission')
+                        ->with('error',$e->getMessage());
+        }
     }
 
     /**
@@ -98,10 +102,17 @@ class PermissionController extends Controller
             'active' => 'required',
         ]);
 
-        $permission->update($request->all());
-
-        return redirect()->route('permissions.index')
+        try {
+            $permission->update($request->all());
+            return redirect()->route('Permission')
                         ->with('success','Permission updated successfully');
+        } catch (\Exception $e) {
+              return redirect()->route('Permission')
+                        ->with('error',$e->getMessage());
+        }
+
+
+
     }
 
     /**
@@ -112,9 +123,14 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $permission->delete();
-
-        return redirect()->route('permissions.index')
+        try {
+            $permission->delete();
+        return redirect()->route('Permission')
                         ->with('success','Permission deleted successfully');
+        } catch (\Exception $e) {
+              return redirect()->route('Permission')
+                        ->with('error',$e->getMessage());
+        }
+
     }
 }

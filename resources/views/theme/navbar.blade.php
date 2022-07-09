@@ -131,7 +131,7 @@
             </span>
 
             <img class="img-profile rounded-circle"
-                src="theme/img/undraw_profile.svg">
+                src="{{ asset('theme/img/undraw_profile.svg') }}">
         </a>
     {{-- ===================================================================================== --}}
     {{-- NAV ITEM - USER INFORMATION DETAILS --}}
@@ -152,7 +152,6 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                @endif
                                 <a class="dropdown-item" href="{{ route('password.change') }}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Change Password
@@ -177,6 +176,7 @@
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </form>
+                                @endif
                             </div>
                     <?php
                     }

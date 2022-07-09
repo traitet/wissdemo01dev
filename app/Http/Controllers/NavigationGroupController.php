@@ -14,10 +14,9 @@ class NavigationGroupController extends Controller
      */
     public function index()
     {
-        $navigationGroups = NavigationGroup::latest()->paginate(5);
+        $navigationGroups = NavigationGroup::all();
 
-        return view('navigationgroups.index',compact('navigationGroups'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('navigationgroups.index',compact('navigationGroups'));
     }
 
     /**
@@ -46,10 +45,12 @@ class NavigationGroupController extends Controller
 
         try {
             NavigationGroup::create($request->all());
-            return redirect()->route('navigationgroups.index')
+            // return redirect()->route('navigationgroups.index')
+            return redirect()->route('Navigation-Group')
                         ->with('success','Navigation group created successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('navigationgroups.index')
+            // return redirect()->route('navigationgroups.index')
+            return redirect()->route('Navigation-Group')
                         ->with('error',$e->getMessage());
         }
     }
@@ -96,10 +97,10 @@ class NavigationGroupController extends Controller
 
         try {
             $navigationGroup->update($request->all());
-            return redirect()->route('navigationgroups.index')
+            return redirect()->route('Navigation-Group')
                         ->with('success','Product updated successfully');
         } catch (\Exception $e) {
-            return redirect()->route('navigationgroups.index')
+            return redirect()->route('Navigation-Group')
                         ->with('error',$e->getMessage());
         }
     }
@@ -114,10 +115,10 @@ class NavigationGroupController extends Controller
     {
         try {
             $navigationGroup->delete();
-            return redirect()->route('navigationgroups.index')
+            return redirect()->route('Navigation-Group')
                         ->with('success','Navigation group deleted successfully');
         } catch (\Exception $e) {
-            return redirect()->route('navigationgroups.index')
+            return redirect()->route('Navigation-Group')
                         ->with('error',$e->getMessage());
         }
     }

@@ -1,4 +1,4 @@
-@extends('userpermissions.layout')
+@extends('authorizations.layout')
 
 @section('content')
     <div class="row">
@@ -7,7 +7,7 @@
                 <h2> Show Permission Table</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('userpermissions.index') }}"> Back</a>
+                {{-- <a class="btn btn-primary" href="{{ route('userpermissions.index') }}"> Back</a> --}}
             </div>
         </div>
     </div>

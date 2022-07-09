@@ -82,9 +82,9 @@ Route::middleware(['auth'])->group(function(){
     // Navigation Group
     /-----------------------------------------------------------------------------
     */
+    Route::get('/navigationgroups',[NavigationGroupController::class,'index'])->name('Navigation-Group');
     Route::prefix('navigationgroups')->name('navigationgroups')->group(function(){
-        Route::get('/',[NavigationGroupController::class,'index'])->name('.index');
-        Route::get('show/{navigationGroup}',[NavigationGroupController::class,'show'])->name('.show');
+        // Route::get('/',[NavigationGroupController::class,'index'])->name('.index');
         Route::get('create',[NavigationGroupController::class,'create'])->name('.create');
         Route::post('/',[NavigationGroupController::class,'store'])->name('.store');
         Route::get('edit/{navigationGroup}',[NavigationGroupController::class,'edit'])->name('.edit');
@@ -97,24 +97,21 @@ Route::middleware(['auth'])->group(function(){
     // Navigation Item
     /-----------------------------------------------------------------------------
     */
+    Route::get('/navigationitems',[NavigationItemController::class,'index'])->name('Navigation-Item');
     Route::prefix('navigationitems')->name('navigationitems')->group(function(){
-        Route::get('/',[NavigationItemController::class,'index'])->name('.index');
-        Route::get('show/{navigationItem}',[NavigationItemController::class,'show'])->name('.show');
         Route::get('create',[NavigationItemController::class,'create'])->name('.create');
         Route::post('/',[NavigationItemController::class,'store'])->name('.store');
         Route::get('edit/{navigationItem}',[NavigationItemController::class,'edit'])->name('.edit');
         Route::put('update/{navigationItem}',[NavigationItemController::class,'update'])->name('.update');
         Route::delete('destroy/{navigationItem}',[NavigationItemController::class,'destroy'])->name('.destroy');
-        // Route::post('/action',[NavigationItemController::class,'action'])->name('.action');
     });
     /*
     /-----------------------------------------------------------------------------
     // Permisson
     /-----------------------------------------------------------------------------
     */
+    Route::get('/permissions',[PermissionController::class,'index'])->name('Permission');
     Route::prefix('permissions')->name('permissions')->group(function(){
-        Route::get('/',[PermissionController::class,'index'])->name('.index');
-        Route::get('show/{permission}',[PermissionController::class,'show'])->name('.show');
         Route::get('create',[PermissionController::class,'create'])->name('.create');
         Route::post('/',[PermissionController::class,'store'])->name('.store');
         Route::get('edit/{permission}',[PermissionController::class,'edit'])->name('.edit');
@@ -126,18 +123,24 @@ Route::middleware(['auth'])->group(function(){
     // User Permission
     /-----------------------------------------------------------------------------
     */
+    Route::get('/userpermissions',[UserPermissionController::class,'index'])->name('User-Permission');
     Route::prefix('userpermissions')->name('userpermissions')->group(function(){
-        Route::get('/',[UserPermissionController::class,'index'])->name('.index');
-        Route::get('show/{userPermission}',[UserPermissionController::class,'show'])->name('.show');
         Route::get('create',[UserPermissionController::class,'create'])->name('.create');
         Route::post('/',[UserPermissionController::class,'store'])->name('.store');
         Route::get('edit/{userPermission}',[UserPermissionController::class,'edit'])->name('.edit');
         Route::put('update/{userPermission}',[UserPermissionController::class,'update'])->name('.update');
         Route::delete('destroy/{userPermission}',[UserPermissionController::class,'destroy'])->name('.destroy');
-
-        Route::get('showauthorize',[UserPermissionController::class,'showauthorize'])->name('.showauthorize');
-
     });
+    /*
+    /-----------------------------------------------------------------------------
+    // Authorization
+    /-----------------------------------------------------------------------------
+    */
+    Route::get('/showauthorize',[UserPermissionController::class,'showauthorize'])->name('Authorization');
+    Route::get('insert/showauthorize',[UserPermissionController::class,'insertpermission'])->name('Authorization.insertpermission');
+    Route::get('delete/showauthorize',[UserPermissionController::class,'deletepermission'])->name('Authorization.deletepermission');
+    Route::post('/updateauthorize',[UserPermissionController::class,'updateauthorize'])->name('Authorization.update');
+
 
 });
 
@@ -161,19 +164,22 @@ Route::post('basic-report-api',[BasicReportApiController::class,'getData']);
 // ==========================================================================
 // ROUTE GET/POST "BASIC-REPORT-API"
 // ==========================================================================
-Route::view('interface-sap-po','interface-sap-po');
+// Route::view('interface-sap-po','interface-sap-po');
+Route::get("interface-sap-po", function(){ return view("interface-sap-po");})->name("PO-Interface");
 Route::post('interface-sap-po',[InterfaceSapPoApiController::class,'getData']);
 
 // ==========================================================================
 // ROUTE GET/POST "BASIC-REPORT-API"
 // ==========================================================================
-Route::view('interface-sap-rec','interface-sap-rec');
+// Route::view('interface-sap-rec','interface-sap-rec');
+Route::get("interface-sap-rec", function(){ return view("interface-sap-rec");})->name("RC-Interface");
 Route::post('interface-sap-rec',[InterfaceSapRecApiController::class,'getData']);
 
 // ==========================================================================
 // ROUTE GET/POST "BASIC-REPORT-API"
 // ==========================================================================
-Route::view('interface-sap-inv','interface-sap-inv');
+// Route::view('interface-sap-inv','interface-sap-inv');
+Route::get("interface-sap-inv", function(){ return view("interface-sap-inv");})->name("INV-Interface");
 Route::post('interface-sap-inv',[InterfaceSapInvApiController::class,'getData']);
 
 
@@ -181,55 +187,68 @@ Route::post('interface-sap-inv',[InterfaceSapInvApiController::class,'getData'])
 // ==========================================================================
 // ROUTE GET/POST "BASIC-REPORT-API"
 // ==========================================================================
-Route::view('emfg-shipping-log-ok','emfg-shipping-log-ok');
+// Route::view('emfg-shipping-log-ok','emfg-shipping-log-ok');
+Route::get("emfg-shipping-log-ok", function(){ return view("emfg-shipping-log-ok");})->name("Shipping-OK-SA");
 Route::post('emfg-shipping-log-ok',[EmfgShippingLogOkApiController::class,'getData']);
 
-Route::view('emfg-shipping-log-ng','emfg-shipping-log-ng');
+// Route::view('emfg-shipping-log-ng','emfg-shipping-log-ng');
+Route::get("emfg-shipping-log-ng", function(){ return view("emfg-shipping-log-ng");})->name("Shipping-NG-SA");
 Route::post('emfg-shipping-log-ng',[EmfgShippingLogNgApiController::class,'getData']);
 
-Route::view('emfg-shipping-log-event','emfg-shipping-log-event');
+// Route::view('emfg-shipping-log-event','emfg-shipping-log-event');
+Route::get("emfg-shipping-log-event", function(){ return view("emfg-shipping-log-even");})->name("Shipping-Event-Log-SA");
 Route::post('emfg-shipping-log-event',[EmfgShippingLogEventApiController::class,'getData']);
 
-Route::view('emfg-shipping-status','emfg-shipping-status');
+// Route::view('emfg-shipping-status','emfg-shipping-status');
+Route::get("emfg-shipping-status", function(){ return view("emfg-shipping-status");})->name("Shipping-Status-SA");
 Route::post('emfg-shipping-status',[EmfgShippingStatusApiController::class,'getData']);
 
-Route::view('emfg-inventory-stock-out-error','emfg-inventory-stock-out-error');
+// Route::view('emfg-inventory-stock-out-error','emfg-inventory-stock-out-error');
+Route::get("emfg-inventory-stock-out-error", function(){ return view("emfg-inventory-stock-out-error");})->name("Stock-Out-Error-SA");
 Route::post('emfg-inventory-stock-out-error',[EmfgInventoryStockOutErrorApiController::class,'getData']);
 
-Route::view('wiss-atac-emfg-shopping-log','wiss-atac-emfg-shopping-log');
+// Route::view('wiss-atac-emfg-shopping-log','wiss-atac-emfg-shopping-log');
+Route::get("wiss-atac-emfg-shopping-log", function(){ return view("wiss-atac-emfg-shopping-log");})->name("Shopping-Log-ATAC");
 Route::post('wiss-atac-emfg-shopping-log',[EmfgAtacShoppingLogApiController::class,'getData']);
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< EPS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ==========================================================================
 // ROUTE GET/POST "BASIC-REPORT-API"
 // ==========================================================================
-Route::view('eps-pr-outstanding','eps-pr-outstanding');
+// Route::view('eps-pr-outstanding','eps-pr-outstanding');
+Route::get("eps-pr-outstanding", function(){ return view("eps-pr-outstanding");})->name("PR-Outstanding");
 Route::post('eps-pr-outstanding',[EpsPrOutstandingApiController::class,'getData']);
 
-Route::view('eps-pr-po-planner','eps-pr-po-planner');
+// Route::view('eps-pr-po-planner','eps-pr-po-planner');
+Route::get("eps-pr-po-planner", function(){ return view("eps-pr-po-planner");})->name("PR-PO-Planner");
 Route::post('eps-pr-po-planner',[EpsPrPoToPlannerApiController::class,'getData']);
 
-Route::view('eps-bg-checking','eps-bg-checking');
+// Route::view('eps-bg-checking','eps-bg-checking');
+Route::get("eps-bg-checking", function(){ return view("eps-bg-checking");})->name("BG-Checking");
 Route::post('eps-bg-checking',[EpsBgCheckingApiController::class,'getData']);
 
 Route::get('wiss-sa-eps-report-budget-checking-pr-detail',[EpsReportBudgetCheckingPrDetailApiController::class,'getData']);
 Route::get('wiss_sa_eps_report_budget_checking_expense',[EpsReportBudgetCheckingExpenseDetailApiController::class,'getData']);
 Route::get('wiss_sa_eps_report_budget_checking_investment',[EpsReportBudgetCheckingInvestmentDetailApiController::class,'getData']);
 
-Route::view('eps-pr-error','eps-pr-error');
+// Route::view('eps-pr-error','eps-pr-error');
+Route::get("eps-pr-error", function(){ return view("eps-pr-error");})->name("PR-Error");
 Route::post('eps-pr-error',[EpsPrErrorApiController::class,'getData']);
 
-Route::view('eps-pr-production-error','eps-pr-production-error');
+// Route::view('eps-pr-production-error','eps-pr-production-error');
+Route::get("eps-pr-production-error", function(){ return view("eps-pr-production-error");})->name("PR-Production-Error");
 Route::post('eps-pr-production-error',[EpsPrProductionErrorApiController::class,'getData']);
 
-Route::view('eps-cp-approve-pr','eps-cp-approve-pr');
+// Route::view('eps-cp-approve-pr','eps-cp-approve-pr');
+Route::get("eps-cp-approve-pr", function(){ return view("eps-cp-approve-pr");})->name("CP-Approve-PR");
 Route::post('eps-cp-approve-pr',[EpsCpApprovePrApiController::class,'getData']);
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< E-Drawing >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // ==========================================================================
 // ROUTE GET/POST "BASIC-REPORT-API"
 // ==========================================================================
-Route::view('edrawing-check-password','edrawing-check-password');
+// Route::view('edrawing-check-password','edrawing-check-password');
+Route::get("edrawing-check-password", function(){ return view("edrawing-check-password");})->name("Password");
 Route::post('edrawing-check-password',[EdrawingCheckPasswordApiController::class,'getData']);
 
 
@@ -241,44 +260,56 @@ Route::post('edrawing-check-password',[EdrawingCheckPasswordApiController::class
 // ROUTE GET/POST "FIX-POROGRAM-API"
 // ==========================================================================
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< I-BG >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Route::view('wiss-sa-add-ibg-dept','wiss-sa-add-ibg-dept');
+// Route::view('wiss-sa-add-ibg-dept','wiss-sa-add-ibg-dept');
+Route::get("wiss-sa-add-ibg-dept", function(){ return view("wiss-sa-add-ibg-dept");})->name("Add-Department");
 Route::post('wiss-sa-add-ibg-dept',[IbgAddDeptApiController::class,'getData']);
 
-Route::view('wiss-sa-add-ibg-user','wiss-sa-add-ibg-user');
+// Route::view('wiss-sa-add-ibg-user','wiss-sa-add-ibg-user');
+Route::get("wiss-sa-add-ibg-user", function(){ return view("wiss-sa-add-ibg-user");})->name("Add-User");
 Route::post('wiss-sa-add-ibg-user',[IbgAddUserApiController::class,'getData']);
 
-Route::view('wiss-sa-ibg-update-inf-schedule','wiss-sa-ibg-update-inf-schedule');
+// Route::view('wiss-sa-ibg-update-inf-schedule','wiss-sa-ibg-update-inf-schedule');
+Route::get("wiss-sa-ibg-update-inf-schedule", function(){ return view("wiss-sa-ibg-update-inf-schedule");})->name("Add-IF-Schedule");
 Route::post('wiss-sa-ibg-update-inf-schedule',[IbgUpdateInfScheduleApiController::class,'getData']);
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< EPS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Route::view('wiss-sa-add-eps-investment','wiss-sa-add-eps-investment');
+// Route::view('wiss-sa-add-eps-investment','wiss-sa-add-eps-investment');
+Route::get("wiss-sa-add-eps-investment", function(){ return view("wiss-sa-add-eps-investment");})->name("Add-Investment");
 Route::post('wiss-sa-add-eps-investment',[EpsAddInvestmentApiController::class,'getData']);
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ATAC EMFG >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Route::view('wiss-atac-emfg-add-model','wiss-atac-emfg-add-model');
+// Route::view('wiss-atac-emfg-add-model','wiss-atac-emfg-add-model');
+Route::get("wiss-atac-emfg-add-model", function(){ return view("wiss-atac-emfg-add-model");})->name("Add-Model-ATAC");
 Route::post('wiss-atac-emfg-add-model',[EmfgAddModelApiController::class,'getData']);
 
-Route::view('wiss-atac-emfg-add-shelf','wiss-atac-emfg-add-shelf');
+// Route::view('wiss-atac-emfg-add-shelf','wiss-atac-emfg-add-shelf');
+Route::get("wiss-atac-emfg-add-shelf", function(){ return view("wiss-atac-emfg-add-shelf");})->name("Add-Shelf-ATAC");
 Route::post('wiss-atac-emfg-add-shelf',[EmfgAddShelfApiController::class,'getData']);
 
-Route::view('wiss-atac-emfg-revert-shopping-status','wiss-atac-emfg-revert-shopping-status');
+// Route::view('wiss-atac-emfg-revert-shopping-status','wiss-atac-emfg-revert-shopping-status');
+Route::get("wiss-atac-emfg-revert-shopping-status", function(){ return view("wiss-atac-emfg-revert-shopping-status");})->name("Revert-Shopping-ATAC");
 Route::post('wiss-atac-emfg-revert-shopping-status',[EmfgRevertShoppingStatusApiController::class,'getData']);
 
-Route::view('wiss-atac-emfg-complete-pkl','wiss-atac-emfg-complete-pkl');
+// Route::view('wiss-atac-emfg-complete-pkl','wiss-atac-emfg-complete-pkl');
+Route::get("wiss-atac-emfg-complete-pkl", function(){ return view("wiss-atac-emfg-complete-pkl");})->name("Complete-PKL-ATAC");
 Route::post('wiss-atac-emfg-complete-pkl',[EmfgCompletePKLApiController::class,'getData']);
 
-Route::view('wiss-atac-emfg-create-pallet-data-from-shopping','wiss-atac-emfg-create-pallet-data-from-shopping');
+// Route::view('wiss-atac-emfg-create-pallet-data-from-shopping','wiss-atac-emfg-create-pallet-data-from-shopping');
+Route::get("wiss-atac-emfg-create-pallet-data-from-shopping", function(){ return view("wiss-atac-emfg-create-pallet-data-from-shopping");})->name("Complete-Pallet-ATAC");
 Route::post('wiss-atac-emfg-create-pallet-data-from-shopping',[EmfgCreatePalletDataFromShoppingApiController::class,'getData']);
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< SA EMFG >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Route::view('wiss-sa-emfg-add-shelf','wiss-sa-emfg-add-shelf');
+// Route::view('wiss-sa-emfg-add-shelf','wiss-sa-emfg-add-shelf');
+Route::get("wiss-sa-emfg-add-shelf", function(){ return view("wiss-sa-emfg-add-shelf");})->name("Add-Shelf-SA");
 Route::post('wiss-sa-emfg-add-shelf',[EmfgSaAddShelfApiController::class,'getData']);
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< I-FIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-Route::view('wiss-sa-ifin-revert-doc','wiss-sa-ifin-revert-doc');
+// Route::view('wiss-sa-ifin-revert-doc','wiss-sa-ifin-revert-doc');
+Route::get("wiss-sa-ifin-revert-doc", function(){ return view("wiss-sa-ifin-revert-doc");})->name("Revert-Doc");
 Route::post('wiss-sa-ifin-revert-doc',[IfinRevertDocApiController::class,'getData']);
 
-Route::view('wiss-sa-ifin-register-admin','wiss-sa-ifin-register-admin');
+// Route::view('wiss-sa-ifin-register-admin','wiss-sa-ifin-register-admin');
+Route::get("wiss-sa-ifin-register-admin", function(){ return view("wiss-sa-ifin-register-admin");})->name("Register-Admin");
 Route::post('wiss-sa-ifin-register-admin',[IfinRegisterAdminApiController::class,'getData']);
 
 // ==========================================================================

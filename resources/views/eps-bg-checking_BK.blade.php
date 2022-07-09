@@ -52,6 +52,26 @@
                 dom:  '<lf<t>ip>'
             });
         });
+
+        // ================================================================
+        // DATE HANDLE
+        // ================================================================
+        // function dateStartHandler() {
+        //     const dateStart = $('#dateStart').val();
+        //     console.log(dateStart);
+        //     $('#dateStart').val(dateStart);
+        // }
+
+
+        // ================================================================
+        // DATE HANDLE
+        // ================================================================
+        // function dateEndHandler() {
+        //     const dateEnd = $('#dateEnd').val();
+        //     console.log(dateStart);
+        //     $('#dateEnd').val(dateEnd);
+        // }
+
         // ================================================================
         // CLEAR FORM
         // ================================================================
@@ -164,7 +184,7 @@
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">Search</button>
-                                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                                            <button type="button" class="btn btn-secondary" onclick="clearForm();">Clear</button>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +206,6 @@
                                     {{-- ========================================================= --}}
                                     {{-- CARD BODY --}}
                                     {{-- ========================================================= --}}
-                                    <div class="card-body">
                                         <div class="table-responsive">
                                             {{-- ========================================================= --}}
                                             {{-- TABLE --}}
@@ -291,4 +310,6 @@
         @include('theme.footer')
 </body>
 </html>
+<script>
 
+</script>
