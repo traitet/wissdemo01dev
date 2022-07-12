@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
+
     /**
      * Display the login view.
      *
@@ -31,6 +32,14 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        /*********************** Add permission email  11/07/2022 ************************************ */
+        // Session::set('arr_permissions', \App\Models\User::getPermission(Auth::user()->email));
+        // $_SESSION['arr_permissions'] =  \App\Models\User::getPermission(Auth::user()->email);
+        session()->put('arr_permissions',\App\Models\User::getPermission(Auth::user()->email));
+        // dd(session()->get('arr_permissions'));
+
+        // $request->session()->put('my_name','Virat Gandhi');
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

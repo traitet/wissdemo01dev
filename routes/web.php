@@ -51,6 +51,9 @@ use App\Http\Controllers\NavigationItemController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserPermissionController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
+// External
+use App\Http\Controllers\ExternalURLController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,6 +70,7 @@ use App\Http\Controllers\UserController;
 |    Protected routes
 |--------------------------------------------------------------------------
 */
+
 Route::middleware(['auth'])->group(function(){
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -151,6 +155,10 @@ require __DIR__.'/auth.php';
 |    Public routes
 |--------------------------------------------------------------------------
 */
+Route::get('/showatgn',[ExternalURLController::class,'showatgn'])->name('ATGN');
+Route::get('/showzabbix',[ExternalURLController::class,'showzabbix'])->name('Zabbix');
+Route::get('/showsolarwinds',[ExternalURLController::class,'showsolarwinds'])->name('Solarwinds');
+Route::get('/shownagios',[ExternalURLController::class,'shownagios'])->name('Nagios');
 //##################################################################################################################
 //#                                                    Report                                                      #
 //##################################################################################################################
@@ -164,7 +172,6 @@ Route::post('basic-report-api',[BasicReportApiController::class,'getData']);
 // ==========================================================================
 // ROUTE GET/POST "BASIC-REPORT-API"
 // ==========================================================================
-// Route::view('interface-sap-po','interface-sap-po');
 Route::get("interface-sap-po", function(){ return view("interface-sap-po");})->name("PO-Interface");
 Route::post('interface-sap-po',[InterfaceSapPoApiController::class,'getData']);
 

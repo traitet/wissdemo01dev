@@ -92,6 +92,7 @@
 
            <?php
                 }
+
             ?>
 
 
@@ -119,3 +120,6 @@
 
        <!-- Divider -->
        <hr class="sidebar-divider">
+
+       {{-- <a class="collapse-item" target="_blank" href="{{ route('Atgn') }}">test menu external</a> --}}
+

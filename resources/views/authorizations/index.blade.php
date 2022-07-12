@@ -198,6 +198,7 @@
                                             <?php
                                             $showNavigationItemId = "";
                                             $previousNavigationItemId = "";
+                                            $colnumber = 0;
                                             $i = 0;
                                             foreach ($users as $user) {
                                                 $i++;
@@ -210,7 +211,7 @@
                                                     $permissionname = $permission->name;
                                                     $permissionid = $permission->id;
                                                 @endphp
-                                                <tr>
+
                                                     <?php
                                                         $currentNavigationItemId = $permission->navigation_item_id;
 
@@ -219,12 +220,21 @@
 
                                                         }else {
                                                             $showNavigationItemId = $currentNavigationItemId;
+                                                            $colnumber = count($users) + 1;
+                                                            ?>
+                                                            <tr>
+                                                                <td colspan="{{ $colnumber }}">{{ \App\Models\UserPermission::getNavigationItemName($showNavigationItemId); }}</td>
+                                                            </tr>
+                                                            <?php
                                                         }
                                                     ?>
-                                                    <td>{{ $permissionname }}{{ $showNavigationItemId }}</td>
+
+                                                    <tr>
+                                                    <td>{{ $permissionname }}</td>
                                                     <?php
                                                     $j = 0;
                                                     ?>
+
                                                     @foreach ($emails as $email)
                                                         <td class="text-center">
                                                             <?php
