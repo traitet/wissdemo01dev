@@ -75,7 +75,12 @@
                                                 ?>
                                <a class="collapse-item" href="deploy-code">deploy-code</a>
                                <?php
-                                                    }else{
+                                                    }else if ($navigationGroupName == 'Infrastructure Monitor'){
+                                                    ?>
+                                <a class="collapse-item" target="_blank" href="{{ route($routename) }}">{{ $routename }}</a>
+                                                    <?php
+                                                    }
+                                                    else{
                                                 ?>
                                <a class="collapse-item" href="{{ route($routename) }}">{{ $routename }}</a>
                                <?php
