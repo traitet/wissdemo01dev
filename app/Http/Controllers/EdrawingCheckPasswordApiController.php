@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 // ==========================================================================
 // CLASS DECLARATION
@@ -69,6 +70,7 @@ class EdrawingCheckPasswordApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
+                    \App\Models\Log::insertLog(Auth::user()->id,32,'Completed');
                     return view('edrawing-check-password', compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv'));
                 }else{
                     //need to return no data msg

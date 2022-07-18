@@ -8,6 +8,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\Auth\userPermission;
+
 class AuthenticatedSessionController extends Controller
 {
 
@@ -33,14 +35,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        /*********************** Add permission email  11/07/2022 ************************************ */
-        // Session::set('arr_permissions', \App\Models\User::getPermission(Auth::user()->email));
-        // $_SESSION['arr_permissions'] =  \App\Models\User::getPermission(Auth::user()->email);
-        session()->put('arr_permissions',\App\Models\User::getPermission(Auth::user()->email));
-        // dd(session()->get('arr_permissions'));
-
-        // $request->session()->put('my_name','Virat Gandhi');
-
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -60,4 +54,5 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
 }

@@ -95,7 +95,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="edrawing-check-password" id="myForm">
+                <form method="POST" action="{{ route('EdrawingPassword.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

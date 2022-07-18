@@ -47,14 +47,12 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public static function getPermission($email)
+    public static function getPermission($permissionName, $email)
     {
-        // $Permissions = UserPermission::where('email','=',$email)
-        // ->get(['name']);
-
         $permissions = UserPermission::join('permissions', 'user_permissions.permission_id', '=', 'permissions.id')
         ->join('navigation_items', 'permissions.navigation_item_id', '=', 'navigation_items.id')
         ->where('user_permissions.email', '=', $email)
+        ->where('permissions.name', '=', $permissionName)
         ->where('permissions.active', '=', '1')
         ->where('navigation_items.active', '=', '1')
         ->orderBy('permissions.sequence', 'asc')
@@ -62,7 +60,13 @@ class User extends Authenticatable
         ->groupBy('permissions.name')
         ->get(['permissions.name']);
 
-        return $permissions;
+        foreach($permissions as $permisson){
+            if($permisson->name == $permissionName){
+                return true;
+            }else{
+                return false;
+            }
+        }
     }
 
 }

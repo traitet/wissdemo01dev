@@ -102,7 +102,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="wiss-sa-ifin-register-admin" id="myForm">
+                <form method="POST" action="{{ route('IfinRegisterAdmin.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

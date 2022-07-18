@@ -96,7 +96,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="wiss-atac-emfg-shopping-log" id="myForm">
+                <form method="POST" action="{{ route('ShoppingLog.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

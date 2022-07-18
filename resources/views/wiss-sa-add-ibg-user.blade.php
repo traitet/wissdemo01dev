@@ -102,7 +102,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="wiss-sa-add-ibg-user" id="myForm">
+                <form method="POST" action="{{ route('AddIBGUser.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

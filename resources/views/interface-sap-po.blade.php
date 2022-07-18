@@ -96,7 +96,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="interface-sap-po" id="myForm">
+                <form method="POST" action="{{ route('InterfaceSAPPO.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

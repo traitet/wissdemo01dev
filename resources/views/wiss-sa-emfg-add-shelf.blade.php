@@ -102,7 +102,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="wiss-sa-emfg-add-shelf" id="myForm">
+                <form method="POST" action="{{ route('EmfgAddShelfSA.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

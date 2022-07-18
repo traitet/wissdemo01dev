@@ -102,7 +102,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="wiss-sa-add-eps-investment" id="myForm">
+                <form method="POST" action="{{ route('AddEPSInvestment.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

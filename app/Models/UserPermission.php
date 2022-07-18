@@ -114,26 +114,6 @@ class UserPermission extends Model
          }
          return $permissionName;
      }
-    // Get getPermissionId detail by Permission Name
-    // public static function getPermissionId($permissionItemName)
-    // {
-    //     $status = UserPermission::join('permissions', 'user_permissions.permission_id', '=', 'permissions.id')
-    //     ->where('user_permissions.email', '=', $email)
-    //     ->where('permissions.id', '=', $permissionid)
-    //     // ->where('permissions.active', '=', '1')
-    //     ->orderBy('permissions.sequence', 'asc')
-    //     ->get(['user_permissions.active']);
-
-    //     foreach($status as $key => $val) {
-    //         return $val->active;
-    //     }
-
-    //     $navigationItemId = NavigationItem::where('active', '1')
-    //     ->where('name','=',$permissionItemName)
-    //     ->get(['id','name']);
-    //     return $navigationItemId;
-
-    // }
 
     // Get user permission active by email
     public static function getPermissionActive($email, $permissionid)

@@ -95,7 +95,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="eps-cp-approve-pr" id="myForm">
+                <form method="POST" action="{{ route('CPApprovePR.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

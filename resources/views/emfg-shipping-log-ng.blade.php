@@ -96,7 +96,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="emfg-shipping-log-ng" id="myForm">
+                <form method="POST" action="{{ route('ShippingLogNG.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

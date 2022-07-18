@@ -175,7 +175,7 @@
                         {{-- ========================================================= --}}
                         <div class="row">
                             <div class="col-xl-12 col-lg-12">
-                                <div class="card shadow mb-4">
+                                <div class="card shadow mb-4" style="overflow-x: auto;">
                                     {{-- ========================================================= --}}
                                     {{-- TABLE --}}
                                     {{-- ========================================================= --}}
@@ -230,7 +230,7 @@
                                                     ?>
 
                                                     <tr>
-                                                    <td>{{ $permissionname }}</td>
+                                                    <td  style="position: sticky;">{{ $permissionname }}</td>
                                                     <?php
                                                     $j = 0;
                                                     ?>

@@ -96,7 +96,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="eps-pr-po-planner" id="myForm">
+                <form method="POST" action="{{ route('PRPOPlanner.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

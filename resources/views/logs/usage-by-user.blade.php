@@ -54,25 +54,6 @@
         });
 
         // ================================================================
-        // DATE HANDLE
-        // ================================================================
-        // function dateStartHandler() {
-        //     const dateStart = $('#dateStart').val();
-        //     console.log(dateStart);
-        //     $('#dateStart').val(dateStart);
-        // }
-
-
-        // ================================================================
-        // DATE HANDLE
-        // ================================================================
-        // function dateEndHandler() {
-        //     const dateEnd = $('#dateEnd').val();
-        //     console.log(dateStart);
-        //     $('#dateEnd').val(dateEnd);
-        // }
-
-        // ================================================================
         // CLEAR FORM
         // ================================================================
         function clearForm() {
@@ -114,14 +95,14 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="eps-bg-checking" id="myForm">
+                <form method="POST" action="{{ route('UserLog.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 EPS BG Checking 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 Log Usage by User 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -173,18 +154,12 @@
                                                     <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "100") echo "selected"; ?> value="100" >100</option>
                                                     <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "1000") echo "selected"; ?> value="1000">1000</option>
                                                 </select>
-                                                &nbsp;&nbsp;
-                                                <label for="docType">Doc Type: </label>
-                                                <select class="form-control" id="docType" name="docType">
-                                                    <option <?php if(isset($docTypeRtv) and $docTypeRtv == "1") echo "selected"; ?> value="1">EXPENSE</option>
-                                                    <option <?php if(isset($docTypeRtv) and $docTypeRtv == "2") echo "selected"; ?> value="2">INVESTMENT</option>
-                                                </select>
 
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">Search</button>
-                                            <button type="button" class="btn btn-secondary" onclick="clearForm();">Clear</button>
+                                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
                                         </div>
                                     </div>
                                 </div>
@@ -206,6 +181,7 @@
                                     {{-- ========================================================= --}}
                                     {{-- CARD BODY --}}
                                     {{-- ========================================================= --}}
+                                    <div class="card-body">
                                         <div class="table-responsive">
                                             {{-- ========================================================= --}}
                                             {{-- TABLE --}}
@@ -230,24 +206,9 @@
                                                     <?php if (isset($result)) {
                                                         foreach ($result as $keyResult => $row) { ?>
                                                             <tr>
-                                                                <?php foreach ($row as $keyRow => $data) {
-                                                                    if($keyRow == 'PRNUM'){
-                                                                    ?>
-                                                                    <td><a href="wiss-sa-eps-report-budget-checking-pr-detail?docNum={{$row[$keyRow]}}" target="_blank">{{$row[$keyRow]}}</a></td>
-                                                                <?php }else if($keyRow == 'EXPENSEID'){
-                                                                    ?>
-                                                                    <td><a href="wiss_sa_eps_report_budget_checking_expense?docNum={{$row[$keyRow]}}" target="_blank">{{$row[$keyRow]}}</a></td>
-                                                                    <?php
-                                                                    }else if($keyRow == 'INVESTMENTID'){
-                                                                    ?>
-                                                                    <td><a href="wiss_sa_eps_report_budget_checking_investment?docNum={{$row[$keyRow]}}" target="_blank">{{$row[$keyRow]}}</a></td>
-                                                                    <?php
-                                                                    }else{ ?>
+                                                                <?php foreach ($row as $keyRow => $data) { ?>
                                                                     <td>{{$row[$keyRow]}}</td>
-                                                                    <?php
-                                                                    }
-                                                                }
-                                                                ?>
+                                                                <?php } ?>
                                                             </tr>
                                                     <?php }
                                                     } ?>
@@ -310,6 +271,3 @@
         @include('theme.footer')
 </body>
 </html>
-<script>
-
-</script>

@@ -83,7 +83,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="wiss-sa-ibg-update-inf-schedule" id="myForm">
+                <form method="POST" action="{{ route('AddIBGInterface.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

@@ -6,6 +6,7 @@ use App\Models\Permission;
 use App\Models\User;
 use App\Models\UserPermission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserPermissionController extends Controller
 {
@@ -188,4 +189,16 @@ class UserPermissionController extends Controller
         ->where('email','=',$request->email)
         ->delete();
     }
+
+    // ====================================================================================================
+    //   14/07/2022 Change to use AuthenticationAPIController    (Temp because table not keep view name)
+    // ====================================================================================================
+    // public function getAuthenticatePOInterfaceAPI(Request $request)
+    // {
+    //     if(\App\Models\User::getPermission($request->permissionName, Auth::user()->email))
+    //         return view('interface-sap-po');
+    //     else
+    //         return abort(403);
+    // }
+
 }

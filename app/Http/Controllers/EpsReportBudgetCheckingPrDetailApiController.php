@@ -36,7 +36,6 @@ class EpsReportBudgetCheckingPrDetailApiController extends Controller
         // ==========================================================================
         $api = '';
 
-
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
@@ -44,14 +43,15 @@ class EpsReportBudgetCheckingPrDetailApiController extends Controller
             // GET DATA
             // ======================================================================
 
-            $docNum = $req->input('docNum')??'';
+            $docNum = $req->docNum??'';
             $queryStr = "doc_num=$docNum";
             // ======================================================================
             // CALL API
             // ======================================================================
             $url = $this->ENDPOINT . $api ."/". $queryStr;
             $response = Http::get($url);
-            error_log($url);
+            // error_log($url);
+            // dd($url);
             // ======================================================================
             // IF CALL SUCCCESS
             // ======================================================================

@@ -94,7 +94,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="eps-bg-checking" id="myForm">
+                <form method="POST" action="{{ route('BGChecking.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
@@ -214,14 +214,14 @@
                                                                 <?php foreach ($row as $keyRow => $data) {
                                                                     if($keyRow == 'PRNUM'){
                                                                     ?>
-                                                                    <td><a href="wiss-sa-eps-report-budget-checking-pr-detail?docNum={{$row[$keyRow]}}" target="_blank">{{$row[$keyRow]}}</a></td>
+                                                                    <td><a href="{{ route('PRDetail',$row[$keyRow]) }}" target="_blank">{{$row[$keyRow]}}</a></td>
                                                                 <?php }else if($keyRow == 'EXPENSEID'){
                                                                     ?>
-                                                                    <td><a href="wiss_sa_eps_report_budget_checking_expense?docNum={{$row[$keyRow]}}" target="_blank">{{$row[$keyRow]}}</a></td>
+                                                                    <td><a href="{{ route('ExpenseDetail',$row[$keyRow]) }}" target="_blank">{{$row[$keyRow]}}</a></td>
                                                                     <?php
                                                                     }else if($keyRow == 'INVESTMENTID'){
                                                                     ?>
-                                                                    <td><a href="wiss_sa_eps_report_budget_checking_investment?docNum={{$row[$keyRow]}}" target="_blank">{{$row[$keyRow]}}</a></td>
+                                                                    <td><a href="{{ route('InvesetmentDetail',$row[$keyRow]) }}" target="_blank">{{$row[$keyRow]}}</a></td>
                                                                     <?php
                                                                     }else{ ?>
                                                                     <td>{{$row[$keyRow]}}</td>

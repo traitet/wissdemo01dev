@@ -44,7 +44,7 @@ class EpsReportBudgetCheckingInvestmentDetailApiController extends Controller
             // GET DATA
             // ======================================================================
 
-            $docNum = $req->input('docNum')??'';
+            $docNum = $req->docNum??'';
             $period = 'SAP';
             $queryStr = "doc_num=$docNum&period=$period";
             // ======================================================================

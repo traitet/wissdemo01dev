@@ -95,7 +95,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="emfg-shipping-log-event" id="myForm">
+                <form method="POST" action="{{ route('ShippingLogEvent.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

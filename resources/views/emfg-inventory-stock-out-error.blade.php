@@ -95,7 +95,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="emfg-inventory-stock-out-error" id="myForm">
+                <form method="POST" action="{{ route('InventoryStockOut.show') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
