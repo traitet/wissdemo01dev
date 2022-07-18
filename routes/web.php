@@ -227,7 +227,7 @@ Route::post('eps-cp-approve-pr',[EpsCpApprovePrApiController::class,'getData'])-
 //                                                     ROUTE GET/POST "E-Drawing"
 // ========================================================================================================================
 Route::get('edrawing-check-password/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateEdrawingPasswordAPI'])->name("Password");
-Route::post('edrawing-check-password',[EdrawingCheckPasswordApiController::class,'getData'])->name('EdrawingPassword.show');
+Route::post('edrawing-check-password/{perName}',[EdrawingCheckPasswordApiController::class,'getData'])->name('EdrawingPassword.show');
 
 
 

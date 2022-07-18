@@ -114,7 +114,17 @@ class UserPermission extends Model
          }
          return $permissionName;
      }
+     // Get permission ID from Name
+     public static function getPermissionID($perName)
+     {
+         $permissionID = Permission::where('name', '=', $perName)
+         ->get(['id']);
 
+         foreach($permissionID as $key) {
+              return $key->id;
+         }
+         return $permissionID;
+     }
     // Get user permission active by email
     public static function getPermissionActive($email, $permissionid)
     {

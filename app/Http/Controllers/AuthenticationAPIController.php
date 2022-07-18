@@ -131,10 +131,13 @@ class AuthenticationAPIController extends Controller
     // ========================================================================================================================
     public function getAuthenticateEdrawingPasswordAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('edrawing-check-password');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('edrawing-check-password',compact('permissionName'));
+        }else{
             return abort(403);
+        }
+
     }
     // ========================================================================================================================
     //                                                      ROUTE GET/POST "IBG"

@@ -22,6 +22,15 @@ class Log extends Model
 
         ]);
 
-        return true;
+        // $request->validate([
+        //     'email' => 'required',
+        //     'permission_id' => 'required',
+        //     'message' => 'required',
+        // ]);
+
+
+        //     log::create($request->all());
+
+
     }
 }
