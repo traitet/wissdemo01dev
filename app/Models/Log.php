@@ -18,7 +18,7 @@ class Log extends Model
         log::insert([
             'emp_id' => $empid,
             'permission_id' => $permissionid,
-            'message' => $message
+            'message' => $message,
 
         ]);
 

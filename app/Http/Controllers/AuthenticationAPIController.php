@@ -24,7 +24,7 @@ class AuthenticationAPIController extends Controller
     public function getAuthenticateRCInterfaceAPI(Request $request)
     {
         if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('interface-sap-rc');
+            return view('interface-sap-rec');
         else
             return abort(403);
     }

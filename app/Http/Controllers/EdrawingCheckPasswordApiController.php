@@ -78,7 +78,7 @@ class EdrawingCheckPasswordApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
-                     Log::insertLog(Auth::user()->id, $permissionID,' Search user Completed');
+                     Log::insertLog(Auth::user()->id, $permissionID,'Search user Completed');
                     return view('edrawing-check-password', compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','permissionName'));
                 }else{
                     //need to return no data msg

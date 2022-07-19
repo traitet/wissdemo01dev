@@ -18,8 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('emp_id');
             $table->unsignedBigInteger('permission_id');
             $table->string('message');
-            $table->string('type');
-            $table->string('status');
+            $table->string('type')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->foreign('emp_id')
