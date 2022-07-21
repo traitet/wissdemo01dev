@@ -282,10 +282,10 @@ Route::post('wiss-atac-emfg-create-pallet-data-from-shopping',[EmfgCreatePalletD
 //                                                    ROUTE GET/POST "Logs"
 // ========================================================================================================================
 Route::get('usage-by-user/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateLogUserAPI'])->name("Log-User");
-Route::post('usage-by-user',[LogController::class,'index'])->name('UserLog.show');
+Route::post('usage-by-user',[LogController::class,'getLogUser'])->name('UserLog.index');
 
 Route::get('usage-by-function/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateLogFunctionAPI'])->name("Log-Function");
-Route::post('usage-by-function',[LogController::class,'index'])->name('FunctionLog.show');
+Route::post('usage-by-function',[LogController::class,'getLogFunction'])->name('FunctionLog.index');
 
 
 // ==========================================================================

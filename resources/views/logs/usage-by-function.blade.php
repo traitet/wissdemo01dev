@@ -95,14 +95,14 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('UserLog.index') }}" id="myForm">
+                <form method="POST" action="{{ route('FunctionLog.index') }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 Log Usage by User 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 Log Usage by Function 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -117,14 +117,21 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <div class="form-group form-inline">
-                                                <label for="docNum">User: </label>
-                                                <input class="form-control" type="text" class="" id="docNum" name="docNum"
-                                                value="<?php
-                                                    if (isset($docNumRtv)) {
-                                                        echo $docNumRtv;
+                                                <label for="docNum">Function: </label>
+                                                <select class="form-control" id="permissionID" name="permissionID">
+                                                    <?php
+                                                    $permissionIDs = \App\Models\log::getPermissionID();
+                                                    foreach($permissionIDs as $key){
+                                                        $selected = '';
+                                                        if(isset($permissionID) and $key->id == $permissionID) { $selected ="selected"; }
+
+                                                    ?>
+                                                            <option {{ $selected }}  value='{{$key->id}}'>{{$key->name}}</option>
+                                                    <?php
                                                     }
-                                                ?>"
-                                                >&nbsp;&nbsp;
+                                                    ?>
+                                                    </select>
+                                                &nbsp;&nbsp;
                                                 <label for="dateStart">Date Start: </label>
                                                 <input class="form-control" type="date" class="" id="dateStart" name="dateStart"
                                                 value="<?php

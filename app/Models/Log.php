@@ -15,22 +15,16 @@ class Log extends Model
 
     public static function insertLog($empid, $permissionid, $message)
     {
-        log::insert([
-            'emp_id' => $empid,
-            'permission_id' => $permissionid,
-            'message' => $message,
+        $Log = new log;
+        $Log->emp_id = $empid;
+        $Log->permission_id = $permissionid;
+        $Log->message = $message;
+        $Log->save();
+    }
 
-        ]);
-
-        // $request->validate([
-        //     'email' => 'required',
-        //     'permission_id' => 'required',
-        //     'message' => 'required',
-        // ]);
-
-
-        //     log::create($request->all());
-
-
+    public static function getPermissionID()
+    {
+        $permissionIDs = Permission::all();
+        return $permissionIDs;
     }
 }

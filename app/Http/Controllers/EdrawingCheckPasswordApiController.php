@@ -65,7 +65,7 @@ class EdrawingCheckPasswordApiController extends Controller
             $maxRecord = $req->input('maxRecord')??'10';
             $docNum = $req->input('docNum')??'';
             $queryStr = "doc_num=$docNum&start_date=$dateStart&end_date=$dateEnd&max_record=$maxRecord";
-
+            $optionValue = $req->input('docNum')??'empty';
             // ======================================================================
             // CALL API
             // ======================================================================
@@ -78,13 +78,14 @@ class EdrawingCheckPasswordApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
-                     Log::insertLog(Auth::user()->id, $permissionID,'Search user Completed');
+                     Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
                     return view('edrawing-check-password', compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','permissionName'));
                 }else{
                     //need to return no data msg
                     $keyArray = [];
                 }
             }
-            return view('edrawing-check-password',compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv'));
+            Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
+            return view('edrawing-check-password',compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','permissionName'));
     }
 }

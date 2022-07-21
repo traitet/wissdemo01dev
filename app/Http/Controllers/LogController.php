@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Log;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class LogController extends Controller
@@ -12,31 +13,74 @@ class LogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function getLogUser(Request $request)
     {
-         // ======================================================================
-        // GET DATA
+        $result = null;
+        $docNum = null;
         // ======================================================================
-            $dateStart = str_replace('-','',$request->input('dateStart')??'20220101');
-            $dateEnd = str_replace('-','',$request->input('dateEnd')??'20220101');
-            $maxRecord = $request->input('maxRecord')??'10';
-            $docNum = $request->input('docNum')??'';
+        // GET DATA AND WHERE CONDITION
+        // ======================================================================
+        $dateStart = str_replace('-', '', $request->input('dateStart') ?? '20220101');
+        $dateEnd = str_replace('-', '', $request->input('dateEnd') ?? '20220101');
+        $maxRecord = $request->input('maxRecord') ?? '10';
+        $docNum = $request->input('docNum') ?? '';
 
-        $result = log::join('permissions', 'logs.permission_id', '=', 'permissions.id')
-            ->orderBy('logs.id', 'asc')
-            ->get(['logs.*', 'permissions.name as permission_name']);
-
+        if ($docNum != "") {
+            $result = log::join('permissions', 'logs.permission_id', '=', 'permissions.id')
+                ->join('users', 'logs.emp_id', '=', 'users.id')
+                ->join('navigation_items', 'permissions.navigation_item_id', '=', 'navigation_items.id')
+                ->where('users.first_name', 'like', '%' . $docNum . '%')
+                ->whereDate('logs.created_at', '>=', $dateStart)
+                ->whereDate('logs.created_at', '<=', $dateEnd)
+                ->orderBy('logs.created_at', 'desc')
+                ->take($maxRecord)
+                ->get(['logs.*', 'navigation_items.name', 'users.first_name', 'permissions.name as permission_name']);
+        }
 
         // ======================================================================
         // SET DATA RETURN TO VIEW
         // ======================================================================
-            $docNumRtv = $request->input('docNum');
-            $dateStartRtv = $request->input('dateStart');
-            $dateEndRtv = $request->input('dateEnd');
-            $maxRecordRtv = $request->input('maxRecord');
+        $docNumRtv = $request->input('docNum');
+        $dateStartRtv = $request->input('dateStart');
+        $dateEndRtv = $request->input('dateEnd');
+        $maxRecordRtv = $request->input('maxRecord');
 
+        return view('logs.usage-by-user', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv'));
+    }
 
-        return view('logs.usage-by-user', compact('result','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv'));
+    public function getLogFunction(Request $request)
+    {
+        $result = null;
+        $permissionID = null;
+        // ======================================================================
+        // GET DATA AND WHERE CONDITION
+        // ======================================================================
+        $dateStart = str_replace('-', '', $request->input('dateStart') ?? '20220101');
+        $dateEnd = str_replace('-', '', $request->input('dateEnd') ?? '20220101');
+        $maxRecord = $request->input('maxRecord') ?? '10';
+        $permissionID = $request->input('permissionID') ?? '';
+
+        if ($permissionID != "") {
+            $result = log::join('permissions', 'logs.permission_id', '=', 'permissions.id')
+                ->join('users', 'logs.emp_id', '=', 'users.id')
+                ->join('navigation_items', 'permissions.navigation_item_id', '=', 'navigation_items.id')
+                ->where('permissions.id', '=', $permissionID)
+                ->whereDate('logs.created_at', '>=', $dateStart)
+                ->whereDate('logs.created_at', '<=', $dateEnd)
+                ->orderBy('logs.created_at', 'desc')
+                ->take($maxRecord)
+                ->get(['logs.*', 'navigation_items.name', 'users.first_name', 'permissions.name as permission_name']);
+        }
+
+        // ======================================================================
+        // SET DATA RETURN TO VIEW
+        // ======================================================================
+        $docNumRtv = $request->input('docNum');
+        $dateStartRtv = $request->input('dateStart');
+        $dateEndRtv = $request->input('dateEnd');
+        $permissionID = $request->input('permissionID');
+
+        return view('logs.usage-by-function', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'permissionID'));
     }
 
     /**
