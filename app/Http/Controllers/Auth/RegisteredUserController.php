@@ -35,16 +35,26 @@ class RegisteredUserController extends Controller
     {
 
         $request->validate([
+            'location' => ['required', 'string', 'max:255'],
+            'employee_id' => ['required', 'string', 'max:10'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'section' => ['max:255'],
+            'department' => ['max:255'],
+            'division' => ['max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+            'location' => strtoupper($request->location),
+            'employee_id' => strtoupper($request->employee_id),
+            'first_name' => strtoupper($request->first_name),
+            'last_name' => strtoupper($request->last_name),
             'email' => $request->email,
+            'section' => strtoupper($request->section),
+            'department' => strtoupper($request->department),
+            'division' => strtoupper($request->division),
             'password' => Hash::make($request->password),
         ]);
 

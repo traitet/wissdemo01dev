@@ -15,13 +15,13 @@ use Illuminate\Validation\Rule;
 // ==========================================================================
 // CLASS DECLARATION
 // ==========================================================================
-class EmfgShippingLogEventApiController extends Controller
+class IfinRevertDocApiController extends Controller
 {
 
 // ==========================================================================
 // DECLARE END POINT
 // ==========================================================================
-    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/emfg_shipping_log_event_obj';
+    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_ifin_revert_doc';
 
 // ==========================================================================
 // GET DATA
@@ -29,9 +29,7 @@ class EmfgShippingLogEventApiController extends Controller
     function getData(Request $req)
     {
         $this->validate($req, [
-            'dateStart' => 'date_format:Y-m-d||nullable',
-            'dateEnd' => 'date_format:Y-m-d||nullable',
-            'docNum' => 'string||nullable'
+            'docNum' => 'string||nullable',
         ]);
         // ==========================================================================
         // API NAME
@@ -42,20 +40,18 @@ class EmfgShippingLogEventApiController extends Controller
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
-             // ======================================================================
+            // ======================================================================
             // GET DATA
             // ======================================================================
-            $dateStart = str_replace('-','',$req->input('dateStart')??'20220101');
-            $dateEnd = str_replace('-','',$req->input('dateEnd')??'20220101');
-            $maxRecord = $req->input('maxRecord')??'10';
-            $docNum = $req->input('docNum')??'';
-            $queryStr = "doc_num=$docNum&start_date=$dateStart&end_date=$dateEnd&max_record=$maxRecord";
+            $doc_num = $req->input('docNum')??'';
+            $queryStr = "doc_num=$doc_num";
 
             // ======================================================================
             // CALL API
             // ======================================================================
             $url = $this->ENDPOINT . $api ."/". $queryStr;
             $response = Http::get($url);
+            // error_log($url);
             // ======================================================================
             // IF CALL SUCCCESS
             // ======================================================================
@@ -63,12 +59,12 @@ class EmfgShippingLogEventApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
-                    return view('emfg-shipping-log-event', compact('result', 'keyArray'));
+                    return view('wiss-sa-ifin-revert-doc', compact('result', 'keyArray'));
                 }else{
                     //need to return no data msg
                     $keyArray = [];
                 }
             }
-            return view('emfg-shipping-log-event');
+            return view('wiss-sa-ifin-revert-doc');
     }
 }

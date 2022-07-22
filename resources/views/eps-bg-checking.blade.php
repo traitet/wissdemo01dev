@@ -156,8 +156,8 @@
                                                 &nbsp;&nbsp;
                                                 <label for="docType">Doc Type: </label>
                                                 <select class="form-control" id="docType" name="docType">
-                                                    <option <?php if(isset($docTypeRtv) and $docTypeRtv == "1") echo "selected"; ?> value="1">EXPENSE</option>
-                                                    <option <?php if(isset($docTypeRtv) and $docTypeRtv == "2") echo "selected"; ?> value="2">INVESTMENT</option>
+                                                    <option <?php if(isset($docTypeRtv) and $docTypeRtv == "1") echo "selected"; ?> value="1">INVESTMENT</option>
+                                                    <option <?php if(isset($docTypeRtv) and $docTypeRtv == "2") echo "selected"; ?> value="2">EXPENSE</option>
                                                 </select>
 
                                             </div>

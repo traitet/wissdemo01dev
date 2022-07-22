@@ -28,14 +28,39 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
         $this->validate($request,[
+            'location' => 'required|max:255',
+            'employee_id' => 'required|max:10',
             'first_name' => 'required|max:255',
             'last_name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email,'.$user->id
+            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+            'section' => 'max:255',
+            'department' => 'max:255',
+            'division' => 'max:255',
         ]);
-        $input = $request->only('first_name','last_name','email');
-        $user->update($input);
 
-        //return back();
+        $input = $request->only('locatioin',
+        'employee_id',
+        'first_name',
+        'last_name',
+        'email',
+        'section',
+        'department',
+        'division');
+
+        // $user->update($input);
+        $user->update([
+            'locatioin' => strtoupper($request->location),
+            'employee_id' => strtoupper($request->employee_id),
+            'first_name' => strtoupper($request->first_name),
+            'last_name' => strtoupper($request->last_name),
+            'email' => $request->email,
+            'section' => strtoupper($request->section),
+            'department' => strtoupper($request->department),
+            'division' => strtoupper($request->division)
+
+        ]);
+
+        // return back();
         return redirect(RouteServiceProvider::HOME);
     }
 
