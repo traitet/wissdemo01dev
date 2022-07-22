@@ -255,4 +255,15 @@ class AuthenticationAPIController extends Controller
         else
             return abort(403);
     }
+
+    // ========================================================================================================================
+    //                                                    ROUTE GET/POST "Deploy"
+    // ========================================================================================================================
+    public function getAuthenticateDeployAPI (Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email))
+            return view('deploy-code');
+        else
+            return abort(403);
+    }
 }

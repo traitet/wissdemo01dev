@@ -77,11 +77,7 @@
                                                     $permissionId =  $permissionMenu->id;
                                                     $permissionName = \App\Models\UserPermission::getPermissionName($permissionId);
                                                     $routename = $permissionName;
-                                                    if ($routename == 'deploy-code'){
-                                                ?>
-                               <a class="collapse-item" href="deploy-code">deploy-code</a>
-                               <?php
-                                                    }else if ($navigationGroupName == 'Infrastructure Monitor'){
+                                                    if ($navigationGroupName == 'Infrastructure Monitor'){
                                                     ?>
                                 <a class="collapse-item" target="_blank" href="{{ route($routename) }}">{{ $routename }}</a>
                                                     <?php

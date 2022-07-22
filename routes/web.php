@@ -294,7 +294,14 @@ Route::post('usage-by-function',[LogController::class,'getLogFunction'])->name('
 Route::view('main','main');
 Route::post('main',[MainController::class,'getData']);
 
+// ========================================================================================================================
+//                                                    ROUTE GET/POST "Deploy"
+// ========================================================================================================================
+Route::get('deploy-code/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateDeployAPI'])->name("deploy-code");
 
+// Route::get('/deploy-code', function () {
+//     return view('deploy-code');
+// });
 
 // ==========================================================================
 // ROUTE VIEW
@@ -330,10 +337,6 @@ Route::get('/basic-report', function () {
 
 Route::get('/basic-report-api', function () {
     return view('basic-report-api');
-});
-
-Route::get('/deploy-code', function () {
-    return view('deploy-code');
 });
 
 
