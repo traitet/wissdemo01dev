@@ -2,8 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 {{-- ============================================================================================================================== --}}
-{{-- HTML HEAD  --}}
+{{-- HTML HEAD --}}
 {{-- ============================================================================================================================== --}}
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,12 +12,14 @@
     @include('theme.header')
     <style>
         @import url(//fonts.googleapis.com/css?family=Lato:700);
+
         body {
             margin: 0;
             font-family: 'Lato', sans-serif;
             /* text-align: center; */
             color: #999;
         }
+
         .container {
             width: 100%;
             height: 20%;
@@ -26,31 +29,32 @@
             margin-left: -150px;
             margin-top: -100px; */
         }
+
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 100%;
         }
+
         td,
         th {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 8px;
         }
+
         tr:nth-child(even) {
             background-color: #dddddd;
         }
-
     </style>
     <script>
-
         // ================================================================
         // CUSTOM DATATABLE
         // ================================================================
         $(document).ready(function() {
             // console.log('test')
             $('#table_id').DataTable({
-                dom:  '<lf<t>ip>'
+                dom: '<lf<t>ip>'
             });
         });
 
@@ -63,9 +67,9 @@
             var month = (now.getMonth() + 1);
             var day = now.getDate();
             if (month < 10)
-            month = "0" + month;
+                month = "0" + month;
             if (day < 10)
-            day = "0" + day;
+                day = "0" + day;
             var today = now.getFullYear() + '-' + month + '-' + day;
             $('#dateStart').val(today);
             $('#dateEnd').val(today);
@@ -85,8 +89,9 @@
 </head>
 
 {{-- ============================================================================================================================== --}}
-{{-- HTML BODY  --}}
+{{-- HTML BODY --}}
 {{-- ============================================================================================================================== --}}
+
 <body id="page-top">
     <div id="wrapper">
         @include('theme.sidebar')
@@ -106,7 +111,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('navigationitems.update',$navigationItem->id) }}">
+                <form method="POST" action="{{ route('navigationitems.update', $navigationItem->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="container-fluid">
@@ -121,45 +126,62 @@
                         {{-- SERCH PARAMTER --}}
                         {{-- ========================================================= --}}
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <strong>Name:</strong>
-                                    <input type="text" name="name" value="{{ $navigationItem->name }}" class="form-control" placeholder="Name">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <strong>Navigation Group ID:</strong>
-                                    <select class="form-control" name="navigation_group_id">
-                                    <?php
+                            {{-- ========================================================= --}}
+                            {{-- BASIC SEARCH --}}
+                            {{-- ========================================================= --}}
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Name:</strong>
+                                                    <input type="text" name="name"
+                                                        value="{{ $navigationItem->name }}" class="form-control"
+                                                        placeholder="Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Navigation Group ID:</strong>
+                                                    <select class="form-control" name="navigation_group_id">
+                                                        <?php
                                     foreach($navigationGroups as $key){
                                         $selected = '';
                                         if($key->id == $navigationItem->navigation_group_id){ $selected ="selected"; }
                                     ?>
-                                            <option {{ $selected }}  value='{{$key->id}}'>{{$key->name}}</option>
-                                    <?php
+                                                        <option {{ $selected }} value='{{ $key->id }}'>
+                                                            {{ $key->name }}</option>
+                                                        <?php
                                     }
                                     ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <strong>Sequence:</strong>
-                                    <input type="text" name="sequence" value="{{ $navigationItem->sequence }}" class="form-control" placeholder="Sequence">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <strong>Active:</strong>
-                                    <select class="form-control" name="active">
-                                        <option <?php if($navigationItem->active == "1") echo "selected"; ?> value="1" >Active</option>
-                                        <option <?php if($navigationItem->active == "0") echo "selected"; ?> value="0" >Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Sequence:</strong>
+                                                    <input type="text" name="sequence"
+                                                        value="{{ $navigationItem->sequence }}" class="form-control"
+                                                        placeholder="Sequence">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Active:</strong>
+                                                    <select class="form-control" name="active">
+                                                        <option <?php if ($navigationItem->active == '1') {
+                                                            echo 'selected';
+                                                        } ?> value="1">Active</option>
+                                                        <option <?php if ($navigationItem->active == '0') {
+                                                            echo 'selected';
+                                                        } ?> value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                         </div>
 
@@ -182,18 +204,19 @@
         </div>
 
 
-{{-- =============================================================== --}}
-{{-- SCROLL TO TOP BUTTON --}}
-{{-- =============================================================== --}}
+        {{-- =============================================================== --}}
+        {{-- SCROLL TO TOP BUTTON --}}
+        {{-- =============================================================== --}}
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
 
 
-{{-- =============================================================== --}}
-{{-- LOGOUT MODAL --}}
-{{-- =============================================================== --}}
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{-- =============================================================== --}}
+        {{-- LOGOUT MODAL --}}
+        {{-- =============================================================== --}}
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -211,10 +234,10 @@
             </div>
         </div>
 
-{{-- =============================================================== --}}
-{{-- INCLUDE FOOTER THEME --}}
-{{-- =============================================================== --}}
+        {{-- =============================================================== --}}
+        {{-- INCLUDE FOOTER THEME --}}
+        {{-- =============================================================== --}}
         @include('theme.footer')
 </body>
-</html>
 
+</html>
