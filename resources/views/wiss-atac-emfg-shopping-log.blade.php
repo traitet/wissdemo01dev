@@ -96,7 +96,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('ShoppingLog.show') }}" id="myForm">
+                <form method="POST" action="{{ route('ShoppingLog.show', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

@@ -16,24 +16,31 @@ class AuthenticationAPIController extends Controller
     // ========================================================================================================================
     public function getAuthenticatePOInterfaceAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('interface-sap-po');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('interface-sap-po',compact('permissionName'));
+        }
+        else{
             return abort(403);
+        }
     }
     public function getAuthenticateRCInterfaceAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('interface-sap-rec');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('interface-sap-rec',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateINVInterfaceAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('interface-sap-inv');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('interface-sap-inv',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
 
     // ======================================================================================================================
@@ -41,90 +48,114 @@ class AuthenticationAPIController extends Controller
     // ======================================================================================================================
     public function getAuthenticateShippingOKAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('emfg-shipping-log-ok');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('emfg-shipping-log-ok',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateShippingNGAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('emfg-shipping-log-ng');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('emfg-shipping-log-ng',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateShippingEventAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('emfg-shipping-log-event');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('emfg-shipping-log-event',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateShippingStatusAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('emfg-shipping-status');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('emfg-shipping-status',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateStockOutAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('emfg-inventory-stock-out-error');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('emfg-inventory-stock-out-error',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateShoppingLogAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-atac-emfg-shopping-log');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-shopping-log',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     // ========================================================================================================================
     //                                                     ROUTE GET/POST "EPS"
     // ========================================================================================================================
     public function getAuthenticatePROutstandingAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('eps-pr-outstanding');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('eps-pr-outstanding',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticatePRPOPlannerAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('eps-pr-po-planner');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('eps-pr-po-planner',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateBGCheckingAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('eps-bg-checking');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('eps-bg-checking',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticatePRErrorAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('eps-pr-error');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('eps-pr-error',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticatePRProductionErrorAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('eps-pr-production-error');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('eps-pr-production-error',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateCPApproveAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('eps-cp-approve-pr');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('eps-cp-approve-pr',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     // ========================================================================================================================
     //                                                     ROUTE GET/POST "E-Drawing"
@@ -144,99 +175,123 @@ class AuthenticationAPIController extends Controller
     // ========================================================================================================================
     public function getAuthenticateAddIBGDeptAPI  (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-sa-add-ibg-dept');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-add-ibg-dept',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateAddIBGUserAPI  (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-sa-add-ibg-user');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-add-ibg-user',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateAddIBGInterfaceAPI  (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-sa-ibg-update-inf-schedule');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-ibg-update-inf-schedule',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     // ========================================================================================================================
     //                                                      ROUTE GET/POST "EPS"
     // ========================================================================================================================
     public function getAuthenticateAddInvestmentAPI   (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-sa-add-eps-investment');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-add-eps-investment',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     // ========================================================================================================================
     //                                                      ROUTE GET/POST "IFIN"
     // ========================================================================================================================
     public function getAuthenticateRevertDocAPI    (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-sa-ifin-revert-doc');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-ifin-revert-doc',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateRegisterAdminAPI    (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-sa-ifin-register-admin');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-ifin-register-admin',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     // ========================================================================================================================
     //                                                    ROUTE GET/POST "SA E-MFG"
     // ========================================================================================================================
     public function getAuthenticateAddShelfSAAPI(Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-sa-emfg-add-shelf');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-emfg-add-shelf',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     // ========================================================================================================================
     //                                                 ROUTE GET/POST "ATAC E-MFG"
     // ========================================================================================================================
     public function getAuthenticateAddModelATACAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-atac-emfg-add-model');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-add-model',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateAddShelfATACAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-atac-emfg-add-shelf');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-add-shelf',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateRevertShoppingATACAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-atac-emfg-revert-shopping-status');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-revert-shopping-status',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateCompletePklATACAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-atac-emfg-complete-pkl');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-complete-pkl',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateCompletePalletATACPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('wiss-atac-emfg-create-pallet-data-from-shopping');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-create-pallet-data-from-shopping',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     // ========================================================================================================================
     //                                                    ROUTE GET/POST "Log"

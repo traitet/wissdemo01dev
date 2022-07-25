@@ -102,7 +102,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('EmfgAddModelATAC.show') }}" id="myForm">
+                <form method="POST" action="{{ route('EmfgAddModelATAC.show', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

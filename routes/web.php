@@ -178,37 +178,37 @@ Route::post('basic-report-api',[BasicReportApiController::class,'getData']);
 // Route::view('interface-sap-po','interface-sap-po');
 // Route::get("interface-sap-po", function(){ return view("interface-sap-po");})->name("PO-Interface");
 Route::get('interface-sap-po/{permissionName}',[AuthenticationAPIController::class,'getAuthenticatePOInterfaceAPI'])->name("PO-Interface");
-Route::post('interface-sap-po',[InterfaceSapPoApiController::class,'getData'])->name('InterfaceSAPPO.show');
+Route::post('interface-sap-po/{permissionAuth}',[InterfaceSapPoApiController::class,'getData'])->name('InterfaceSAPPO.show');
 Route::get('interface-sap-rec/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateRCInterfaceAPI'])->name("RC-Interface");
-Route::post('interface-sap-rec',[InterfaceSapRecApiController::class,'getData'])->name('InterfaceSAPREC.show');
+Route::post('interface-sap-rec/{permissionAuth}',[InterfaceSapRecApiController::class,'getData'])->name('InterfaceSAPREC.show');
 Route::get('interface-sap-inv/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateINVInterfaceAPI'])->name("INV-Interface");
-Route::post('interface-sap-inv',[InterfaceSapInvApiController::class,'getData'])->name('InterfaceSAPINV.show');
+Route::post('interface-sap-inv/{permissionAuth}',[InterfaceSapInvApiController::class,'getData'])->name('InterfaceSAPINV.show');
 
 // ========================================================================================================================
 //                                                     ROUTE GET/POST "E-MFG"
 // ========================================================================================================================
 Route::get('emfg-shipping-log-ok/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateShippingOKAPI'])->name("Shipping-OK-SA");
-Route::post('emfg-shipping-log-ok',[EmfgShippingLogOkApiController::class,'getData'])->name('ShippingLogOK.show');
+Route::post('emfg-shipping-log-ok/{permissionAuth}',[EmfgShippingLogOkApiController::class,'getData'])->name('ShippingLogOK.show');
 Route::get('emfg-shipping-log-ng/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateShippingNGAPI'])->name("Shipping-NG-SA");
-Route::post('emfg-shipping-log-ng',[EmfgShippingLogNgApiController::class,'getData'])->name('ShippingLogNG.show');
+Route::post('emfg-shipping-log-ng/{permissionAuth}',[EmfgShippingLogNgApiController::class,'getData'])->name('ShippingLogNG.show');
 Route::get('emfg-shipping-log-event/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateShippingEventAPI'])->name("Shipping-Event-Log-SA");
-Route::post('emfg-shipping-log-event',[EmfgShippingLogEventApiController::class,'getData'])->name('ShippingLogEvent.show');
+Route::post('emfg-shipping-log-event/{permissionAuth}',[EmfgShippingLogEventApiController::class,'getData'])->name('ShippingLogEvent.show');
 Route::get('emfg-shipping-status/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateShippingStatusAPI'])->name("Shipping-Status-SA");
-Route::post('emfg-shipping-status',[EmfgShippingStatusApiController::class,'getData'])->name('ShippingStatus.show');
+Route::post('emfg-shipping-status/{permissionAuth}',[EmfgShippingStatusApiController::class,'getData'])->name('ShippingStatus.show');
 Route::get('emfg-inventory-stock-out-error/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateStockOutAPI'])->name("Stock-Out-Error-SA");
-Route::post('emfg-inventory-stock-out-error',[EmfgInventoryStockOutErrorApiController::class,'getData'])->name('InventoryStockOut.show');
+Route::post('emfg-inventory-stock-out-error/{permissionAuth}',[EmfgInventoryStockOutErrorApiController::class,'getData'])->name('InventoryStockOut.show');
 Route::get('wiss-atac-emfg-shopping-log/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateShoppingLogAPI'])->name("Shopping-Log-ATAC");
-Route::post('wiss-atac-emfg-shopping-log',[EmfgAtacShoppingLogApiController::class,'getData'])->name('ShoppingLog.show');
+Route::post('wiss-atac-emfg-shopping-log/{permissionAuth}',[EmfgAtacShoppingLogApiController::class,'getData'])->name('ShoppingLog.show');
 
 // ========================================================================================================================
 //                                                     ROUTE GET/POST "EPS"
 // ========================================================================================================================
 Route::get('eps-pr-outstanding/{permissionName}',[AuthenticationAPIController::class,'getAuthenticatePROutstandingAPI'])->name("PR-Outstanding");
-Route::post('eps-pr-outstanding',[EpsPrOutstandingApiController::class,'getData'])->name('PROustanding.show');
+Route::post('eps-pr-outstanding/{permissionAuth}',[EpsPrOutstandingApiController::class,'getData'])->name('PROustanding.show');
 Route::get('eps-pr-po-planner/{permissionName}',[AuthenticationAPIController::class,'getAuthenticatePRPOPlannerAPI'])->name("PR-PO-Planner");
-Route::post('eps-pr-po-planner',[EpsPrPoToPlannerApiController::class,'getData'])->name('PRPOPlanner.show');
+Route::post('eps-pr-po-planner/{permissionAuth}',[EpsPrPoToPlannerApiController::class,'getData'])->name('PRPOPlanner.show');
 Route::get('eps-bg-checking/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateBGCheckingAPI'])->name("BG-Checking");
-Route::post('eps-bg-checking',[EpsBgCheckingApiController::class,'getData'])->name('BGChecking.show');
+Route::post('eps-bg-checking/{permissionAuth}',[EpsBgCheckingApiController::class,'getData'])->name('BGChecking.show');
 
  //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Fix direct acccess API later >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Route::get('wiss-sa-eps-report-budget-checking-pr-detail',[EpsReportBudgetCheckingPrDetailApiController::class,'getData']);
@@ -217,17 +217,17 @@ Route::get('wiss_sa_eps_report_budget_checking_expense/{docNum}',[EpsReportBudge
 Route::get('wiss_sa_eps_report_budget_checking_investment/{docNum}',[EpsReportBudgetCheckingInvestmentDetailApiController::class,'getData'])->name("InvesetmentDetail");
 
 Route::get('eps-pr-error/{permissionName}',[AuthenticationAPIController::class,'getAuthenticatePRErrorAPI'])->name("PR-Error");
-Route::post('eps-pr-error',[EpsPrErrorApiController::class,'getData'])->name('PRError.show');
+Route::post('eps-pr-error/{permissionAuth}',[EpsPrErrorApiController::class,'getData'])->name('PRError.show');
 Route::get('eps-pr-production-error/{permissionName}',[AuthenticationAPIController::class,'getAuthenticatePRProductionErrorAPI'])->name("PR-Production-Error");
-Route::post('eps-pr-production-error',[EpsPrProductionErrorApiController::class,'getData'])->name('PRProcuction.show');
+Route::post('eps-pr-production-error/{permissionAuth}',[EpsPrProductionErrorApiController::class,'getData'])->name('PRProcuction.show');
 Route::get('eps-cp-approve-pr/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateCPApproveAPI'])->name("CP-Approve-PR");
-Route::post('eps-cp-approve-pr',[EpsCpApprovePrApiController::class,'getData'])->name('CPApprovePR.show');
+Route::post('eps-cp-approve-pr/{permissionAuth}',[EpsCpApprovePrApiController::class,'getData'])->name('CPApprovePR.show');
 
 // ========================================================================================================================
 //                                                     ROUTE GET/POST "E-Drawing"
 // ========================================================================================================================
 Route::get('edrawing-check-password/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateEdrawingPasswordAPI'])->name("Password");
-Route::post('edrawing-check-password/{perName}',[EdrawingCheckPasswordApiController::class,'getData'])->name('EdrawingPassword.show');
+Route::post('edrawing-check-password/{permissionAuth}',[EdrawingCheckPasswordApiController::class,'getData'])->name('EdrawingPassword.show');
 
 
 
@@ -238,45 +238,45 @@ Route::post('edrawing-check-password/{perName}',[EdrawingCheckPasswordApiControl
 //                                                      ROUTE GET/POST "IBG"
 // ========================================================================================================================
 Route::get('wiss-sa-add-ibg-dept/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateAddIBGDeptAPI'])->name("Add-Department");
-Route::post('wiss-sa-add-ibg-dept',[IbgAddDeptApiController::class,'getData'])->name('AddIBGDept.show');
+Route::post('wiss-sa-add-ibg-dept/{permissionAuth}',[IbgAddDeptApiController::class,'getData'])->name('AddIBGDept.show');
 Route::get('wiss-sa-add-ibg-user/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateAddIBGUserAPI'])->name("Add-User");
-Route::post('wiss-sa-add-ibg-user',[IbgAddUserApiController::class,'getData'])->name('AddIBGUser.show');
+Route::post('wiss-sa-add-ibg-user/{permissionAuth}',[IbgAddUserApiController::class,'getData'])->name('AddIBGUser.show');
 Route::get('wiss-sa-ibg-update-inf-schedule/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateAddIBGInterfaceAPI'])->name("Add-IF-Schedule");
-Route::post('wiss-sa-ibg-update-inf-schedule',[IbgUpdateInfScheduleApiController::class,'getData'])->name('AddIBGInterface.show');
+Route::post('wiss-sa-ibg-update-inf-schedule/{permissionAuth}',[IbgUpdateInfScheduleApiController::class,'getData'])->name('AddIBGInterface.show');
 
 // ========================================================================================================================
 //                                                      ROUTE GET/POST "EPS"
 // ========================================================================================================================
 Route::get('wiss-sa-add-eps-investment/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateAddInvestmentAPI'])->name("Add-Investment");
-Route::post('wiss-sa-add-eps-investment',[EpsAddInvestmentApiController::class,'getData'])->name('AddEPSInvestment.show');
+Route::post('wiss-sa-add-eps-investment/{permissionAuth}',[EpsAddInvestmentApiController::class,'getData'])->name('AddEPSInvestment.show');
 
 // ========================================================================================================================
 //                                                      ROUTE GET/POST "IFIN"
 // ========================================================================================================================
 Route::get('wiss-sa-ifin-revert-doc/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateRevertDocAPI'])->name("Revert-Doc");
-Route::post('wiss-sa-ifin-revert-doc',[IfinRevertDocApiController::class,'getData'])->name('IfinRevertDoc.show');
+Route::post('wiss-sa-ifin-revert-doc/{permissionAuth}',[IfinRevertDocApiController::class,'getData'])->name('IfinRevertDoc.show');
 Route::get('wiss-sa-ifin-register-admin/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateRegisterAdminAPI'])->name("Register-Admin");
-Route::post('wiss-sa-ifin-register-admin',[IfinRegisterAdminApiController::class,'getData'])->name('IfinRegisterAdmin.show');
+Route::post('wiss-sa-ifin-register-admin/{permissionAuth}',[IfinRegisterAdminApiController::class,'getData'])->name('IfinRegisterAdmin.show');
 
 // ========================================================================================================================
 //                                                    ROUTE GET/POST "SA E-MFG"
 // ========================================================================================================================
 Route::get('wiss-sa-emfg-add-shelf/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateAddShelfSAAPI'])->name("Add-Shelf-SA");
-Route::post('wiss-sa-emfg-add-shelf',[EmfgSaAddShelfApiController::class,'getData'])->name('EmfgAddShelfSA.show');
+Route::post('wiss-sa-emfg-add-shelf/{permissionAuth}',[EmfgSaAddShelfApiController::class,'getData'])->name('EmfgAddShelfSA.show');
 
 // ========================================================================================================================
 //                                                 ROUTE GET/POST "ATAC E-MFG"
 // ========================================================================================================================
 Route::get('wiss-atac-emfg-add-model/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateAddModelATACAPI'])->name("Add-Model-ATAC");
-Route::post('wiss-atac-emfg-add-model',[EmfgAddModelApiController::class,'getData'])->name('EmfgAddModelATAC.show');
+Route::post('wiss-atac-emfg-add-model/{permissionAuth}',[EmfgAddModelApiController::class,'getData'])->name('EmfgAddModelATAC.show');
 Route::get('wiss-atac-emfg-add-shelf/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateAddShelfATACAPI'])->name("Add-Shelf-ATAC");
-Route::post('wiss-atac-emfg-add-shelf',[EmfgAddShelfApiController::class,'getData'])->name('EmfgAddShelfATAC.show');
+Route::post('wiss-atac-emfg-add-shelf/{permissionAuth}',[EmfgAddShelfApiController::class,'getData'])->name('EmfgAddShelfATAC.show');
 Route::get('wiss-atac-emfg-revert-shopping-status/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateRevertShoppingATACAPI'])->name("Revert-Shopping-ATAC");
-Route::post('wiss-atac-emfg-revert-shopping-status',[EmfgRevertShoppingStatusApiController::class,'getData'])->name('EmfgRevertShoppingATAC.show');
+Route::post('wiss-atac-emfg-revert-shopping-status/{permissionAuth}',[EmfgRevertShoppingStatusApiController::class,'getData'])->name('EmfgRevertShoppingATAC.show');
 Route::get('wiss-atac-emfg-complete-pkl/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateCompletePklATACAPI'])->name("Complete-PKL-ATAC");
-Route::post('wiss-atac-emfg-complete-pkl',[EmfgCompletePKLApiController::class,'getData'])->name('EmfgCompletePklATAC.show');
+Route::post('wiss-atac-emfg-complete-pkl/{permissionAuth}',[EmfgCompletePKLApiController::class,'getData'])->name('EmfgCompletePklATAC.show');
 Route::get('wiss-atac-emfg-create-pallet-data-from-shopping/{permissionName}',[AuthenticationAPIController::class,'getAuthenticateCompletePalletATACPI'])->name("Complete-Pallet-ATAC");
-Route::post('wiss-atac-emfg-create-pallet-data-from-shopping',[EmfgCreatePalletDataFromShoppingApiController::class,'getData'])->name('EmfgCreatePalletATAC.show');
+Route::post('wiss-atac-emfg-create-pallet-data-from-shopping/{permissionAuth}',[EmfgCreatePalletDataFromShoppingApiController::class,'getData'])->name('EmfgCreatePalletATAC.show');
 
 // ========================================================================================================================
 //                                                    ROUTE GET/POST "Logs"

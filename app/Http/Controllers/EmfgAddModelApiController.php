@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
+use App\Models\UserPermission;
 
 // ==========================================================================
 // CLASS DECLARATION
@@ -38,7 +41,14 @@ class EmfgAddModelApiController extends Controller
         // ==========================================================================
         $api = '';
 
-
+        // ======================================================================
+    // SET DATA WRITE LOG
+    // ======================================================================
+    $permissionName = $req->permissionAuth;
+    $permissionID = UserPermission::getPermissionID($permissionName);
+    $optionValue = $req->input('modelCode')??'modelCode is empty';
+    $optionValue += $req->input('modleName')??', modleName is empty';
+// ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
@@ -63,12 +73,14 @@ class EmfgAddModelApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
-                    return view('wiss-atac-emfg-add-model', compact('result', 'keyArray'));
+                    Log::insertLog(Auth::user()->id, $permissionID,'Insert '.$permissionName.' '.$optionValue.' completed');
+                    return view('wiss-atac-emfg-add-model', compact('result', 'keyArray','permissionName'));
                 }else{
                     //need to return no data msg
                     $keyArray = [];
                 }
             }
-            return view('wiss-atac-emfg-add-model');
+            Log::insertLog(Auth::user()->id, $permissionID,'Insert '.$permissionName.' '.$optionValue.' failed');
+            return view('wiss-atac-emfg-add-model', compact('permissionName'));
     }
 }

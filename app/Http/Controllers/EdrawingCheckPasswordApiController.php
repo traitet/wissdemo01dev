@@ -40,7 +40,6 @@ class EdrawingCheckPasswordApiController extends Controller
         // API NAME
         // ==========================================================================
         $api = '';
-
         // ======================================================================
             // SET DATA RETURN TO VIEW
             // ======================================================================
@@ -51,9 +50,9 @@ class EdrawingCheckPasswordApiController extends Controller
         // ======================================================================
             // SET DATA WRITE LOG
             // ======================================================================
-
-            $permissionName = $req->perName;
+            $permissionName = $req->permissionAuth;
             $permissionID = UserPermission::getPermissionID($permissionName);
+            $optionValue = $req->input('docNum')??'empty';
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
@@ -65,7 +64,6 @@ class EdrawingCheckPasswordApiController extends Controller
             $maxRecord = $req->input('maxRecord')??'10';
             $docNum = $req->input('docNum')??'';
             $queryStr = "doc_num=$docNum&start_date=$dateStart&end_date=$dateEnd&max_record=$maxRecord";
-            $optionValue = $req->input('docNum')??'empty';
             // ======================================================================
             // CALL API
             // ======================================================================

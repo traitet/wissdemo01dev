@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
+use App\Models\UserPermission;
 
 // ==========================================================================
 // CLASS DECLARATION
@@ -39,7 +42,14 @@ class IbgUpdateInfScheduleApiController extends Controller
         // ==========================================================================
         $api = '';
 
-
+        // ======================================================================
+    // SET DATA WRITE LOG
+    // ======================================================================
+    $permissionName = $req->permissionAuth;
+    $permissionID = UserPermission::getPermissionID($permissionName);
+    $optionValue = $req->input('year')??'year is empty';
+    $optionValue += $req->input('period')??', period is empty';
+// ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
@@ -65,12 +75,14 @@ class IbgUpdateInfScheduleApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
-                    return view('wiss-sa-ibg-update-inf-schedule', compact('result', 'keyArray'));
+                    Log::insertLog(Auth::user()->id, $permissionID,'Insert '.$permissionName.' '.$optionValue.' completed');
+                    return view('wiss-sa-ibg-update-inf-schedule', compact('result', 'keyArray','permissionName'));
                 }else{
                     //need to return no data msg
                     $keyArray = [];
                 }
             }
-            return view('wiss-sa-ibg-update-inf-schedule');
+            Log::insertLog(Auth::user()->id, $permissionID,'Insert '.$permissionName.' '.$optionValue.' failed');
+            return view('wiss-sa-ibg-update-inf-schedule', compact('permissionName'));
     }
 }
