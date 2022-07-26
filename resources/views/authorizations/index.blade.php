@@ -90,7 +90,7 @@
         // Check box event
         // ================================================================
         document.addEventListener('DOMContentLoaded', function() {
-            var checkboxes = document.querySelectorAll('input[type=checkbox][name=gender]');
+            var checkboxes = document.querySelectorAll('input[type=checkbox][name=permissionCHB]');
 
             for (var checkbox of checkboxes) {
                 checkbox.addEventListener('change', function(event) {
@@ -101,7 +101,7 @@
                         // let word = myArray[1];
                         $.ajax({
                             url: "{{ route('Authorization.insertpermission') }}",
-                            data: {"id":myArray[0],"email":myArray[1]},
+                            data: {"id":myArray[0],"email":myArray[1],"perName":"Authorization"},
                             type: 'get',
                             success: function(result){
                                 // location.reload();
@@ -117,7 +117,7 @@
                         // let word = myArray[1];
                         $.ajax({
                             url: "{{ route('Authorization.deletepermission') }}",
-                            data: {"id":myArray[0],"email":myArray[1]},
+                            data: {"id":myArray[0],"email":myArray[1],"perName":"Authorization"},
                             type: 'get',
                             success: function(result){
                                 // location.reload();
@@ -244,14 +244,14 @@
                                                         ?>
                                                             {{-- <input name="{{ $names[$j] }}[]" type="checkbox"
                                                                 value="{{ $permissionid }}" onclick="checkFluency()" checked /> --}}
-                                                            <input name="gender" type="checkbox"
+                                                            <input name="permissionCHB" type="checkbox"
                                                                 value="{{ $permissionid}}|{{ $email }}" checked />
                                                             <?php
                                                             }else{
                                                             ?>
                                                             {{-- <input name="{{ $names[$j] }}[]" type="checkbox"
                                                                 value="{{ $permissionid }}" onclick="checkFluency()" /> --}}
-                                                            <input name="gender" type="checkbox"
+                                                            <input name="permissionCHB" type="checkbox"
                                                                 value="{{ $permissionid}}|{{ $email }}" />
                                                             <?php
                                                             }

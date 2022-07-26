@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
 
 class UserPermissionController extends Controller
 {
@@ -130,7 +131,7 @@ class UserPermissionController extends Controller
                 ->with('error', $e->getMessage());
         }
     }
-    public function showauthorize()
+    public function showauthorize(Request $request)
     {
         $permissions = Permission::where('active', '1')
             ->orderByRaw('LENGTH(sequence) ASC')
@@ -138,8 +139,8 @@ class UserPermissionController extends Controller
             ->get(['permissions.*']);
 
         $users = User::orderBy('email', 'ASC')->get();
-
-        return view('authorizations.index', compact('users', 'permissions'));
+        $permissionName = $request->permissionName;
+        return view('authorizations.index', compact('users', 'permissions','permissionName'));
     }
     public function updateauthorize(Request $request, UserPermission $userPermission)
     {
@@ -175,19 +176,43 @@ class UserPermissionController extends Controller
 
     public function insertpermission(Request $request)
     {
-        UserPermission::insert([
-            'email' => $request->email,
-            'permission_id' => $request->id,
-            'active' => 1
-
-        ]);
+        // ======================================================================
+        // SET DATA WRITE LOG
+        // ======================================================================
+        $permissionName = UserPermission::getPermissionName($request->id);
+        $permissionId = UserPermission::getPermissionID($request->perName);
+        // ======================================================================
+        try {
+            UserPermission::insert([
+                'email' => $request->email,
+                'permission_id' => $request->id,
+                'active' => 1
+            ]);
+            Log::insertLog(Auth::user()->id, $permissionId, 'Add authorize ' . $permissionName .'to '.$request->id.' completed');
+        } catch (\Exception $e) {
+            Log::insertLog(Auth::user()->id, $permissionId, 'Add authorize ' . $permissionName . 'to '.$request->id.' failed');
+        }
     }
 
     public function deletepermission(Request $request)
     {
-        UserPermission::where('permission_id','=',$request->id)
-        ->where('email','=',$request->email)
-        ->delete();
+        // ======================================================================
+        // SET DATA WRITE LOG
+        // ======================================================================
+        $permissionName = UserPermission::getPermissionName($request->id);
+        $permissionId = UserPermission::getPermissionID($request->perName);
+        // ======================================================================
+        try{
+            UserPermission::where('permission_id', '=', $request->id)
+            ->where('email', '=', $request->email)
+            ->delete();
+            Log::insertLog(Auth::user()->id, $permissionId, 'Delete authorize ' . $permissionName . 'from '.$request->id.' completed');
+
+        }catch (\Exception $e) {
+            Log::insertLog(Auth::user()->id, $permissionId, 'Delete authorize ' . $permissionName . 'from '.$request->id.' failed');
+
+        }
+
     }
 
     // ====================================================================================================

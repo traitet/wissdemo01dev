@@ -130,23 +130,24 @@ Route::middleware(['auth'])->group(function () {
     });
     /*
     /-----------------------------------------------------------------------------
-    // User Permission
+    // User Permission comment 26/07/2022
     /-----------------------------------------------------------------------------
     */
-    Route::get('/userpermissions', [UserPermissionController::class, 'index'])->name('User-Permission');
-    Route::prefix('userpermissions')->name('userpermissions')->group(function () {
-        Route::get('create', [UserPermissionController::class, 'create'])->name('.create');
-        Route::post('/', [UserPermissionController::class, 'store'])->name('.store');
-        Route::get('edit/{userPermission}', [UserPermissionController::class, 'edit'])->name('.edit');
-        Route::put('update/{userPermission}', [UserPermissionController::class, 'update'])->name('.update');
-        Route::delete('destroy/{userPermission}', [UserPermissionController::class, 'destroy'])->name('.destroy');
-    });
+    // Route::get('/userpermissions', [UserPermissionController::class, 'index'])->name('User-Permission');
+    // Route::prefix('userpermissions')->name('userpermissions')->group(function () {
+    //     Route::get('create', [UserPermissionController::class, 'create'])->name('.create');
+    //     Route::post('/', [UserPermissionController::class, 'store'])->name('.store');
+    //     Route::get('edit/{userPermission}', [UserPermissionController::class, 'edit'])->name('.edit');
+    //     Route::put('update/{userPermission}', [UserPermissionController::class, 'update'])->name('.update');
+    //     Route::delete('destroy/{userPermission}', [UserPermissionController::class, 'destroy'])->name('.destroy');
+    // });
     /*
     /-----------------------------------------------------------------------------
     // Authorization
     /-----------------------------------------------------------------------------
     */
-    Route::get('/showauthorize', [UserPermissionController::class, 'showauthorize'])->name('Authorization');
+    Route::get('showauthorize/{permissionName}', [UserPermissionController::class, 'showauthorize'])->name("Authorization");
+    // Route::get('/showauthorize', [UserPermissionController::class, 'showauthorize'])->name('Authorization');
     Route::get('insert/showauthorize', [UserPermissionController::class, 'insertpermission'])->name('Authorization.insertpermission');
     Route::get('delete/showauthorize', [UserPermissionController::class, 'deletepermission'])->name('Authorization.deletepermission');
     Route::post('/updateauthorize', [UserPermissionController::class, 'updateauthorize'])->name('Authorization.update');
