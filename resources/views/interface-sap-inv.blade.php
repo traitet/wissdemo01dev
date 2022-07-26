@@ -94,7 +94,7 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('InterfaceSAPINV.show') }}" id="myForm">
+                <form method="POST" action="{{ route('InterfaceSAPINV.show', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}

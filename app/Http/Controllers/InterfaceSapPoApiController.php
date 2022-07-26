@@ -42,7 +42,13 @@ class InterfaceSapPoApiController extends Controller
         // ==========================================================================
         $api = '';
 
-
+                    // ======================================================================
+    // SET DATA WRITE LOG
+    // ======================================================================
+    $permissionName = $req->permissionAuth;
+    $permissionID = UserPermission::getPermissionID($permissionName);
+    $optionValue = $req->input('docNum')??'empty';
+// =========================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
@@ -61,13 +67,7 @@ class InterfaceSapPoApiController extends Controller
             $maxRecord = $req->input('maxRecord')??'10';
             $docNum = $req->input('docNum')??'';
             $queryStr = "doc_num=$docNum&start_date=$dateStart&end_date=$dateEnd&max_record=$maxRecord";
-            // ======================================================================
-    // SET DATA WRITE LOG
-    // ======================================================================
-        $permissionName = $req->permissionAuth;
-        $permissionID = UserPermission::getPermissionID($permissionName);
-        $optionValue = $req->input('docNum')??'empty';
-    // =========================================================
+
 
             // ======================================================================
             // CALL API
