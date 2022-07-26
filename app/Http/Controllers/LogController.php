@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\UserPermission;
 
 class LogController extends Controller
 {
@@ -17,6 +19,13 @@ class LogController extends Controller
     {
         $result = null;
         $docNum = null;
+        // ======================================================================
+    // SET DATA WRITE LOG
+    // ======================================================================
+    $permissionName = $request->permissionAuth;
+    $permissionID = UserPermission::getPermissionID($permissionName);
+    $optionValue = $request->input('docNum')??'User is empty';
+// ======================================================================
         // ======================================================================
         // GET DATA AND WHERE CONDITION
         // ======================================================================
@@ -45,13 +54,21 @@ class LogController extends Controller
         $dateEndRtv = $request->input('dateEnd');
         $maxRecordRtv = $request->input('maxRecord');
 
-        return view('logs.usage-by-user', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv'));
+        Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
+        return view('logs.usage-by-user', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv','permissionName'));
     }
 
     public function getLogFunction(Request $request)
     {
         $result = null;
         $permissionID = null;
+        // ======================================================================
+    // SET DATA WRITE LOG
+    // ======================================================================
+    $permissionName = $request->permissionAuth;
+    $permissionID = UserPermission::getPermissionID($permissionName);
+    $optionValue = $request->input('docNum')??'Function is empty';
+// ======================================================================
         // ======================================================================
         // GET DATA AND WHERE CONDITION
         // ======================================================================
@@ -79,8 +96,8 @@ class LogController extends Controller
         $dateStartRtv = $request->input('dateStart');
         $dateEndRtv = $request->input('dateEnd');
         $permissionID = $request->input('permissionID');
-
-        return view('logs.usage-by-function', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'permissionID'));
+        Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
+        return view('logs.usage-by-function', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'permissionID','permissionName'));
     }
 
     /**

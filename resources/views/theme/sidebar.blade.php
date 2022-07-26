@@ -79,7 +79,7 @@
                                                     $routename = $permissionName;
                                                     if ($navigationGroupName == 'Infrastructure Monitor'){
                                                     ?>
-                                <a class="collapse-item" target="_blank" href="{{ route($routename) }}">{{ $routename }}</a>
+                                <a class="collapse-item" target="_blank" href="{{ route($routename, $routename) }}">{{ $routename }}</a>
                                                     <?php
                                                     }
                                                     else{

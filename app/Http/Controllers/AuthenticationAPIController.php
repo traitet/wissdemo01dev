@@ -298,17 +298,21 @@ class AuthenticationAPIController extends Controller
     // ========================================================================================================================
     public function getAuthenticateLogUserAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('logs.usage-by-user');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('logs.usage-by-user',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
     public function getAuthenticateLogFunctionAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('logs.usage-by-function');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('logs.usage-by-function',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
 
     // ========================================================================================================================
@@ -316,9 +320,11 @@ class AuthenticationAPIController extends Controller
     // ========================================================================================================================
     public function getAuthenticateDeployAPI (Request $request)
     {
-        if(User::getPermission($request->permissionName, Auth::user()->email))
-            return view('deploy-code');
-        else
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('deploy-code',compact('permissionName'));
+        }else{
             return abort(403);
+        }
     }
 }
