@@ -110,10 +110,10 @@
                                                 $runCMD = 'c:\DeployWissdemo01dev.bat';
                                                 $output = shell_exec($runCMD);
                                                 if (isset($output)) {
-                                                    App\Models\Log::insertLog(Auth::user()->id, $_GET['permissionName'],'Deploy '.$k.' completed');
+                                                    App\Models\Log::insertLog(Auth::user()->id, $_GET['permissionAuth'],'Deploy '.$k.' completed');
                                                     echo '<pre>' . $output . '</pre>';
                                                 }else{
-                                                    App\Models\LogLog::insertLog(Auth::user()->id, $_GET['permissionName'],'Deploy '.$k.' failed');
+                                                    App\Models\LogLog::insertLog(Auth::user()->id, $_GET['permissionAuth'],'Deploy '.$k.' failed');
                                                     echo '<pre> Not completed </pre>';
                                                 }
 
