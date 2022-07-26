@@ -74,7 +74,7 @@
                 {{-- =============================================================== --}}
                 {{-- CALL MAIN CONTROLLER --}}
                 {{-- =============================================================== --}}
-                <form method="GET" action="" id="deploycode">
+                <form method="GET" action="{{ route('deploy-code.update', $permissionName) }}" id="deploycode">
 
                     {{-- =============================================================== --}}
                     {{-- PARAMTER --}}
