@@ -20,12 +20,12 @@ class DeployController extends Controller
         $result = null;
         $docNum = null;
         // ======================================================================
-    // SET DATA WRITE LOG
-    // ======================================================================
-    $permissionName = $request->permissionAuth;
-    $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $request->input('docNum')??'User is empty';
-// ======================================================================
+        // SET DATA WRITE LOG
+        // ======================================================================
+        $permissionName = $request->permissionAuth;
+        $permissionID = UserPermission::getPermissionID($permissionName);
+        $optionValue = $request->input('docNum') ?? 'User is empty';
+        // ======================================================================
         // ======================================================================
         // GET DATA AND WHERE CONDITION
         // ======================================================================
@@ -54,8 +54,8 @@ class DeployController extends Controller
         $dateEndRtv = $request->input('dateEnd');
         $maxRecordRtv = $request->input('maxRecord');
 
-        Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
-        return view('logs.usage-by-user', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv','permissionName'));
+        Log::insertLog(Auth::user()->id, $permissionID, 'Search ' . $permissionName . ' ' . $optionValue . ' completed');
+        return view('logs.usage-by-user', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv', 'permissionName'));
     }
 
     public function getLogFunction(Request $request)
@@ -63,12 +63,12 @@ class DeployController extends Controller
         $result = null;
         $permissionID = null;
         // ======================================================================
-    // SET DATA WRITE LOG
-    // ======================================================================
-    $permissionName = $request->permissionAuth;
-    $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $request->input('docNum')??'Function is empty';
-// ======================================================================
+        // SET DATA WRITE LOG
+        // ======================================================================
+        $permissionName = $request->permissionAuth;
+        $permissionID = UserPermission::getPermissionID($permissionName);
+        $optionValue = $request->input('docNum') ?? 'Function is empty';
+        // ======================================================================
         // ======================================================================
         // GET DATA AND WHERE CONDITION
         // ======================================================================
@@ -96,8 +96,8 @@ class DeployController extends Controller
         $dateStartRtv = $request->input('dateStart');
         $dateEndRtv = $request->input('dateEnd');
         $permissionID = $request->input('permissionID');
-        Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
-        return view('logs.usage-by-function', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'permissionID','permissionName'));
+        Log::insertLog(Auth::user()->id, $permissionID, 'Search ' . $permissionName . ' ' . $optionValue . ' completed');
+        return view('logs.usage-by-function', compact('result', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'permissionID', 'permissionName'));
     }
 
     /**
@@ -154,22 +154,22 @@ class DeployController extends Controller
     public function update(Request $request)
     {
         // ======================================================================
-    // SET DATA WRITE LOG
-    // ======================================================================
-    $output = '';
-    $permissionName = $request->permissionAuth;
-    $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $request->input('comment')??'';
-// ======================================================================
-        if($optionValue!=""){
+        // SET DATA WRITE LOG
+        // ======================================================================
+        $output = '';
+        $permissionName = $request->permissionAuth;
+        $permissionID = UserPermission::getPermissionID($permissionName);
+        $optionValue = $request->input('comment') ?? '';
+        // ======================================================================
+        if ($optionValue != "") {
             $runCMD = 'c:\DeployWissdemo01dev.bat';
             $output = shell_exec($runCMD);
-            Log::insertLog(Auth::user()->id, $permissionID,'Deploy '.$permissionName.' '.$optionValue.' completed');
-		    return view('deploy-code', compact('output','permissionName'));
-        }else{
-            $output = 'Could not deploy '.$optionValue;
-            Log::insertLog(Auth::user()->id, $permissionID,'Deploy '.$permissionName.' '.$optionValue.' failed');
-		    return view('deploy-code', compact('output','permissionName'));
+            Log::insertLog(Auth::user()->id, $permissionID, 'Deploy ' . $permissionName . ' ' . $optionValue . ' completed');
+            return view('deploy-code', compact('output', 'permissionName'));
+        } else {
+            $output = 'Could not deploy ' . $optionValue .', Please fill deploy comment.';
+            Log::insertLog(Auth::user()->id, $permissionID, 'Deploy ' . $permissionName . ' ' . $optionValue . ' failed');
+            return view('deploy-code', compact('output', 'permissionName'));
         }
     }
 
