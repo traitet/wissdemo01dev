@@ -58,6 +58,8 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\ExternalURLController;
 // Authentication API
 use App\Http\Controllers\AuthenticationAPIController;
+use App\Http\Controllers\DeployController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -295,7 +297,7 @@ Route::post('main', [MainController::class, 'getData']);
 //                                                    ROUTE GET/POST "Deploy"
 // ========================================================================================================================
 Route::get('deploy-code/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateDeployAPI'])->name("deploy-code");
-Route::get("deploy-code/{permissionAuth}", function(){ return view("deploy-code");})->name("deploy-code.update");
+Route::post('deploy-code/{permissionAuth}', [DeployController::class, 'update'])->name('deploy-code.update');
 
 //  Route::get('/deploy-code/{permissionName}', function () {
 //      return view('deploy-code.update');

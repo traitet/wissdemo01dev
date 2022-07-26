@@ -74,7 +74,7 @@
                 {{-- =============================================================== --}}
                 {{-- CALL MAIN CONTROLLER --}}
                 {{-- =============================================================== --}}
-                <form method="GET" action="{{ route('deploy-code.update', $permissionName) }}"  id="deploycode">
+                <form method="POST" action="{{ route('deploy-code.update', $permissionName) }}"  id="deploycode">
 
                     {{-- =============================================================== --}}
                     {{-- PARAMTER --}}
@@ -103,25 +103,26 @@
                                             {{-- PHP: DEPLOY AFTER C LICK --}}
                                             {{-- =============================================================== --}}
                                             <?php
-                                            echo "Permission name: ".$permissionName;
-                                            // echo "Permission auth 1: ".$permissionAuth;
-
-                                            if ($_GET) {
-                                                echo "Permission auth 2: ".$_GET['permissionAuth'];
-                                                $output = null;
-                                                $k = $_GET['comment'];
-                                                echo "<h4>ผลการ Deploy Code เป็นดังนี้ <span>$k</span></h4>  ";
-                                                $runCMD = 'c:\DeployWissdemo01dev.bat';
-                                                $output = shell_exec($runCMD);
                                                 if (isset($output)) {
-                                                    App\Models\Log::insertLog(Auth::user()->id, $_GET['permissionAuth'],'Deploy '.$k.' completed');
-                                                    echo '<pre>' . $output . '</pre>';
-                                                }else{
-                                                    App\Models\LogLog::insertLog(Auth::user()->id, $_GET['permissionAuth'],'Deploy '.$k.' failed');
-                                                    echo '<pre> Not completed </pre>';
-                                                }
+                                                        echo "<h4>ผลการ Deploy Code เป็นดังนี้ <span>$k</span></h4>  ";
+                                                        echo '<pre>' . $output . '</pre>';
+                                                    }
 
-                                            }
+                                            // if ($_GET) {
+                                            //     $output = null;
+                                            //     $k = $_GET['comment'];
+                                            //     echo "<h4>ผลการ Deploy Code เป็นดังนี้ <span>$k</span></h4>  ";
+                                            //     $runCMD = 'c:\DeployWissdemo01dev.bat';
+                                            //     $output = shell_exec($runCMD);
+                                            //     if (isset($output)) {
+                                            //         App\Models\Log::insertLog(Auth::user()->id, $_GET['permissionAuth'],'Deploy '.$k.' completed');
+                                            //         echo '<pre>' . $output . '</pre>';
+                                            //     }else{
+                                            //         App\Models\LogLog::insertLog(Auth::user()->id, $_GET['permissionAuth'],'Deploy '.$k.' failed');
+                                            //         echo '<pre> Not completed </pre>';
+                                            //     }
+
+                                            // }
                                             ?>
                                         </div>
                                     </div>
