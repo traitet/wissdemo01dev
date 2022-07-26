@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
+use App\Models\UserPermission;
 
 // ==========================================================================
 // CLASS DECLARATION
@@ -38,8 +41,13 @@ class EpsBgCheckingApiController extends Controller
         // API NAME
         // ==========================================================================
         $api = '';
-
-
+        // ======================================================================
+    // SET DATA WRITE LOG
+    // ======================================================================
+    $permissionName = $req->permissionAuth;
+    $permissionID = UserPermission::getPermissionID($permissionName);
+    $optionValue = $req->input('docNum')??'docNum is empty';
+// ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
@@ -74,12 +82,14 @@ class EpsBgCheckingApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
-                    return view('eps-bg-checking', compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','docTypeRtv'));
+                    Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
+                    return view('eps-bg-checking', compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','docTypeRtv','permissionName'));
                 }else{
                     //need to return no data msg
                     $keyArray = [];
                 }
             }
-            return view('eps-bg-checking',compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','docTypeRtv'));
+            Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' failed');
+            return view('eps-bg-checking',compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','docTypeRtv','permissionName'));
     }
 }
