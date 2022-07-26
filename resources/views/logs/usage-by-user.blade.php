@@ -102,7 +102,7 @@
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 Log Usage by User 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 Log Usage by User +】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
