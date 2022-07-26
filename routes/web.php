@@ -295,7 +295,7 @@ Route::post('main', [MainController::class, 'getData']);
 //                                                    ROUTE GET/POST "Deploy"
 // ========================================================================================================================
 Route::get('deploy-code/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateDeployAPI'])->name("deploy-code");
-// Route::get("deploy-code/{permissionAuth}", function(){ return view("deploy-code");})->name("deploy-code.update");
+Route::get("deploy-code/{permissionAuth}", function(){ return view("deploy-code");})->name("deploy-code.update");
 
 //  Route::get('/deploy-code/{permissionName}', function () {
 //      return view('deploy-code.update');
