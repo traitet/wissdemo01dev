@@ -103,7 +103,11 @@
                                             {{-- PHP: DEPLOY AFTER C LICK --}}
                                             {{-- =============================================================== --}}
                                             <?php
+                                            echo "Permission name: ".$permissionName;
+                                            // echo "Permission auth 1: ".$permissionAuth;
+
                                             if ($_GET) {
+                                                echo "Permission auth 2: ".$_GET['permissionAuth'];
                                                 $output = null;
                                                 $k = $_GET['comment'];
                                                 echo "<h4>ผลการ Deploy Code เป็นดังนี้ <span>$k</span></h4>  ";
