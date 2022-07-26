@@ -109,7 +109,7 @@
                                                 echo "<h4>ผลการ Deploy Code เป็นดังนี้ <span>$k</span></h4>  ";
                                                 $runCMD = 'c:\DeployWissdemo01dev.bat';
                                                 $output = shell_exec($runCMD);
-                                                if (isset($docNumRtv)) {
+                                                if (isset($output)) {
                                                     echo '<pre>' . $output . '</pre>';
                                                 }else{
                                                     echo '<pre> Not completed </pre>';
