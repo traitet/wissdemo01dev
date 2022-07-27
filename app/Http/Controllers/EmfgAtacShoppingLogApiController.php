@@ -25,7 +25,7 @@ class EmfgAtacShoppingLogApiController extends Controller
 // DECLARE END POINT
 // ==========================================================================
 
-    private $ENDPOINT = 'http://10.40.0.4:8080/wissdemo01/public/api/wiss_atac_emfg_shopping_log';
+    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_shopping_log';
 
 // ==========================================================================
 // GET DATA
