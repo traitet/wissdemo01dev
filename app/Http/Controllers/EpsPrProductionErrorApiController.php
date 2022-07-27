@@ -24,7 +24,7 @@ class EpsPrProductionErrorApiController extends Controller
 // ==========================================================================
 // DECLARE END POINT
 // ==========================================================================
-    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/eps_pr_productionid_error_report_obj';
+    private $ENDPOINT = 'http://10.40.0.4:8080/wissdemo01/public/api/eps_pr_productionid_error_report_obj';
 
 // ==========================================================================
 // GET DATA
