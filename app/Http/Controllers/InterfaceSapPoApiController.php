@@ -75,12 +75,12 @@ class InterfaceSapPoApiController extends Controller
         $url = $this->ENDPOINT . $api . "/" . $queryStr;
         $response = Http::get($url);
         error_log($url);
-        dd($url);
         // ======================================================================
         // IF CALL SUCCCESS
         // ======================================================================
         if ($response->status() == 200) {
             $result = json_decode($response->body(), true);
+            dd($url);
             if (!empty($result)) {
                 $keyArray = array_keys($result[0]);
                 Log::insertLog(Auth::user()->id, $permissionID, 'Search ' . $permissionName . ' ' . $optionValue . ' completed');
