@@ -69,7 +69,6 @@ class EdrawingCheckPasswordApiController extends Controller
             // ======================================================================
             $url = $this->ENDPOINT . $api ."/". $queryStr;
             $response = Http::get($url);
-            dd($url);
             // ======================================================================
             // IF CALL SUCCCESS
             // ======================================================================
