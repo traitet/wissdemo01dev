@@ -90,6 +90,6 @@ class InterfaceSapPoApiController extends Controller
             }
         }
         Log::insertLog(Auth::user()->id, $permissionID, 'Search ' . $permissionName . ' ' . $optionValue . ' not found');
-        return view('interface-sap-po', compact('result', 'keyArray', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv', 'permissionName'));
+        return view('interface-sap-po', compact('docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv', 'permissionName'));
     }
 }
