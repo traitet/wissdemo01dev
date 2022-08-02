@@ -82,7 +82,7 @@ class Log extends Model
         // ->orwhere('navigation_groups.id','3')
         ->orderBy('total','desc')
         ->groupBy('navigation_items.name')
-        ->selectRaw('count(*) as total, navigation_items.name as name')
+        ->selectRaw('count(*) as total, navigation_items.name')
         ->get();
         return $logUsages;
     }

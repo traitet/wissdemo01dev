@@ -126,13 +126,13 @@
                                 <div class="card border-left-primary shadow h-100 py-2">
                             @endif
                             @if ($rowIndex == 2)
-                                <div class="card border-left-info shadow h-100 py-2">
-                            @endif
-                            @if ($rowIndex == 3)
                                 <div class="card border-left-success shadow h-100 py-2">
                             @endif
+                            @if ($rowIndex == 3)
+                                <div class="card border-left-info shadow h-100 py-2">
+                            @endif
                             @if ($rowIndex == 4)
-                                <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card border-left-danger shadow h-100 py-2">
                             @endif
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
@@ -142,15 +142,15 @@
                                                 {{ $log->name }}
                                         @endif
                                         @if ($rowIndex == 2)
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                {{ $log->name }}
-                                        @endif
-                                        @if ($rowIndex == 3)
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 {{ $log->name }}
                                         @endif
+                                        @if ($rowIndex == 3)
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                {{ $log->name }}
+                                        @endif
                                         @if ($rowIndex == 4)
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 {{ $log->name }}
                                         @endif
 
@@ -167,11 +167,11 @@
                                                         if($rowIndex == 1)
                                                             echo "class='progress-bar bg-primary'";
                                                         else if($rowIndex == 2)
-                                                            echo "class='progress-bar bg-info'";
-                                                        else if($rowIndex == 3)
                                                             echo "class='progress-bar bg-success'";
+                                                        else if($rowIndex == 3)
+                                                            echo "class='progress-bar bg-info'";
                                                         else if($rowIndex == 4)
-                                                            echo "class='progress-bar bg-warning'";
+                                                            echo "class='progress-bar bg-danger'";
                                                 ?>
                                                 role="progressbar"
                                                 style='width: {{ number_format($percent,2) }}%'
@@ -256,14 +256,30 @@
                                 <canvas id="myPieChart"></canvas>
                             </div>
                             <div class="mt-4 text-center small">
+                                <?php $logs = \App\Models\log::getTotalLog();
+                                    $rowIndex = 0;
+                                    foreach($logs->slice(0, 4) as $log){
+                                        $rowIndex ++;
+                                ?>
+                                    <span class="mr-2">
+                                        <i
+                                        <?php
+                                            if ($rowIndex == 1)
+                                            echo "class='fas fa-circle text-primary'";
+                                            else if ($rowIndex == 2)
+                                            echo "class='fas fa-circle text-success'";
+                                            else if ($rowIndex == 3)
+                                            echo "class='fas fa-circle text-info'";
+                                            else if ($rowIndex == 4)
+                                            echo "class='fas fa-circle text-danger'";
+                                        ?>
+                                        ></i>{{ $log->name }}
+                                    </span>
+                                <?php
+                                    }
+                                ?>
                                 <span class="mr-2">
-                                    <i class="fas fa-circle text-primary"></i> Direct
-                                </span>
-                                <span class="mr-2">
-                                    <i class="fas fa-circle text-success"></i> Social
-                                </span>
-                                <span class="mr-2">
-                                    <i class="fas fa-circle text-info"></i> Referral
+                                    <i class="fas fa-circle text-warning"></i> Other
                                 </span>
                             </div>
                         </div>
@@ -450,16 +466,29 @@ var myPieChart = new Chart(ctx, {
   type: 'doughnut',
   data: {
     <?php $logs = \App\Models\log::getTotalLog(); ?>
-    labels: ["Direct", "Referral", "Social"],
-    datasets: [{
-      data:[ <?php
-                            foreach ($logs as $log){
-                                echo $log->total.",";
+    labels: [
+        <?php
+                            foreach ($logs->slice(0, 4) as $log){
+                                echo "'".$log->name."', ";
                             }
-            ?>],
-    //   data: [50, 35, 15],
-      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#36b9cc', '#36b9cc'],
-      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#2c9faf', '#2c9faf'],
+            ?>
+    "Ohter"],
+    // labels: ["Direct", "Referral", "Social", "Social2"],
+    datasets: [{
+      data:[ <?php          $sumDoughnut = 0;
+                            foreach ($logs->slice(0, 4) as $log){
+                                $value = ($log->total / $totalLogs) * 100;
+                                echo $value.",";
+                                $sumDoughnut += $log->total;
+                            }
+                            $sumDoughnut = $totalLogs - $sumDoughnut;
+                            $percent = ($sumDoughnut / $totalLogs) * 100;
+                            echo $percent;
+            ?>
+        ],
+    // data: [50, 35, 15],
+      backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#d41730', '#ffbf2e'],
+      hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#ff0000', '#ffc914'],
       hoverBorderColor: "rgba(234, 236, 244, 1)",
     }],
   },
