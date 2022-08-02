@@ -174,7 +174,7 @@ class UserPermissionController extends Controller
         return view('authorizations.index', compact('users', 'permissions'));
     }
 
-    public function insertpermission(Request $request)
+    public function insertpermission(Request $request, UserPermission $userPermission)
     {
         // ======================================================================
         // SET DATA WRITE LOG
@@ -182,12 +182,16 @@ class UserPermissionController extends Controller
         $permissionName = UserPermission::getPermissionName($request->id);
         $permissionId = UserPermission::getPermissionID($request->perName);
         // ======================================================================
+
         try {
             UserPermission::insert([
                 'email' => $request->email,
                 'permission_id' => $request->id,
-                'active' => 1
+                'active' => 1,
+                'created_at' => date("Y-m-d H:i:s", strtotime('now')),
+                'updated_at' => date("Y-m-d H:i:s", strtotime('now'))
             ]);
+         
             Log::insertLog(Auth::user()->id, $permissionId, 'Add authorize ' . $permissionName .'to '.$request->id.' completed');
         } catch (\Exception $e) {
             Log::insertLog(Auth::user()->id, $permissionId, 'Add authorize ' . $permissionName . 'to '.$request->id.' failed');
