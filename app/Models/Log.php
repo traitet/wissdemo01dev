@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Log extends Model
 {
     use HasFactory;
@@ -85,5 +86,28 @@ class Log extends Model
         ->selectRaw('count(*) as total, navigation_items.name')
         ->get();
         return $logUsages;
+    }
+
+    // public static function getWissUsagePerMonth()
+    // {
+    //     $data = log::all()->sortBy(function ($item) {
+    //         return -$item->created_at->month;
+    //    })->groupBy(function ($item) {
+    //         return $item->created_at->format("F");
+    //    })->map->count();
+    //    return $data;
+    // }
+
+    public static function getWissUsagePerMonth()
+    {
+
+        $data = log::select(
+        log::raw('count(id) as counts'),
+        log::raw("DATE_FORMAT(created_at,'%M %Y') as monthYear")
+        )
+        ->orderBy('monthYear', 'DESC')
+        ->groupBy('monthYear')
+        ->paginate(12);
+        return $data;
     }
 }
