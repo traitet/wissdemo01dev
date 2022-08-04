@@ -16,7 +16,7 @@ use App\Models\Log;
 use App\Models\UserPermission;
 
 // ==========================================================================
-// CLASS DECLARATION
+// CLASS DECLARATION 04/02/2022
 // ==========================================================================
 class InterfaceSapPoApiController extends Controller
 {
@@ -24,7 +24,6 @@ class InterfaceSapPoApiController extends Controller
     // ==========================================================================
     // DECLARE END POINT
     // ==========================================================================
-
     private $ENDPOINT = 'http://10.40.0.9:8080/wissdemo01/public/api/interface_sap_po_obj';
 
     // ==========================================================================
