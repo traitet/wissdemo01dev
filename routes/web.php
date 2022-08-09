@@ -147,10 +147,14 @@ Route::middleware(['auth'])->group(function () {
     /-----------------------------------------------------------------------------
     */
     Route::get('showauthorize/{permissionName}', [UserPermissionController::class, 'showauthorize'])->name("Authorization");
+    Route::get('update/{email}', [UserPermissionController::class, 'showauthorizebypersion'])->name('Authorization.edit');
+
+
     // Route::get('/showauthorize', [UserPermissionController::class, 'showauthorize'])->name('Authorization');
     Route::get('insert/showauthorize', [UserPermissionController::class, 'insertpermission'])->name('Authorization.insertpermission');
     Route::get('delete/showauthorize', [UserPermissionController::class, 'deletepermission'])->name('Authorization.deletepermission');
     Route::post('/updateauthorize', [UserPermissionController::class, 'updateauthorize'])->name('Authorization.update');
+
 });
 
 require __DIR__ . '/auth.php';

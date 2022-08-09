@@ -191,7 +191,7 @@ class UserPermissionController extends Controller
                 'created_at' => date("Y-m-d H:i:s", strtotime('now')),
                 'updated_at' => date("Y-m-d H:i:s", strtotime('now'))
             ]);
-         
+
             Log::insertLog(Auth::user()->id, $permissionId, 'Add authorize ' . $permissionName .'to '.$request->id.' completed');
         } catch (\Exception $e) {
             Log::insertLog(Auth::user()->id, $permissionId, 'Add authorize ' . $permissionName . 'to '.$request->id.' failed');
@@ -218,7 +218,21 @@ class UserPermissionController extends Controller
         }
 
     }
+    public function showauthorizebypersion(Request $request)
+    {
+        $permissions = Permission::where('active', '1')
+            ->orderByRaw('LENGTH(sequence) ASC')
+            ->orderBy('sequence', 'ASC')
+            ->get(['permissions.*']);
 
+        $users = User::where('email', $request->email)
+            ->orderBy('email', 'ASC')
+            ->get();
+
+        // $permissionName = $request->permissionName;
+        // return view('authorizations.edit', compact('users', 'permissions','permissionName'));
+        return view('authorizations.edit', compact('users', 'permissions'));
+    }
     // ====================================================================================================
     //   14/07/2022 Change to use AuthenticationAPIController    (Temp because table not keep view name)
     // ====================================================================================================

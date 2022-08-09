@@ -155,7 +155,7 @@
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 Authorization Matrix 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 Edit Authorization 】</h1>
                         </div>
                         {{-- ========================================================= --}}
                         {{-- Alert  message --}}
@@ -187,8 +187,7 @@
                                             <tr>
                                                 <th class="text-center">Permission \ Name</th>
                                                 @foreach ($users as $user)
-                                                    {{-- <th class="text-center">{{ $user->first_name }}</th> --}}
-                                                    <th><a class="text-center" target="_blank" href="{{ route('Authorization.edit', $user->email) }}">{{ $user->first_name }}</a></th>
+                                                    <th class="text-center">{{ $user->first_name }}</th>
                                                 @endforeach
                                             </tr>
                                         </thead>
@@ -243,13 +242,17 @@
                                                             $status = \App\Models\UserPermission::getPermissionActive($email, $permissionid) ;
                                                             if($status == "1"){
                                                         ?>
+                                                            {{-- <input name="{{ $names[$j] }}[]" type="checkbox"
+                                                                value="{{ $permissionid }}" onclick="checkFluency()" checked /> --}}
                                                             <input name="permissionCHB" type="checkbox"
-                                                                value="{{ $permissionid}}|{{ $email }}" checked disabled="disabled" />
+                                                                value="{{ $permissionid}}|{{ $email }}" checked />
                                                             <?php
                                                             }else{
                                                             ?>
+                                                            {{-- <input name="{{ $names[$j] }}[]" type="checkbox"
+                                                                value="{{ $permissionid }}" onclick="checkFluency()" /> --}}
                                                             <input name="permissionCHB" type="checkbox"
-                                                                value="{{ $permissionid}}|{{ $email }}" disabled="disabled"/>
+                                                                value="{{ $permissionid}}|{{ $email }}" />
                                                             <?php
                                                             }
                                                         ?>
