@@ -101,13 +101,19 @@ class Log extends Model
     public static function getWissUsagePerMonth()
     {
 
-        $data = log::select(
-        log::raw('count(id) as counts'),
-        log::raw("DATE_FORMAT(created_at,'%M %Y') as monthYear")
-        )
-        ->orderBy('monthYear', 'DESC')
-        ->groupBy('monthYear')
-        ->paginate(12);
-        return $data;
+        // $data = log::select(
+        // log::raw('count(id) as counts'),
+        // log::raw("DATE_FORMAT(created_at,'%M %Y') as monthYear")
+        // )
+        // ->orderBy('monthYear', 'DESC')
+        // ->groupBy('monthYear')
+        // ->paginate(12);
+        // return $data;
+
+            $data = log::selectRaw('year(created_at) as year, monthname(created_at) as month, sum(id) as counts')
+            ->groupBy('year','month')
+            ->orderByRaw('min(created_at) desc')
+            ->paginate(12);
+            return $data;
     }
 }

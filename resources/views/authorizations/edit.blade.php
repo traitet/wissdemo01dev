@@ -223,7 +223,7 @@
                                                             $colnumber = count($users) + 1;
                                                             ?>
                                                             <tr>
-                                                                <td colspan="{{ $colnumber }}">{{ \App\Models\UserPermission::getNavigationItemName($showNavigationItemId); }}</td>
+                                                                <td colspan="{{ $colnumber }}" class="bg-secondary text-white" >{{ \App\Models\UserPermission::getNavigationItemName($showNavigationItemId); }}</td>
                                                             </tr>
                                                             <?php
                                                         }

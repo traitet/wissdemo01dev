@@ -547,12 +547,21 @@ var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
     // labels: ["Jan 2022", "Feb", "Mar"],
-    <?php $wissUsages = \App\Models\log::getWissUsagePerMonth(); ?>
+    <?php $wissUsages = \App\Models\log::getWissUsagePerMonth();
+    $logInd =0;
+    foreach($wissUsages as $wissUsage){
+            $logValue[$logInd] = $wissUsage->month." ".$wissUsage->year;
+            $logInd++;
+        }
+    ?>
     labels: [
     <?php
-        foreach($wissUsages as $wissUsage){
-            echo "'".$wissUsage->monthYear."',";
+        foreach (array_reverse($logValue) as $key => $layer){
+            echo "'".$layer."',";
         }
+        // foreach($wissUsages as $wissUsage){
+        //     echo "'".$wissUsage->month." ".$wissUsage->year."',";
+        // }
     ?>
     ],
     datasets: [{
