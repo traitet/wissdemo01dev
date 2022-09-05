@@ -110,7 +110,7 @@ class Log extends Model
         // ->paginate(12);
         // return $data;
 
-            $data = log::selectRaw('year(created_at) as year, monthname(created_at) as month, sum(id) as counts')
+            $data = log::selectRaw('year(created_at) as year, monthname(created_at) as month, count(id) as counts')
             ->groupBy('year','month')
             ->orderByRaw('min(created_at) desc')
             ->paginate(12);

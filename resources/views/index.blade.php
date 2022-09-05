@@ -550,13 +550,14 @@ var myLineChart = new Chart(ctx, {
     <?php $wissUsages = \App\Models\log::getWissUsagePerMonth();
     $logInd =0;
     foreach($wissUsages as $wissUsage){
-            $logValue[$logInd] = $wissUsage->month." ".$wissUsage->year;
+            $logMonth[$logInd] = $wissUsage->month." ".$wissUsage->year;
+            $logCount[$logInd] = $wissUsage->counts;
             $logInd++;
         }
     ?>
     labels: [
     <?php
-        foreach (array_reverse($logValue) as $key => $layer){
+        foreach (array_reverse($logMonth) as $key => $layer){
             echo "'".$layer."',";
         }
         // foreach($wissUsages as $wissUsage){
@@ -580,9 +581,13 @@ var myLineChart = new Chart(ctx, {
     //   data: [1000, 10000, 5000],
     data: [
         <?php
-        foreach($wissUsages as $wissUsage){
-            echo $wissUsage->counts.",";
+
+        foreach (array_reverse($logCount) as $key => $layer){
+            echo "'".$layer."',";
         }
+        // foreach($wissUsages as $wissUsage){
+        //     echo $wissUsage->counts.",";
+        // }
     ?>
     ]
     }],
