@@ -102,7 +102,7 @@
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 SAP Interface PO 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 SAP Interface PO V2 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
