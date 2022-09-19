@@ -46,8 +46,7 @@ class IbgAddDeptApiController extends Controller
     // ======================================================================
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $req->input('empId')??'empId is empty';
-    $optionValue += $req->input('deptCode')??', deptCode is empty';
+    $optionValue = $req->input('empId')??'empId is empty' . $req->input('deptCode')??', deptCode is empty';
 // ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY

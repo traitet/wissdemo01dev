@@ -47,9 +47,8 @@ class IbgUpdateInfScheduleApiController extends Controller
     // ======================================================================
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $req->input('year')??'year is empty';
-    $optionValue += $req->input('period')??', period is empty';
-// ======================================================================
+    $optionValue = $req->input('year')??'year is empty' . $req->input('period')??', period is empty';
+    // ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================

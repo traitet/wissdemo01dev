@@ -47,9 +47,8 @@ class EmfgSaAddShelfApiController extends Controller
     // ======================================================================
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $req->input('slocCode')??'slocCode is empty';
-    $optionValue += $req->input('shelfName')??', shelfName is empty';
-// ======================================================================
+    $optionValue = $req->input('slocCode')??'slocCode is empty' . $req->input('shelfName')??', shelfName is empty';
+    // ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================

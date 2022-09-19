@@ -47,7 +47,7 @@ class EpsBgCheckingApiController extends Controller
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
     $optionValue = $req->input('docNum')??'docNum is empty';
-// ======================================================================
+    // ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================

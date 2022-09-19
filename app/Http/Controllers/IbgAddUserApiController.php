@@ -53,13 +53,12 @@ class IbgAddUserApiController extends Controller
     $permissionID = UserPermission::getPermissionID($permissionName);
     $optionValue = $req->input('docNum')??'empty';
 // ======================================================================
-        // ======================================================================
+    // ======================================================================
     // SET DATA WRITE LOG
     // ======================================================================
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $req->input('empId')??'empId is empty';
-    $optionValue += $req->input('userName')??', userName is empty';
+    $optionValue = $req->input('empId')??'empId is empty' . $req->input('userName')??', userName is empty';
 // ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY

@@ -44,9 +44,8 @@ class IfinRegisterAdminApiController extends Controller
     // ======================================================================
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $req->input('groupCode')??'groupCode is empty';
-    $optionValue += $req->input('userName')??', userName is empty';
-// ======================================================================
+    $optionValue = $req->input('groupCode')??'groupCode is empty' . $req->input('userName')??', userName is empty';
+    // ======================================================================
 
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY

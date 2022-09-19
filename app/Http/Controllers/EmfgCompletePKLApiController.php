@@ -45,9 +45,8 @@ class EmfgCompletePKLApiController extends Controller
     // ======================================================================
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $req->input('pickingList')??'pickingList is empty';
-    $optionValue += $req->input('palletNumber')??', palletNumber is empty';
-// ======================================================================
+    $optionValue = $req->input('pickingList')??'pickingList is empty' . $req->input('palletNumber')??', palletNumber is empty';
+    // ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================

@@ -46,9 +46,8 @@ class EmfgAddModelApiController extends Controller
     // ======================================================================
     $permissionName = $req->permissionAuth;
     $permissionID = UserPermission::getPermissionID($permissionName);
-    $optionValue = $req->input('modelCode')??'modelCode is empty';
-    $optionValue += $req->input('modleName')??', modleName is empty';
-// ======================================================================
+    $optionValue = $req->input('modelCode')??'modelCode is empty' . $req->input('modleName')??', modleName is empty';
+    // ======================================================================
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
         // ==========================================================================
