@@ -212,6 +212,15 @@ class AuthenticationAPIController extends Controller
             return abort(403);
         }
     }
+    public function getAuthenticateIssuePRAPI   (Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-sa-issue-pr',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
     // ========================================================================================================================
     //                                                      ROUTE GET/POST "IFIN"
     // ========================================================================================================================

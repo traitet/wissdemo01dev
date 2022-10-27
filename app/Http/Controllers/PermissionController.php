@@ -28,9 +28,15 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        $navigationItems = NavigationItem::where('active', '1')
-        ->orderBy('name')
-        ->get(['id','name']);
+        // $navigationItems = NavigationItem::where('active', '1')
+        // ->orderBy('name')
+        // ->get(['id','name']);
+
+        $navigationItems = NavigationItem::join('navigation_groups', 'navigation_items.navigation_group_id', '=', 'navigation_groups.id')
+                                            ->where('navigation_items.active', '1')
+                                            ->orderBy('name')
+                                            ->get(['navigation_items.*','navigation_groups.name as navigation_group_name']);
+
         return view('permissions.create',compact('navigationItems'));
     }
 

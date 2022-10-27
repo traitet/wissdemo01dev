@@ -254,6 +254,9 @@ Route::post('wiss-sa-ibg-update-inf-schedule/{permissionAuth}', [IbgUpdateInfSch
 // ========================================================================================================================
 Route::get('wiss-sa-add-eps-investment/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateAddInvestmentAPI'])->name("Add-Investment");
 Route::post('wiss-sa-add-eps-investment/{permissionAuth}', [EpsAddInvestmentApiController::class, 'getData'])->name('AddEPSInvestment.show');
+Route::get('wiss-sa-issue-pr/{permissionName}',[AuthenticationAPIController::class, 'getAuthenticateIssuePRAPI'])->name("Issue-PR");
+Route::post('wiss-sa-issue-pr/{permissionAuth}', [EpsIssuePRApiController::class, 'getData'])->name('IssuePR.show');
+
 
 // ========================================================================================================================
 //                                                      ROUTE GET/POST "IFIN"

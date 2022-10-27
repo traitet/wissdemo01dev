@@ -479,3 +479,15 @@ Route::get('wiss_atac_emfg_create_pallet_data_from_shopping/{obj}', function ($o
     $result = DB::connection('sqlsrv_atac_arisa_p02_db')->select("EXEC wiss_atac_emfg_create_pallet_data_from_shopping @picking_list_num ='$picking_list_num', @pallet_Number = '$pallet_Number'");
     return json_encode($result);
 });
+
+//========================================================================
+// 13.wiss_sa_issue_pr (sqlsrv_eps_db, SIAM_EPSDB)
+//========================================================================
+// http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_issue_pr/doc_num=PR22011422&comment=ReissuePR
+Route::get('wiss_sa_issue_pr/{obj}', function ($obj) {
+    parse_str($obj,$myArray);
+    $doc_num = $myArray['doc_num'];
+    $comment = $myArray['comment'];
+    $result = DB::connection('sqlsrv_eps_db')->select("EXEC SP_FIX_ISSUE_PR_NOT_COMPLETE @DOC_NUM ='$doc_num', @COMMENT = '$comment'");
+    return json_encode($result);
+});

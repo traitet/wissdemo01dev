@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WISS 2022</title>
     @include('theme.header')
-
     <style>
         @import url(//fonts.googleapis.com/css?family=Lato:700);
         body {
@@ -41,7 +40,6 @@
         tr:nth-child(even) {
             background-color: #dddddd;
         }
-
     </style>
     <script>
 
@@ -56,22 +54,29 @@
         });
 
         // ================================================================
+        // DATE HANDLE
+        // ================================================================
+        function dateStartHandler() {
+            const dateStart = $('#dateStart').val();
+            // console.log(dateStart);
+            $('#dateStart').val(dateStart);
+        }
+
+
+        // ================================================================
+        // DATE HANDLE
+        // ================================================================
+        function dateEndHandler() {
+            const dateEnd = $('#dateEnd').val();
+            // console.log(dateStart);
+            $('#dateEnd').val(dateEnd);
+        }
+
+        // ================================================================
         // CLEAR FORM
         // ================================================================
-        function clearForm() {
-            $('#docNum').val("");
-            var now = new Date();
-            var month = (now.getMonth() + 1);
-            var day = now.getDate();
-            if (month < 10)
-            month = "0" + month;
-            if (day < 10)
-            day = "0" + day;
-            var today = now.getFullYear() + '-' + month + '-' + day;
-            $('#dateStart').val(today);
-            $('#dateEnd').val(today);
-            $('#maxRecord').val("10");
-            $('#docType').val("1");
+        const clearForm = () => {
+            $('#myForm')[0].reset();
         }
 
         // ================================================================
@@ -91,32 +96,20 @@
 <body id="page-top">
     <div id="wrapper">
         @include('theme.sidebar')
-        {{-- Error message --}}
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-        {{-- End error message --}}
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 @include('theme.navbar')
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('permissions.store') }}">
+                <form method="POST" action="{{ route('AddEPSInvestment.show', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 Create Permission 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 Reissue PR 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -129,56 +122,80 @@
                             <div class="col-xl-12 col-lg-12">
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
-
-                                            <div class="row">
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <strong>Name:</strong>
-                                                        <input type="text" name="name" class="form-control" placeholder="Name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <strong>Navigation Item ID:</strong>
-                                                        <select class="form-control" name="navigation_item_id">
-                                                            @foreach($navigationItems as $key)
-                                                                <option value='{{$key->id}}'>{{$key->navigation_group_name}} / {{$key->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        {{-- <input type="text" name="nav_item_id" class="form-control" placeholder="Navigation Item ID"> --}}
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <strong>Sequence:</strong>
-                                                        <input type="text" name="sequence" class="form-control" placeholder="Sequence">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                                    <div class="form-group">
-                                                        <strong>Active:</strong>
-                                                        <select class="form-control" name="active">
-                                                            <option value="1" >Active</option>
-                                                            <option value="0" >Inactive</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                                </div>
+                                        <div class="form-group">
+                                            <div class="form-group form-inline">
+                                                <label for="prNumber">PR Number: </label>
+                                                <input class="form-control" type="text" class="" id="prNumber" name="prNumber">&nbsp;&nbsp;
+                                                <label for="prComment">Comment: </label>
+                                                <input class="form-control" type="text" class="" id="prComment" name="prComment">
                                             </div>
-
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                    </div> {{--End Contain fuild --}}
+                    </div>
 
 
 {{-- ========================================================= --}}
 {{-- SEARCH OUTPUT --}}
 {{-- ========================================================= --}}
+                    <div class="container-fluid">
+                        {{-- ========================================================= --}}
+                        {{-- CLASS ROW --}}
+                        {{-- ========================================================= --}}
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    {{-- ========================================================= --}}
+                                    {{-- CARD BODY --}}
+                                    {{-- ========================================================= --}}
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE --}}
+                                            {{-- ========================================================= --}}
+                                            <table class="table table-bordered" id="table_id" width="100%" cellspacing="0">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE HEADER --}}
+                                            {{-- ========================================================= --}}
+                                                <thead>
+                                                    <tr>
+                                                        <?php if (isset($keyArray)) {
+                                                            foreach ($keyArray as $key => $value) { ?>
+                                                                <th scope="col">{{$value}}</th>
+                                                        <?php  }
+                                                        } ?>
+                                                    </tr>
+                                                </thead>
+                                                {{-- ========================================================= --}}
+                                                {{-- TABLE BODY --}}
+                                                {{-- ========================================================= --}}
+                                                <tbody>
+                                                    <?php if (isset($result)) {
+                                                        foreach ($result as $keyResult => $row) { ?>
+                                                            <tr>
+                                                                <?php foreach ($row as $keyRow => $data) { ?>
+                                                                    <td>{{$row[$keyRow]}}</td>
+                                                                <?php } ?>
+                                                            </tr>
+                                                    <?php }
+                                                    } ?>
+                                                </tbody>
+                                            </table>
+                                            {{-- ========================================================= --}}
+                                            {{-- END TABLE --}}
+                                            {{-- ========================================================= --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
 
                 <footer class="sticky-footer bg-white">
@@ -227,4 +244,28 @@
         @include('theme.footer')
 </body>
 </html>
+<script>
+    $(document).ready( function() {
+    var now = new Date();
+    var month = (now.getMonth() + 1);
+    var day = now.getDate();
+    if (month < 10)
+    month = "0" + month;
+    if (day < 10)
+    day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+    $('#dateStart').val(today);
+    });
 
+    $(document).ready( function() {
+    var now = new Date();
+    var month = (now.getMonth() + 1);
+    var day = now.getDate();
+    if (month < 10)
+    month = "0" + month;
+    if (day < 10)
+    day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+    $('#dateEnd').val(today);
+    });
+</script>
