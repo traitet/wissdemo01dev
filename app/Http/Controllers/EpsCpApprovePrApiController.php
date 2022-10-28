@@ -48,8 +48,8 @@ class EpsCpApprovePrApiController extends Controller
         $optionValue = $req->input('docNum')??'docNum is empty';
     // ======================================================================
         // ======================================================================
-            // SET DATA RETURN TO VIEW
-            // ======================================================================
+        // SET DATA RETURN TO VIEW
+        // ======================================================================
             $docNumRtv = $req->input('docNum');
             $dateStartRtv = $req->input('dateStart');
             $dateEndRtv = $req->input('dateEnd');

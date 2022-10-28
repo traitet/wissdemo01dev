@@ -23,6 +23,9 @@ use App\Http\Controllers\EpsCpApprovePrApiController;
 use App\Http\Controllers\EmfgInventoryStockOutErrorApiController;
 use App\Http\Controllers\EdrawingCheckPasswordApiController;
 use App\Http\Controllers\EmfgAtacShoppingLogApiController;
+use App\Http\Controllers\ItssSatisfactionEachDepartmentApiController;
+use App\Http\Controllers\ItssPercentSatisfactionApiController;
+
 //==================================================================================================================
 //                                                     Maintain
 //==================================================================================================================
@@ -38,6 +41,7 @@ use App\Http\Controllers\IfinRegisterAdminApiController;
 use App\Http\Controllers\EmfgRevertShoppingStatusApiController;
 use App\Http\Controllers\EmfgCompletePKLApiController;
 use App\Http\Controllers\EmfgCreatePalletDataFromShoppingApiController;
+use App\Http\Controllers\EpsIssuePrApiController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChangePasswordController;
@@ -234,6 +238,14 @@ Route::post('eps-cp-approve-pr/{permissionAuth}', [EpsCpApprovePrApiController::
 Route::get('edrawing-check-password/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateEdrawingPasswordAPI'])->name("Password");
 Route::post('edrawing-check-password/{permissionAuth}', [EdrawingCheckPasswordApiController::class, 'getData'])->name('EdrawingPassword.show');
 
+// ========================================================================================================================
+//                                                     ROUTE GET/POST "ITSS"
+// ========================================================================================================================
+Route::get('wiss-itss-satisfaction-each-department/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateItssSatisfactionEachDepartmentAPI'])->name("Satisfaction-Each-Dept");
+Route::post('wiss-itss-satisfaction-each-department/{permissionAuth}', [ItssSatisfactionEachDepartmentApiController::class, 'getData'])->name('ItssSatisfactionEachDepartment.show');
+Route::get('wiss-itss-percent-satisfaction/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateItssPercentSatisfactionAPI'])->name("Percent-Satisfaction");
+Route::post('wiss-itss-percent-satisfaction/{permissionAuth}', [ItssPercentSatisfactionApiController::class, 'getData'])->name('ItssPercentSatisfaction.show');
+
 
 
 //#########################################################################################################################
@@ -255,7 +267,7 @@ Route::post('wiss-sa-ibg-update-inf-schedule/{permissionAuth}', [IbgUpdateInfSch
 Route::get('wiss-sa-add-eps-investment/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateAddInvestmentAPI'])->name("Add-Investment");
 Route::post('wiss-sa-add-eps-investment/{permissionAuth}', [EpsAddInvestmentApiController::class, 'getData'])->name('AddEPSInvestment.show');
 Route::get('wiss-sa-issue-pr/{permissionName}',[AuthenticationAPIController::class, 'getAuthenticateIssuePRAPI'])->name("Issue-PR");
-Route::post('wiss-sa-issue-pr/{permissionAuth}', [EpsIssuePRApiController::class, 'getData'])->name('IssuePR.show');
+Route::post('wiss-sa-issue-pr/{permissionAuth}', [EpsIssuePrApiController::class, 'getData'])->name('IssuePR.show');
 
 
 // ========================================================================================================================

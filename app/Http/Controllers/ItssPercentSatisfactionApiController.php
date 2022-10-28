@@ -18,13 +18,13 @@ use App\Models\UserPermission;
 // ==========================================================================
 // CLASS DECLARATION
 // ==========================================================================
-class EdrawingCheckPasswordApiController extends Controller
+class ItssPercentSatisfactionApiController extends Controller
 {
 
 // ==========================================================================
 // DECLARE END POINT
 // ==========================================================================
-    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/edrawing_check_password_obj';
+    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/wiss_itss_percent_satisfaction';
 
 // ==========================================================================
 // GET DATA
@@ -77,13 +77,13 @@ class EdrawingCheckPasswordApiController extends Controller
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
                      Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
-                    return view('edrawing-check-password', compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','permissionName'));
+                    return view('wiss-itss-percent-satisfaction', compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','permissionName'));
                 }else{
                     //need to return no data msg
                     $keyArray = [];
                 }
             }
             Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
-            return view('edrawing-check-password',compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','permissionName'));
+            return view('wiss-itss-percent-satisfaction',compact('result', 'keyArray','docNumRtv','dateStartRtv','dateEndRtv','maxRecordRtv','permissionName'));
     }
 }

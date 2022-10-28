@@ -314,6 +314,36 @@ Route::get('wiss_atac_emfg_shopping_log/{obj}', function ($obj) {
     return json_encode($result);
 });
 
+//========================================================================
+// 20) wiss_itss_percent_satisfaction  (sqlsrv_ap_itss_db, AP_ITSS)
+//========================================================================
+// http://10.100.1.94:8080/wissdemo01/public/api/wiss_itss_percent_satisfaction/doc_num=ATAC&start_date=20221001&end_date=20221028&max_record=100
+Route::get('wiss_itss_percent_satisfaction/{obj}', function ($obj) {
+    parse_str($obj,$myArray);
+    $doc_num = $myArray['doc_num'];
+    $start_date = $myArray['start_date'];
+    $end_date = $myArray['end_date'];
+    $max_record = $myArray['max_record'];
+    $result = DB::connection('sqlsrv_ap_itss_db')->select("EXEC wiss_itss_percent_satisfaction '$start_date','$end_date','$doc_num',$max_record");
+    return json_encode($result);
+});
+
+//========================================================================
+// 21) wiss_itss_percent_satisfaction  (sqlsrv_ap_itss_db, AP_ITSS)
+//========================================================================
+// http://10.100.1.94:8080/wissdemo01/public/api/wiss_itss_satisfaction_each_department/doc_num=ATAC&start_date=20221001&end_date=20221028&max_record=100
+Route::get('wiss_itss_satisfaction_each_department/{obj}', function ($obj) {
+    parse_str($obj,$myArray);
+    $doc_num = $myArray['doc_num'];
+    $start_date = $myArray['start_date'];
+    $end_date = $myArray['end_date'];
+    $max_record = $myArray['max_record'];
+    $result = DB::connection('sqlsrv_ap_itss_db')->select("EXEC wiss_itss_satisfaction_each_department '$start_date','$end_date','$doc_num',$max_record");
+    return json_encode($result);
+});
+
+
+
 
 
 // **********************************************************************************************************************************************
@@ -483,11 +513,11 @@ Route::get('wiss_atac_emfg_create_pallet_data_from_shopping/{obj}', function ($o
 //========================================================================
 // 13.wiss_sa_issue_pr (sqlsrv_eps_db, SIAM_EPSDB)
 //========================================================================
-// http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_issue_pr/doc_num=PR22011422&comment=ReissuePR
-Route::get('wiss_sa_issue_pr/{obj}', function ($obj) {
+// http://10.100.1.94:8080/wissdemo01/public/api/wiss_fix_issue_pr_not_complete/doc_num=PR22011422&comment=ReissuePR
+Route::get('wiss_fix_issue_pr_not_complete/{obj}', function ($obj) {
     parse_str($obj,$myArray);
     $doc_num = $myArray['doc_num'];
     $comment = $myArray['comment'];
-    $result = DB::connection('sqlsrv_eps_db')->select("EXEC SP_FIX_ISSUE_PR_NOT_COMPLETE @DOC_NUM ='$doc_num', @COMMENT = '$comment'");
+    $result = DB::connection('sqlsrv_eps_db')->select("EXEC wiss_fix_issue_pr_not_complete '$doc_num', '$comment'");
     return json_encode($result);
 });

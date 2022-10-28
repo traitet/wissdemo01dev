@@ -54,31 +54,22 @@
         });
 
         // ================================================================
-        // DATE HANDLE
-        // ================================================================
-        function dateStartHandler() {
-            const dateStart = $('#dateStart').val();
-            // console.log(dateStart);
-            $('#dateStart').val(dateStart);
-        }
-
-
-        // ================================================================
-        // DATE HANDLE
-        // ================================================================
-        function dateEndHandler() {
-            const dateEnd = $('#dateEnd').val();
-            // console.log(dateStart);
-            $('#dateEnd').val(dateEnd);
-        }
-
-        // ================================================================
         // CLEAR FORM
         // ================================================================
-        const clearForm = () => {
-            $('#myForm')[0].reset();
-            $('#prNumber').val("");
-            $('#prComment').val("");
+        function clearForm() {
+            $('#docNum').val("");
+            var now = new Date();
+            var month = (now.getMonth() + 1);
+            var day = now.getDate();
+            if (month < 10)
+            month = "0" + month;
+            if (day < 10)
+            day = "0" + day;
+            var today = now.getFullYear() + '-' + month + '-' + day;
+            $('#dateStart').val(today);
+            $('#dateEnd').val(today);
+            $('#maxRecord').val("10");
+            $('#docType').val("1");
         }
 
         // ================================================================
@@ -101,27 +92,17 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 @include('theme.navbar')
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('IssuePR.show', $permissionName) }}" id="myForm">
+                <form method="POST" action="{{ route('ItssSatisfactionEachDepartment.show', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 Reissue PR 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 Satisfaction Each Department 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -136,22 +117,48 @@
                                     <div class="card-body">
                                         <div class="form-group">
                                             <div class="form-group form-inline">
-                                                <label for="prNumber">PR Number: </label>
-                                                <input class="form-control" type="text" class="" id="prNumber" name="prNumber" value="<?php
-                                                if (isset($prNumberRtv)) {
-                                                    echo $prNumberRtv;
-                                                }
-                                                ?>">&nbsp;&nbsp;
-                                                <label for="prComment">Comment: </label>
-                                                <input class="form-control" type="text" class="" id="prComment" name="prComment" value="<?php
-                                                if (isset($prCommentRtv)) {
-                                                    echo $prCommentRtv;
-                                                }
-                                                ?>">
+                                                <label for="docNum">Doc Num: </label>
+                                                <input class="form-control" type="text" class="" id="docNum" name="docNum"
+                                                value="<?php
+                                                    if (isset($docNumRtv)) {
+                                                        echo $docNumRtv;
+                                                    }
+                                                ?>"
+                                                >&nbsp;&nbsp;
+                                                <label for="dateStart">Date Start: </label>
+                                                <input class="form-control" type="date" class="" id="dateStart" name="dateStart"
+                                                value="<?php
+                                                    if (isset($dateStartRtv)) {
+                                                        echo $dateStartRtv;
+                                                    }else{
+                                                        echo date("Y-m-d");
+                                                    }
+                                                    ?>"
+                                                >
+                                                &nbsp;&nbsp;
+                                                <label for="dateEnd">Date End: </label>
+                                                <input class="form-control" type="date" class="" id="dateEnd" name="dateEnd"
+                                                value="<?php
+                                                    if (isset($dateEndRtv)) {
+                                                        echo $dateEndRtv;
+                                                    }else{
+                                                        echo date("Y-m-d");
+                                                    }
+                                                    ?>"
+                                                >
+                                                &nbsp;&nbsp;
+
+                                                <label for="record">Record: </label>
+                                                <select class="form-control" id="maxRecord" name="maxRecord">
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "10") echo "selected"; ?> value="10"  >10</option>
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "100") echo "selected"; ?> value="100" >100</option>
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "1000") echo "selected"; ?> value="1000">1000</option>
+                                                </select>
+
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Search</button>
                                             <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
                                         </div>
                                     </div>
@@ -264,28 +271,3 @@
         @include('theme.footer')
 </body>
 </html>
-<script>
-    $(document).ready( function() {
-    var now = new Date();
-    var month = (now.getMonth() + 1);
-    var day = now.getDate();
-    if (month < 10)
-    month = "0" + month;
-    if (day < 10)
-    day = "0" + day;
-    var today = now.getFullYear() + '-' + month + '-' + day;
-    $('#dateStart').val(today);
-    });
-
-    $(document).ready( function() {
-    var now = new Date();
-    var month = (now.getMonth() + 1);
-    var day = now.getDate();
-    if (month < 10)
-    month = "0" + month;
-    if (day < 10)
-    day = "0" + day;
-    var today = now.getFullYear() + '-' + month + '-' + day;
-    $('#dateEnd').val(today);
-    });
-</script>

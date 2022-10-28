@@ -222,6 +222,27 @@ class AuthenticationAPIController extends Controller
         }
     }
     // ========================================================================================================================
+    //                                                      ROUTE GET/POST "ITSS"
+    // ========================================================================================================================
+    public function getAuthenticateItssSatisfactionEachDepartmentAPI   (Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-itss-satisfaction-each-department',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
+    public function getAuthenticateItssPercentSatisfactionAPI   (Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-itss-percent-satisfaction',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
+    // ========================================================================================================================
     //                                                      ROUTE GET/POST "IFIN"
     // ========================================================================================================================
     public function getAuthenticateRevertDocAPI    (Request $request)
