@@ -531,16 +531,7 @@ Route::get('import_data', function ($obj) {
     parse_str($obj,$myArray);
     // $doc_num = $myArray['doc_num'];
     // $comment = $myArray['comment'];
-    $result = DB::connection('sqlsrv_eps_db')->select("
-    EXEC import_data @data = '<root>
-    <row>
-    <name>product1</name>
-    <qty>10</qty>
-    </row>
-    <row>
-    <name>product2</name>
-    <qty>20</qty>
-    </row>
-    </root>'");
+    $data = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
+    $result = DB::connection('sqlsrv_aiap_test_db')->select("EXEC import_data @data = '$data'");
     return json_encode($result);
 });
