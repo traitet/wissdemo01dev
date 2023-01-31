@@ -518,6 +518,6 @@ Route::get('wiss_fix_issue_pr_not_complete/{obj}', function ($obj) {
     parse_str($obj,$myArray);
     $doc_num = $myArray['doc_num'];
     $comment = $myArray['comment'];
-    $result = DB::connection('sqlsrv_eps_db')->select("EXEC wiss_fix_issue_pr_not_complete '$doc_num', '$comment'");
+    $result = DB::connection('sqlsrv_eps_db')->select("EXEC wiss_fix_issue_pr_not_complete @doc_num='$doc_num', @comment='$comment'");
     return json_encode($result);
 });

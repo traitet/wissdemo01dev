@@ -137,16 +137,18 @@
                                         <div class="form-group">
                                             <div class="form-group form-inline">
                                                 <label for="prNumber">PR Number: </label>
-                                                <input class="form-control" type="text" class="" id="prNumber" name="prNumber" value="<?php
-                                                if (isset($prNumberRtv)) {
-                                                    echo $prNumberRtv;
-                                                }
+                                                <input class="form-control" type="text" class="" id="prNumber" name="prNumber"
+                                                value="<?php
+                                                    if (isset($prNumberRtv)) {
+                                                        echo $prNumberRtv;
+                                                    }
                                                 ?>">&nbsp;&nbsp;
                                                 <label for="prComment">Comment: </label>
-                                                <input class="form-control" type="text" class="" id="prComment" name="prComment" value="<?php
-                                                if (isset($prCommentRtv)) {
-                                                    echo $prCommentRtv;
-                                                }
+                                                <input class="form-control" type="text" class="" id="prComment" name="prComment"
+                                                value="<?php
+                                                    if (isset($prCommentRtv)) {
+                                                        echo $prCommentRtv;
+                                                    }
                                                 ?>">
                                             </div>
                                         </div>
