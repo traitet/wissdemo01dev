@@ -521,3 +521,26 @@ Route::get('wiss_fix_issue_pr_not_complete/{obj}', function ($obj) {
     $result = DB::connection('sqlsrv_eps_db')->select("EXEC wiss_fix_issue_pr_not_complete @doc_num='$doc_num', @comment='$comment'");
     return json_encode($result);
 });
+
+
+//========================================================================
+// wiss_aiap_test_import (sqlsrv_aiap_test_db, AIAP_TEST01)
+//========================================================================
+// http://10.100.1.94:8080/wissdemo01/public/api/wiss_aiap_test_import_excel
+Route::get('wiss_aiap_test_import_excel', function ($obj) {
+    parse_str($obj,$myArray);
+    // $doc_num = $myArray['doc_num'];
+    // $comment = $myArray['comment'];
+    $result = DB::connection('sqlsrv_eps_db')->select("
+    EXEC import_data @data = <root>
+    <row>
+    <name>product1</name>
+    <qty>10</qty>
+    </row>
+    <row>
+    <name>product2</name>
+    <qty>20</qty>
+    </row>
+    </root>");
+    return json_encode($result);
+});
