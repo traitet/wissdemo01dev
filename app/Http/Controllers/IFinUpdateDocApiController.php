@@ -25,7 +25,7 @@ class IFinUpdateDocApiController extends Controller
 // DECLARE END POINT
 // ==========================================================================
     //private $ENDPOINT = 'http://localhost:8000/api/wiss_sa_ifin_get_doc_interface';
-    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_ifin_get_doc_interface';
+    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface';
 // ==========================================================================
 // GET DATA
 // ==========================================================================
