@@ -193,6 +193,7 @@ Route::get('emfg_shipping_order_status_obj/{obj}', function ($obj) {
 //========================================================================
 // 11) edrawing_check_password (sqlsrv_ags_j614_db,AGS_J614_J614)
 //========================================================================
+// http://10.100.1.94:8080/wissdemo01/public/api/edrawing_check_password_obj/start_date=20210101&end_date=20230131&doc_num=pusit&max_record=100
 Route::get('edrawing_check_password_obj/{obj}', function ($obj) {
     parse_str($obj,$myArray);
     $doc_num = $myArray['doc_num'];
@@ -342,7 +343,19 @@ Route::get('wiss_itss_satisfaction_each_department/{obj}', function ($obj) {
     return json_encode($result);
 });
 
-
+//========================================================================
+// 21) wiss_sa_ifin_get_doc_interface  (sqlsrv_siam_laser_q01_db, AP_ITSS)
+//========================================================================
+// http://127.0.0.1:8000/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
+// http://10.100.1.94:8080/wissdemo01/public/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
+Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
+    parse_str($obj,$myArray);
+    $doc_num = $myArray['doc_num'];
+    // $comment = $myArray['comment'];
+    //$data = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
+    $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
+    return json_encode($result);
+});
 
 
 
@@ -526,12 +539,24 @@ Route::get('wiss_fix_issue_pr_not_complete/{obj}', function ($obj) {
 //========================================================================
 // wiss_aiap_test_import (sqlsrv_aiap_test_db, AIAP_TEST01)
 //========================================================================
-// http://10.100.1.94:8080/wissdemo01/public/api/import_data
+// http://127.0.0.1:8000/api/edrawing_check_password_obj/start_date=20000101&end_date=20230131&doc_num=pusit&max_record=100
+// http://10.100.1.94:8080/wissdemo01dev/public/api/edrawing_check_password_obj/start_date=20000101&end_date=20230131&doc_num=pusit&max_record=100
+// http://127.0.0.1:8000/api/import_data -H 'Content-Type: application/xml'  -d '<data><element attribute="value">content</element></data>'
+
+// http://10.100.1.94:8080/wissdemo01dev/public/api/import_data
 Route::get('import_data', function ($obj) {
     parse_str($obj,$myArray);
-    // $doc_num = $myArray['doc_num'];
+    $doc_num = $myArray['doc_num'];
     // $comment = $myArray['comment'];
-    $data = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
-    $result = DB::connection('sqlsrv_aiap_test_db')->select("EXEC import_data @data = '$data'");
+    //$data = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
+    $result = DB::connection('sqlsrv_aiap_test_db')->select("EXEC import_data @data = '$doc_num'");
     return json_encode($result);
 });
+
+
+
+// Route::get('import_data', function () {
+//     $data = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
+//     $result = DB::connection('sqlsrv_aiap_test_db')->select("EXEC import_data @data = '$data'");
+//     return json_encode($result);
+// });

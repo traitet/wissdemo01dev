@@ -63,6 +63,7 @@ use App\Http\Controllers\ExternalURLController;
 // Authentication API
 use App\Http\Controllers\AuthenticationAPIController;
 use App\Http\Controllers\DeployController;
+use App\Http\Controllers\IFinUpdateDocApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -246,6 +247,11 @@ Route::post('wiss-itss-satisfaction-each-department/{permissionAuth}', [ItssSati
 Route::get('wiss-itss-percent-satisfaction/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateItssPercentSatisfactionAPI'])->name("Percent-Satisfaction");
 Route::post('wiss-itss-percent-satisfaction/{permissionAuth}', [ItssPercentSatisfactionApiController::class, 'getData'])->name('ItssPercentSatisfaction.show');
 
+// ========================================================================================================================
+//                                                     ROUTE GET/POST "E-Drawing"
+// ========================================================================================================================
+//Route::get('edrawing-check-password/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateEdrawingPasswordAPI'])->name("Password");
+Route::post('ifin-get-docs-interface/', [IFinUpdateDocApiController::class, 'getData'])->name('IFinGetDocInterface.show');
 
 
 //#########################################################################################################################
@@ -367,6 +373,6 @@ Route::get('/basic-report-api', function () {
 // ==========================================================================
 // TEST ROUTE VIEW DASHBOARD
 // ==========================================================================
-// Route::get('/userpermissions', function () {
-//     return view('userpermissions');
-// });
+ Route::get('/ifin', function () {
+     return view('ifin-get-doc-interface');
+ });
