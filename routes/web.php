@@ -38,6 +38,7 @@ use App\Http\Controllers\EmfgAddShelfApiController;
 use App\Http\Controllers\EmfgSaAddShelfApiController;
 use App\Http\Controllers\IfinRevertDocApiController;
 use App\Http\Controllers\IfinRegisterAdminApiController;
+use App\Http\Controllers\IFinUpdateDocApiController;
 use App\Http\Controllers\EmfgRevertShoppingStatusApiController;
 use App\Http\Controllers\EmfgCompletePKLApiController;
 use App\Http\Controllers\EmfgCreatePalletDataFromShoppingApiController;
@@ -63,7 +64,6 @@ use App\Http\Controllers\ExternalURLController;
 // Authentication API
 use App\Http\Controllers\AuthenticationAPIController;
 use App\Http\Controllers\DeployController;
-use App\Http\Controllers\IFinUpdateDocApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -247,13 +247,6 @@ Route::post('wiss-itss-satisfaction-each-department/{permissionAuth}', [ItssSati
 Route::get('wiss-itss-percent-satisfaction/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateItssPercentSatisfactionAPI'])->name("Percent-Satisfaction");
 Route::post('wiss-itss-percent-satisfaction/{permissionAuth}', [ItssPercentSatisfactionApiController::class, 'getData'])->name('ItssPercentSatisfaction.show');
 
-// ========================================================================================================================
-//                                                     ROUTE GET/POST "E-Drawing"
-// ========================================================================================================================
-//Route::get('edrawing-check-password/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateEdrawingPasswordAPI'])->name("Password");
-Route::post('ifin-get-docs-interface/', [IFinUpdateDocApiController::class, 'getData'])->name('IFinGetDocInterface.show');
-
-
 //#########################################################################################################################
 //#                                                  Maintain Program                                                     #
 //#########################################################################################################################
@@ -283,6 +276,12 @@ Route::get('wiss-sa-ifin-revert-doc/{permissionName}', [AuthenticationAPIControl
 Route::post('wiss-sa-ifin-revert-doc/{permissionAuth}', [IfinRevertDocApiController::class, 'getData'])->name('IfinRevertDoc.show');
 Route::get('wiss-sa-ifin-register-admin/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateRegisterAdminAPI'])->name("Register-Admin");
 Route::post('wiss-sa-ifin-register-admin/{permissionAuth}', [IfinRegisterAdminApiController::class, 'getData'])->name('IfinRegisterAdmin.show');
+
+Route::get('wiss-sa-ifin-update-doc/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateDocAPI'])->name("Update-Doc");
+Route::post('wiss-sa-ifin-update-doc/{permissionAuth}', [IFinUpdateDocApiController::class, 'getData'])->name('IFinGetDocInterface.show');
+
+// Route::post('ifin-get-docs-interface/', [IFinUpdateDocApiController::class, 'getData'])->name('IFinGetDocInterface.show');
+
 
 // ========================================================================================================================
 //                                                    ROUTE GET/POST "SA E-MFG"

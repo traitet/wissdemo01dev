@@ -263,6 +263,15 @@ class AuthenticationAPIController extends Controller
             return abort(403);
         }
     }
+    public function getAuthenticateUpdateDocAPI    (Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('ifin-get-doc-interface',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
     // ========================================================================================================================
     //                                                    ROUTE GET/POST "SA E-MFG"
     // ========================================================================================================================
