@@ -111,7 +111,7 @@ class IFinUpdateDocApiController extends Controller
             // CALL API
             // ======================================================================
             $url = $this->ENDPOINT2 ."/". $queryStr;
-            //dd($url);
+            dd($url);
             $response = Http::get($url);
             //dd($url);
             // ======================================================================

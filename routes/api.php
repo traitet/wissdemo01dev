@@ -358,11 +358,10 @@ Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
 });
 
 // http://127.0.0.1:8000/api/wiss_sa_ifin_update_doc_sap/data=xml
-Route::get('wiss_sa_ifin_update_doc_sap/{obj}', function ($obj) {
-    parse_str($obj,$myArray);
-    $data = $myArray['data'];
-    // $comment = $myArray['comment'];
-    //$data = '<root><row><id>32362</id><docsap>6600000066</docsap></row><row><id>32363</id><docsap>6600000067</docsap></row></root>';
+Route::get('wiss_sa_ifin_update_doc_sap', function () {
+    //parse_str($obj,$myArray);
+    //$data = $myArray['data'];
+    $data = '<root><row><id>32362</id><docsap>6600000066</docsap></row><row><id>32363</id><docsap>6600000067</docsap></row></root>';
     $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_update_doc_sap @data = '$data'");
     return json_encode($result);
 });
