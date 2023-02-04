@@ -97,19 +97,20 @@ class IFinUpdateDocApiController extends Controller
             $sapDoc[] = $req->input('sapdoc');
 
             $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
-
             for ($i = 0; $i < count($docId[0]); $i++){
                 $xmlRow = $xml->addChild("row");
                 $xmlRow->addChild("id", $docId[0][$i]);
                 $xmlRow->addChild("sapdoc", $sapDoc[0][$i]);
             }
 
-            //dd( $xml->asXML());
-
+            $xmlString = $xml->asXML();
+            $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
+            $queryStr = "data=".str_replace("\n",'',$xmlString);
+            //$queryStr = "data=".$xmlString;
             // ======================================================================
             // CALL API
             // ======================================================================
-            $url = $this->ENDPOINT2 ."/". $xml->asXML();
+            $url = $this->ENDPOINT2 ."/". $queryStr;
             //dd($url);
             $response = Http::get($url);
             //dd($url);
@@ -118,8 +119,8 @@ class IFinUpdateDocApiController extends Controller
             // ======================================================================
             if ($response->status() == 200) {
                 $resultRes = json_decode($response->body(), true);
-                if(!empty($result)){
-                    $keyArrayRes = array_keys($result[0]);
+                if(!empty($resultRes)){
+                    $keyArrayRes = array_keys($resultRes[0]);
                      //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
                     return view('ifin-update-doc-interface', compact('resultRes', 'keyArrayRes','permissionName'));
                 }else{
@@ -127,7 +128,7 @@ class IFinUpdateDocApiController extends Controller
                     $keyArrayRes = [];
                 }
             }
-            //dd($keyArray);
+            dd($response->status());
             //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
             return view('ifin-update-doc-interface',compact('resultRes', 'keyArrayRes','permissionName'));
 
