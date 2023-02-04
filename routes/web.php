@@ -279,6 +279,7 @@ Route::post('wiss-sa-ifin-register-admin/{permissionAuth}', [IfinRegisterAdminAp
 
 Route::get('wiss-sa-ifin-update-doc/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateDocAPI'])->name("Update-Doc");
 Route::post('wiss-sa-ifin-update-doc/{permissionAuth}', [IFinUpdateDocApiController::class, 'getData'])->name('IFinGetDocInterface.show');
+Route::post('wiss-sa-ifin-store-doc/{permissionAuth}', [IFinUpdateDocApiController::class, 'update'])->name('IFinGetDocInterface.update');
 
 // Route::post('ifin-get-docs-interface/', [IFinUpdateDocApiController::class, 'getData'])->name('IFinGetDocInterface.show');
 
@@ -372,6 +373,6 @@ Route::get('/basic-report-api', function () {
 // ==========================================================================
 // TEST ROUTE VIEW DASHBOARD
 // ==========================================================================
- Route::get('/ifin', function () {
-     return view('ifin-get-doc-interface');
- });
+//   Route::get('/ifin', function () {
+//       return view('ifin-get-doc-interface');
+//   });

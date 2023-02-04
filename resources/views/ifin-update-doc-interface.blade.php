@@ -95,42 +95,95 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('IFinGetDocInterface.show', $permissionName) }}" id="myForm">
+                <form method="POST" action="{{ route('IFinGetDocInterface.update', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 GET DOC IFIN 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 UPDATE DOC IFIN 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
                         {{-- SERCH PARAMTER --}}
                         {{-- ========================================================= --}}
                         <div class="row">
-                            {{-- ========================================================= --}}
-                            {{-- BASIC SEARCH --}}
-                            {{-- ========================================================= --}}
                             <div class="col-xl-12 col-lg-12">
                                 <div class="card shadow mb-4">
+                                    {{-- ========================================================= --}}
+                                    {{-- CARD BODY --}}
+                                    {{-- ========================================================= --}}
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <div class="form-group form-inline">
-                                                <label for="docNum">Doc Num: </label>
-                                                <input class="form-control" type="text" class="" id="docNum" name="docNum"
-                                                {{-- value="<?php
-                                                   // if (isset($docNumRtv)) {
-                                                        //echo $docNumRtv;
-                                                    //}
-                                                ?>" --}}
-                                                >&nbsp;&nbsp;
+                                        <div class="table-responsive">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE --}}
+                                            {{-- ========================================================= --}}
+                                            <table class="table table-bordered" id="table_id" width="100%" cellspacing="0">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE HEADER --}}
+                                            {{-- ========================================================= --}}
+                                                <thead>
+                                                    <tr>
+                                                        <?php
+                                                        if (isset($keyArray)) {
+                                                            foreach ($keyArray as $key => $value) { ?>
+                                                                <th scope="col">{{$value}}</th>
+                                                        <?php  }
+                                                        }else if(isset($keyArrayRes)) {
+                                                            foreach ($keyArrayRes as $key => $value) { ?>
+                                                            <th scope="col">{{$value}}</th>
+                                                            <?php  }
+                                                        }?>
+                                                    </tr>
+                                                </thead>
+                                                {{-- ========================================================= --}}
+                                                {{-- TABLE BODY --}}
+                                                {{-- ========================================================= --}}
+                                                <tbody>
+                                                    <?php if (isset($result)) {
+                                                        foreach ($result as $keyResult => $row) { ?>
+                                                            <tr>
+                                                                <?php
+                                                                foreach ($row as $keyRow => $data) {
+                                                                    if($keyRow == 'id'){ ?>
+                                                                        <input type="hidden" id="textbox" name="docId[]" value="{{$data}}">
+                                                                    <?php
+                                                                    }
+                                                                    if($keyRow == 'DOCSAP'){ ?>
+                                                                        <td>
+                                                                            <input type="textbox" id="textbox" name="sapdoc[]" value="{{$data}}">
+                                                                        </td>
+                                                                    <?php
+                                                                    }else{ ?>
+                                                                        <td>{{$row[$keyRow]}}</td>
+                                                                <?php
+                                                                    }
+                                                                } ?>
+                                                            </tr>
 
-                                            </div>
+                                                    <?php }
+                                                    }else if (isset($resultRes)) {
+                                                        foreach ($resultRes as $keyResult => $row) { ?>
+                                                            <tr>
+                                                                <?php
+                                                                foreach ($row as $keyRow => $data) { ?>
+                                                                    <td>{{$row[$keyRow]}}</td>
+                                                                <?php
+                                                                } ?>
+                                                            </tr>
+
+                                                    <?php }
+                                                    }  ?>
+                                                </tbody>
+                                            </table>
+                                            {{-- ========================================================= --}}
+                                            {{-- END TABLE --}}
+                                            {{-- ========================================================= --}}
                                         </div>
+                                        <br>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Search</button>
-                                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -140,6 +193,9 @@
 
                 </form>
 
+{{-- ========================================================= --}}
+{{-- SEARCH OUTPUT --}}
+{{-- ========================================================= --}}
 
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">

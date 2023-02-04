@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Log;
 use App\Models\UserPermission;
+use SimpleXMLElement;
 
 // ==========================================================================
 // CLASS DECLARATION
@@ -26,13 +27,17 @@ class IFinUpdateDocApiController extends Controller
 // ==========================================================================
     //private $ENDPOINT = 'http://localhost:8000/api/wiss_sa_ifin_get_doc_interface';
     private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface';
+    private $ENDPOINT2 = 'http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_update_doc_interface';
 // ==========================================================================
 // GET DATA
 // ==========================================================================
     function getData(Request $req)
     {
-        $this->validate($req, [
-            'docNum' => 'string||nullable'
+        // $this->validate($req, [
+        //     'docNum' => 'string||nullable'
+        // ]);
+        $req->validate([
+            'docNum' => 'required',
         ]);
         // ==========================================================================
         // API NAME
@@ -46,8 +51,8 @@ class IFinUpdateDocApiController extends Controller
         // ======================================================================
             // SET DATA WRITE LOG
             // ======================================================================
-            //$permissionName = $req->permissionAuth;
-            //$permissionID = UserPermission::getPermissionID($permissionName);
+            $permissionName = $req->permissionAuth;
+            $permissionID = UserPermission::getPermissionID($permissionName);
             $optionValue = $req->input('docNum')??'empty';
         // ==========================================================================
         // CHECK INPUT IF NOT EMPTY
@@ -71,15 +76,62 @@ class IFinUpdateDocApiController extends Controller
                 $result = json_decode($response->body(), true);
                 if(!empty($result)){
                     $keyArray = array_keys($result[0]);
-                     //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
-                    return view('ifin-get-doc-interface', compact('result', 'keyArray','docNumRtv'));
+                     Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
+                    return view('ifin-update-doc-interface', compact('result', 'keyArray','docNumRtv','permissionName'));
                 }else{
                     //need to return no data msg
                     $keyArray = [];
                 }
             }
-            dd($keyArray);
-            //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
-            return view('ifin-get-doc-interface',compact('result', 'keyArray','docNumRtv'));
+            //dd($keyArray);
+            Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
+            return view('ifin-update-doc-interface',compact('result', 'keyArray','docNumRtv','permissionName'));
     }
+    function update(Request $req)
+    {
+
+        // ======================================================================
+        // GET DATA FROM VIEW
+        // ======================================================================
+            $docId[] = $req->input('docId');
+            $sapDoc[] = $req->input('sapdoc');
+
+            $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
+
+            for ($i = 0; $i < count($docId[0]); $i++){
+                $xmlRow = $xml->addChild("row");
+                $xmlRow->addChild("id", $docId[0][$i]);
+                $xmlRow->addChild("sapdoc", $sapDoc[0][$i]);
+            }
+
+            //dd( $xml->asXML());
+
+            // ======================================================================
+            // CALL API
+            // ======================================================================
+            $url = $this->ENDPOINT2 ."/". $xml->asXML();
+            //dd($url);
+            $response = Http::get($url);
+            //dd($url);
+            // ======================================================================
+            // IF CALL SUCCCESS
+            // ======================================================================
+            if ($response->status() == 200) {
+                $resultRes = json_decode($response->body(), true);
+                if(!empty($result)){
+                    $keyArrayRes = array_keys($result[0]);
+                     //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
+                    return view('ifin-update-doc-interface', compact('resultRes', 'keyArrayRes','permissionName'));
+                }else{
+                    //need to return no data msg
+                    $keyArrayRes = [];
+                }
+            }
+            //dd($keyArray);
+            //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
+            return view('ifin-update-doc-interface',compact('resultRes', 'keyArrayRes','permissionName'));
+
+    }
+
+
 }

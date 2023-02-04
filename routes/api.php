@@ -352,8 +352,18 @@ Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
     parse_str($obj,$myArray);
     $doc_num = $myArray['doc_num'];
     // $comment = $myArray['comment'];
-    //$data = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
+    //$doc_num = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
     $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
+    return json_encode($result);
+});
+
+// http://127.0.0.1:8000/api/wiss_sa_ifin_update_doc_sap/data=xml
+Route::get('wiss_sa_ifin_update_doc_sap/{obj}', function ($obj) {
+    parse_str($obj,$myArray);
+    $data = $myArray['data'];
+    // $comment = $myArray['comment'];
+    //$data = '<root><row><id>32362</id><docsap>6600000066</docsap></row><row><id>32363</id><docsap>6600000067</docsap></row></root>';
+    $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_update_doc_sap @data = '$data'");
     return json_encode($result);
 });
 
