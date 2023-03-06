@@ -360,7 +360,6 @@ Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
 //========================================================================
 // 22) wiss_sa_ifin_get_doc_interface  (sqlsrv_siam_laser_d01_db, AP_ITSS)
 //========================================================================
-// http://127.0.0.1:8000/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
 // http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
 Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
     parse_str($obj,$myArray);
