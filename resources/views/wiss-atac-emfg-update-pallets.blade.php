@@ -97,14 +97,14 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('EmfgUpdateDocksATAC.update', $permissionName) }}" id="myForm">
+                <form method="POST" action="{{ route('EmfgUpdatePalletsATAC.update', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 E-MFG UPDATE DOCKS 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 E-MFG UPDATE PALLETS 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -151,7 +151,7 @@
                                                                 ?>
                                                                     <td>
                                                                         <?php
-                                                                        if($keyRow == 'DOCKCODE' or $keyRow == 'CUSTCODE' or $keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
+                                                                        if($keyRow == 'CREATEBY' or $keyRow == 'CREATEDATE' or $keyRow == 'CREATETIME' or $keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
                                                                         ?>
                                                                             <input type="hidden" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
                                                                             {{$data}}
@@ -194,7 +194,7 @@
                                             ?>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">Update</button>
-                                            <a class="btn btn-primary" href="{{ route('Update-Docks-ATAC','Update-Docks-ATAC') }}">Back</a>
+                                            <a class="btn btn-primary" href="{{ route('Update-Pallets-ATAC','Update-Pallets-ATAC') }}">Back</a>
                                         </div>
                                         <?php }
                                         ?>

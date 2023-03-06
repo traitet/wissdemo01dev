@@ -109,6 +109,33 @@ class AuthenticationAPIController extends Controller
             return abort(403);
         }
     }
+    public function getAuthenticateUpdateShelfsAPI(Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-get-shelfs',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
+    public function getAuthenticateUpdateModelsAPI(Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-get-models',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
+    public function getAuthenticateUpdatePalletsAPI(Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-get-pallets',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
     // ========================================================================================================================
     //                                                     ROUTE GET/POST "EPS"
     // ========================================================================================================================

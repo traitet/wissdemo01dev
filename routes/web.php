@@ -44,6 +44,9 @@ use App\Http\Controllers\EmfgCompletePKLApiController;
 use App\Http\Controllers\EmfgCreatePalletDataFromShoppingApiController;
 use App\Http\Controllers\EpsIssuePrApiController;
 use App\Http\Controllers\EmfgUpdateDocksApiController;
+use App\Http\Controllers\EmfgUpdateShelfsApiController;
+use App\Http\Controllers\EmfgUpdateModelsApiController;
+use App\Http\Controllers\EmfgUpdatePalletsApiController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChangePasswordController;
@@ -308,6 +311,16 @@ Route::post('wiss-atac-emfg-create-pallet-data-from-shopping/{permissionAuth}', 
 Route::get('wiss-atac-emfg-update-docks/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateDocksAPI'])->name("Update-Docks-ATAC");
 Route::post('wiss-atac-emfg-update-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'getData'])->name('EmfgUpdateDocksATAC.show');
 Route::post('wiss-atac-emfg-store-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'update'])->name('EmfgUpdateDocksATAC.update');
+Route::get('wiss-atac-emfg-update-shelfs/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateShelfsAPI'])->name("Update-Shelfs-ATAC");
+Route::post('wiss-atac-emfg-update-shelfs/{permissionAuth}', [EmfgUpdateShelfsApiController::class, 'getData'])->name('EmfgUpdateShelfsATAC.show');
+Route::post('wiss-atac-emfg-store-shelfs/{permissionAuth}', [EmfgUpdateShelfsApiController::class, 'update'])->name('EmfgUpdateShelfsATAC.update');
+Route::get('wiss-atac-emfg-update-models/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateModelsAPI'])->name("Update-Models-ATAC");
+Route::post('wiss-atac-emfg-update-models/{permissionAuth}', [EmfgUpdateModelsApiController::class, 'getData'])->name('EmfgUpdateModelsATAC.show');
+Route::post('wiss-atac-emfg-store-models/{permissionAuth}', [EmfgUpdateModelsApiController::class, 'update'])->name('EmfgUpdateModelsATAC.update');
+Route::get('wiss-atac-emfg-update-pallets/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdatePalletsAPI'])->name("Update-Pallets-ATAC");
+Route::post('wiss-atac-emfg-update-pallets/{permissionAuth}', [EmfgUpdatePalletsApiController::class, 'getData'])->name('EmfgUpdatePalletsATAC.show');
+Route::post('wiss-atac-emfg-store-pallets/{permissionAuth}', [EmfgUpdatePalletsApiController::class, 'update'])->name('EmfgUpdatePalletsATAC.update');
+
 
 // ========================================================================================================================
 //                                                    ROUTE GET/POST "Logs"

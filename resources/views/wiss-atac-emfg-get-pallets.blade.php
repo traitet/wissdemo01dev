@@ -81,8 +81,6 @@
             );
         }
     </script>
-
-
 </head>
 
 {{-- ============================================================================================================================== --}}
@@ -97,18 +95,107 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('EmfgUpdateDocksATAC.update', $permissionName) }}" id="myForm">
+                <form method="POST" action="{{ route('EmfgUpdatePalletsATAC.show', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 E-MFG UPDATE DOCKS 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 E-MFG UPDATE PALLETS 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
                         {{-- SERCH PARAMTER --}}
+                        {{-- ========================================================= --}}
+                        <div class="row">
+                            {{-- ========================================================= --}}
+                            {{-- BASIC SEARCH --}}
+                            {{-- ========================================================= --}}
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="form-group form-inline">
+                                                <label for="docNum">Doc Num: </label>
+                                                <input class="form-control" type="text" class="" id="docNum" name="docNum"
+                                                value="<?php
+                                                    if (isset($docNumRtv)) {
+                                                        echo $docNumRtv;
+                                                    }
+                                                ?>"
+                                                >&nbsp;&nbsp;
+                                                <label for="dateStart">Date Start: </label>
+                                                <input class="form-control" type="date" class="" id="dateStart" name="dateStart"
+                                                value="<?php
+                                                    if (isset($dateStartRtv)) {
+                                                        echo $dateStartRtv;
+                                                    }else{
+                                                        echo date("Y-m-d");
+                                                    }
+                                                    ?>"
+                                                >
+                                                &nbsp;&nbsp;
+                                                <label for="dateEnd">Date End: </label>
+                                                <input class="form-control" type="date" class="" id="dateEnd" name="dateEnd"
+                                                value="<?php
+                                                    if (isset($dateEndRtv)) {
+                                                        echo $dateEndRtv;
+                                                    }else{
+                                                        echo date("Y-m-d");
+                                                    }
+                                                    ?>"
+                                                >
+                                                &nbsp;&nbsp;
+
+                                                <label for="record">Record: </label>
+                                                <select class="form-control" id="maxRecord" name="maxRecord">
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "10") echo "selected"; ?> value="10"  >10</option>
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "100") echo "selected"; ?> value="100" >100</option>
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "1000") echo "selected"; ?> value="1000">1000</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Search</button>
+                                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Error no data message --}}
+                        @if (isset($error))
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                    <li>{{ $error }}</li>
+                            </ul>
+                        </div>
+                        @endif
+                        {{-- End no data message --}}
+                        {{-- Error validationmessage --}}
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+                        {{-- End error message --}}
+                    </div>
+
+
+{{-- ========================================================= --}}
+{{-- SEARCH OUTPUT --}}
+{{-- ========================================================= --}}
+                    <div class="container-fluid">
+                        {{-- ========================================================= --}}
+                        {{-- CLASS ROW --}}
                         {{-- ========================================================= --}}
                         <div class="row">
                             <div class="col-xl-12 col-lg-12">
@@ -127,16 +214,11 @@
                                             {{-- ========================================================= --}}
                                                 <thead>
                                                     <tr>
-                                                        <?php
-                                                        if (isset($keyArray)) {
+                                                        <?php if (isset($keyArray)) {
                                                             foreach ($keyArray as $key => $value) { ?>
                                                                 <th scope="col">{{$value}}</th>
                                                         <?php  }
-                                                        }elseif(isset($keyArrayRes)) {
-                                                            foreach ($keyArrayRes as $key => $value) { ?>
-                                                                <th scope="col">{{$value}}</th>
-                                                        <?php }
-                                                        }?>
+                                                        } ?>
                                                     </tr>
                                                 </thead>
                                                 {{-- ========================================================= --}}
@@ -146,79 +228,24 @@
                                                     <?php if (isset($result)) {
                                                         foreach ($result as $keyResult => $row) { ?>
                                                             <tr>
-                                                                <?php
-                                                                foreach ($row as $keyRow => $data) {
-                                                                ?>
-                                                                    <td>
-                                                                        <?php
-                                                                        if($keyRow == 'DOCKCODE' or $keyRow == 'CUSTCODE' or $keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
-                                                                        ?>
-                                                                            <input type="hidden" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
-                                                                            {{$data}}
-                                                                        <?php
-                                                                        }else{
-                                                                        ?>
-                                                                            <input type="textbox" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
-                                                                        <?php
-                                                                        }
-                                                                        ?>
-
-                                                                    </td>
-                                                                    <?php
-                                                                } ?>
+                                                                <?php foreach ($row as $keyRow => $data) { ?>
+                                                                    <td>{{$row[$keyRow]}}</td>
+                                                                <?php } ?>
                                                             </tr>
-
                                                     <?php }
-                                                    }else if (isset($resultRes)) {
-                                                        foreach ($resultRes as $keyResult => $row) { ?>
-
-                                                            <tr>
-                                                                <?php
-                                                                foreach ($row as $keyRow => $data) { ?>
-                                                                    <td>{{$data}}</td>
-                                                                <?php
-                                                                } ?>
-                                                            </tr>
-
-                                                    <?php }
-                                                    }
-                                                      ?>
+                                                    } ?>
                                                 </tbody>
                                             </table>
                                             {{-- ========================================================= --}}
                                             {{-- END TABLE --}}
                                             {{-- ========================================================= --}}
                                         </div>
-                                        <br>
-                                        <?php if (isset($result)) {
-                                            ?>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                            <a class="btn btn-primary" href="{{ route('Update-Docks-ATAC','Update-Docks-ATAC') }}">Back</a>
-                                        </div>
-                                        <?php }
-                                        ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- Error no data message --}}
-                        @if (isset($error))
-                        <div class="alert alert-danger">
-                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                            <ul>
-                                    <li>{{ $error }}</li>
-                            </ul>
-                        </div>
-                        @endif
-                        {{-- End no data message --}}
                     </div>
-
                 </form>
-
-{{-- ========================================================= --}}
-{{-- SEARCH OUTPUT --}}
-{{-- ========================================================= --}}
 
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
