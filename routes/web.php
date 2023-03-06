@@ -43,6 +43,7 @@ use App\Http\Controllers\EmfgRevertShoppingStatusApiController;
 use App\Http\Controllers\EmfgCompletePKLApiController;
 use App\Http\Controllers\EmfgCreatePalletDataFromShoppingApiController;
 use App\Http\Controllers\EpsIssuePrApiController;
+use App\Http\Controllers\EmfgUpdateDocksApiController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChangePasswordController;
@@ -303,6 +304,10 @@ Route::get('wiss-atac-emfg-complete-pkl/{permissionName}', [AuthenticationAPICon
 Route::post('wiss-atac-emfg-complete-pkl/{permissionAuth}', [EmfgCompletePKLApiController::class, 'getData'])->name('EmfgCompletePklATAC.show');
 Route::get('wiss-atac-emfg-create-pallet-data-from-shopping/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateCompletePalletATACPI'])->name("Complete-Pallet-ATAC");
 Route::post('wiss-atac-emfg-create-pallet-data-from-shopping/{permissionAuth}', [EmfgCreatePalletDataFromShoppingApiController::class, 'getData'])->name('EmfgCreatePalletATAC.show');
+
+Route::get('wiss-atac-emfg-update-docks/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateDocksAPI'])->name("Update-Docks-ATAC");
+Route::post('wiss-atac-emfg-update-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'getData'])->name('EmfgUpdateDocksATAC.show');
+Route::post('wiss-atac-emfg-store-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'update'])->name('EmfgUpdateDocksATAC.update');
 
 // ========================================================================================================================
 //                                                    ROUTE GET/POST "Logs"

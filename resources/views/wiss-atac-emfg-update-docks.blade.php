@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WISS 2022</title>
     @include('theme.header')
-
     <style>
         @import url(//fonts.googleapis.com/css?family=Lato:700);
         body {
@@ -82,6 +81,8 @@
             );
         }
     </script>
+
+
 </head>
 
 {{-- ============================================================================================================================== --}}
@@ -96,48 +97,111 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('IFinGetDocInterface.show', $permissionName) }}" id="myForm">
+                <form method="POST" action="{{ route('EmfgUpdateDocksATAC.update', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 DOCUMENT INTERFACE SAP 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 E-MFG UPDATE DOCKS 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
                         {{-- SERCH PARAMTER --}}
                         {{-- ========================================================= --}}
                         <div class="row">
-                            {{-- ========================================================= --}}
-                            {{-- BASIC SEARCH --}}
-                            {{-- ========================================================= --}}
                             <div class="col-xl-12 col-lg-12">
                                 <div class="card shadow mb-4">
+                                    {{-- ========================================================= --}}
+                                    {{-- CARD BODY --}}
+                                    {{-- ========================================================= --}}
                                     <div class="card-body">
-                                        <div class="form-group">
-                                            <div class="form-group form-inline">
-                                                <label for="docNum">Doc Num: </label>
-                                                <input class="form-control" type="text" class="" id="docNum" name="docNum"
-                                                value="<?php
-                                                   if (isset($docNumRtv)) {
-                                                        echo $docNumRtv;
-                                                    }
-                                                ?>"
-                                                >&nbsp;&nbsp;
+                                        <div class="table-responsive">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE --}}
+                                            {{-- ========================================================= --}}
+                                            <table class="table table-bordered" id="table_id" width="100%" cellspacing="0">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE HEADER --}}
+                                            {{-- ========================================================= --}}
+                                                <thead>
+                                                    <tr>
+                                                        <?php
+                                                        if (isset($keyArray)) {
+                                                            foreach ($keyArray as $key => $value) { ?>
+                                                                <th scope="col">{{$value}}</th>
+                                                        <?php  }
+                                                        }elseif(isset($keyArrayRes)) {
+                                                            foreach ($keyArrayRes as $key => $value) { ?>
+                                                                <th scope="col">{{$value}}</th>
+                                                        <?php }
+                                                        }?>
+                                                    </tr>
+                                                </thead>
+                                                {{-- ========================================================= --}}
+                                                {{-- TABLE BODY --}}
+                                                {{-- ========================================================= --}}
+                                                <tbody>
+                                                    <?php if (isset($result)) {
+                                                        foreach ($result as $keyResult => $row) { ?>
+                                                            <tr>
+                                                                <?php
+                                                                foreach ($row as $keyRow => $data) {
+                                                                ?>
+                                                                    <td>
+                                                                        <?php
+                                                                        if($keyRow == 'DOCKCODE' or $keyRow == 'CUSTCODE'){
+                                                                        ?>
+                                                                            <input type="hidden" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
+                                                                            {{$data}}
+                                                                        <?php
+                                                                        }else{
+                                                                        ?>
+                                                                            <input type="textbox" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
+                                                                        <?php
+                                                                        }
+                                                                        ?>
 
-                                            </div>
+                                                                    </td>
+                                                                    <?php
+                                                                } ?>
+                                                            </tr>
+
+                                                    <?php }
+                                                    }else if (isset($resultRes)) {
+                                                        foreach ($resultRes as $keyResult => $row) { ?>
+
+                                                            <tr>
+                                                                <?php
+                                                                foreach ($row as $keyRow => $data) { ?>
+                                                                    <td>{{$data}}</td>
+                                                                <?php
+                                                                } ?>
+                                                            </tr>
+
+                                                    <?php }
+                                                    }
+                                                      ?>
+                                                </tbody>
+                                            </table>
+                                            {{-- ========================================================= --}}
+                                            {{-- END TABLE --}}
+                                            {{-- ========================================================= --}}
                                         </div>
+                                        <br>
+                                        <?php if (isset($result)) {
+                                            ?>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Search</button>
-                                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <a class="btn btn-primary" href="{{ route('Update-Docks-ATAC','Update-Docks-ATAC') }}">Back</a>
                                         </div>
+                                        <?php }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         {{-- Error no data message --}}
                         @if (isset($error))
                         <div class="alert alert-danger">
@@ -148,22 +212,13 @@
                         </div>
                         @endif
                         {{-- End no data message --}}
-                        {{-- Error validationmessage --}}
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-                        {{-- End error message --}}
-
                     </div>
 
                 </form>
+
+{{-- ========================================================= --}}
+{{-- SEARCH OUTPUT --}}
+{{-- ========================================================= --}}
 
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">

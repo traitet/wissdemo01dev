@@ -100,6 +100,15 @@ class AuthenticationAPIController extends Controller
             return abort(403);
         }
     }
+    public function getAuthenticateUpdateDocksAPI(Request $request)
+    {
+        if(User::getPermission($request->permissionName, Auth::user()->email)){
+            $permissionName = $request->permissionName;
+            return view('wiss-atac-emfg-get-docks',compact('permissionName'));
+        }else{
+            return abort(403);
+        }
+    }
     // ========================================================================================================================
     //                                                     ROUTE GET/POST "EPS"
     // ========================================================================================================================

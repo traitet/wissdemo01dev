@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WISS 2022</title>
     @include('theme.header')
-
     <style>
         @import url(//fonts.googleapis.com/css?family=Lato:700);
         body {
@@ -96,14 +95,14 @@
                 {{-- =============================================================== --}}
                 {{-- FORM  ACTION = VIEW --}}
                 {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('IFinGetDocInterface.show', $permissionName) }}" id="myForm">
+                <form method="POST" action="{{ route('EmfgUpdateDocksATAC.show', $permissionName) }}" id="myForm">
                     @csrf
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 DOCUMENT INTERFACE SAP 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 E-MFG UPDATE DOCKS 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -121,11 +120,40 @@
                                                 <label for="docNum">Doc Num: </label>
                                                 <input class="form-control" type="text" class="" id="docNum" name="docNum"
                                                 value="<?php
-                                                   if (isset($docNumRtv)) {
+                                                    if (isset($docNumRtv)) {
                                                         echo $docNumRtv;
                                                     }
                                                 ?>"
                                                 >&nbsp;&nbsp;
+                                                <label for="dateStart">Date Start: </label>
+                                                <input class="form-control" type="date" class="" id="dateStart" name="dateStart"
+                                                value="<?php
+                                                    if (isset($dateStartRtv)) {
+                                                        echo $dateStartRtv;
+                                                    }else{
+                                                        echo date("Y-m-d");
+                                                    }
+                                                    ?>"
+                                                >
+                                                &nbsp;&nbsp;
+                                                <label for="dateEnd">Date End: </label>
+                                                <input class="form-control" type="date" class="" id="dateEnd" name="dateEnd"
+                                                value="<?php
+                                                    if (isset($dateEndRtv)) {
+                                                        echo $dateEndRtv;
+                                                    }else{
+                                                        echo date("Y-m-d");
+                                                    }
+                                                    ?>"
+                                                >
+                                                &nbsp;&nbsp;
+
+                                                <label for="record">Record: </label>
+                                                <select class="form-control" id="maxRecord" name="maxRecord">
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "10") echo "selected"; ?> value="10"  >10</option>
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "100") echo "selected"; ?> value="100" >100</option>
+                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "1000") echo "selected"; ?> value="1000">1000</option>
+                                                </select>
 
                                             </div>
                                         </div>
@@ -137,7 +165,6 @@
                                 </div>
                             </div>
                         </div>
-
                         {{-- Error no data message --}}
                         @if (isset($error))
                         <div class="alert alert-danger">
@@ -160,9 +187,64 @@
                         </div>
                         @endif
                         {{-- End error message --}}
-
                     </div>
 
+
+{{-- ========================================================= --}}
+{{-- SEARCH OUTPUT --}}
+{{-- ========================================================= --}}
+                    <div class="container-fluid">
+                        {{-- ========================================================= --}}
+                        {{-- CLASS ROW --}}
+                        {{-- ========================================================= --}}
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    {{-- ========================================================= --}}
+                                    {{-- CARD BODY --}}
+                                    {{-- ========================================================= --}}
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE --}}
+                                            {{-- ========================================================= --}}
+                                            <table class="table table-bordered" id="table_id" width="100%" cellspacing="0">
+                                            {{-- ========================================================= --}}
+                                            {{-- TABLE HEADER --}}
+                                            {{-- ========================================================= --}}
+                                                <thead>
+                                                    <tr>
+                                                        <?php if (isset($keyArray)) {
+                                                            foreach ($keyArray as $key => $value) { ?>
+                                                                <th scope="col">{{$value}}</th>
+                                                        <?php  }
+                                                        } ?>
+                                                    </tr>
+                                                </thead>
+                                                {{-- ========================================================= --}}
+                                                {{-- TABLE BODY --}}
+                                                {{-- ========================================================= --}}
+                                                <tbody>
+                                                    <?php if (isset($result)) {
+                                                        foreach ($result as $keyResult => $row) { ?>
+                                                            <tr>
+                                                                <?php foreach ($row as $keyRow => $data) { ?>
+                                                                    <td>{{$row[$keyRow]}}</td>
+                                                                <?php } ?>
+                                                            </tr>
+                                                    <?php }
+                                                    } ?>
+                                                </tbody>
+                                            </table>
+                                            {{-- ========================================================= --}}
+                                            {{-- END TABLE --}}
+                                            {{-- ========================================================= --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
 
                 <footer class="sticky-footer bg-white">

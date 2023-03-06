@@ -190,6 +190,7 @@
                                             ?>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">Update</button>
+                                            <a class="btn btn-primary" href="{{ route('Update-Doc','Update-Doc') }}">Back</a>
                                         </div>
                                         <?php }
                                         ?>
@@ -197,6 +198,16 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- Error no data message --}}
+                        @if (isset($error))
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                    <li>{{ $error }}</li>
+                            </ul>
+                        </div>
+                        @endif
+                        {{-- End no data message --}}
                     </div>
 
                 </form>
