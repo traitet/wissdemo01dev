@@ -81,6 +81,8 @@
             );
         }
     </script>
+
+
 </head>
 
 {{-- ============================================================================================================================== --}}
@@ -102,7 +104,7 @@
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 UPDATE DOC IFIN 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 DOCUMENT INTERFACE SAP 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -130,10 +132,10 @@
                                                             foreach ($keyArray as $key => $value) { ?>
                                                                 <th scope="col">{{$value}}</th>
                                                         <?php  }
-                                                        }else if(isset($keyArrayRes)) {
+                                                        }elseif(isset($keyArrayRes)) {
                                                             foreach ($keyArrayRes as $key => $value) { ?>
-                                                            <th scope="col">{{$value}}</th>
-                                                            <?php  }
+                                                                <th scope="col">{{$value}}</th>
+                                                        <?php }
                                                         }?>
                                                     </tr>
                                                 </thead>
@@ -146,13 +148,13 @@
                                                             <tr>
                                                                 <?php
                                                                 foreach ($row as $keyRow => $data) {
-                                                                    if($keyRow == 'id'){ ?>
+                                                                    if($keyRow == 'Id'){ ?>
                                                                         <input type="hidden" id="textbox" name="docId[]" value="{{$data}}">
                                                                     <?php
                                                                     }
-                                                                    if($keyRow == 'DOCSAP'){ ?>
+                                                                    if($keyRow == 'DocSap'){ ?>
                                                                         <td>
-                                                                            <input type="textbox" id="textbox" name="sapdoc[]" value="{{$data}}">
+                                                                            <input type="textbox" id="textbox" name="sapDoc[]" value="{{$data}}">
                                                                         </td>
                                                                     <?php
                                                                     }else{ ?>
@@ -165,16 +167,18 @@
                                                     <?php }
                                                     }else if (isset($resultRes)) {
                                                         foreach ($resultRes as $keyResult => $row) { ?>
+
                                                             <tr>
                                                                 <?php
                                                                 foreach ($row as $keyRow => $data) { ?>
-                                                                    <td>{{$row[$keyRow]}}</td>
+                                                                    <td>{{$data}}</td>
                                                                 <?php
                                                                 } ?>
                                                             </tr>
 
                                                     <?php }
-                                                    }  ?>
+                                                    }
+                                                      ?>
                                                 </tbody>
                                             </table>
                                             {{-- ========================================================= --}}
@@ -182,9 +186,13 @@
                                             {{-- ========================================================= --}}
                                         </div>
                                         <br>
+                                        <?php if (isset($result)) {
+                                            ?>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary">Update</button>
                                         </div>
+                                        <?php }
+                                        ?>
                                     </div>
                                 </div>
                             </div>

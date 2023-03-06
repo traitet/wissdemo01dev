@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Log;
 use App\Models\UserPermission;
 use SimpleXMLElement;
+use Illuminate\Support\facades\DB;
 
 // ==========================================================================
 // CLASS DECLARATION
@@ -27,18 +28,16 @@ class IFinUpdateDocApiController extends Controller
 // ==========================================================================
     //private $ENDPOINT = 'http://localhost:8000/api/wiss_sa_ifin_get_doc_interface';
     private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface';
-    private $ENDPOINT2 = 'http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_update_doc_interface';
+    //private $ENDPOINT2 = 'http://localhost:8000/api/wiss_sa_ifin_update_doc_interface';
 // ==========================================================================
 // GET DATA
 // ==========================================================================
     function getData(Request $req)
     {
-        // $this->validate($req, [
-        //     'docNum' => 'string||nullable'
-        // ]);
-        $req->validate([
-            'docNum' => 'required',
+        $this->validate($req, [
+            'docNum' => 'required|size:10',
         ]);
+
         // ==========================================================================
         // API NAME
         // ==========================================================================
@@ -93,44 +92,71 @@ class IFinUpdateDocApiController extends Controller
         // ======================================================================
         // GET DATA FROM VIEW
         // ======================================================================
+        // $req->validate([
+        //     'sapDoc' => 'required|regex:/^[0-9]{10}$/',
+        // ]);
+        $req->validate([
+            'sapDoc' => 'required',
+        ]);
+
             $docId[] = $req->input('docId');
-            $sapDoc[] = $req->input('sapdoc');
+            $sapDoc[] = $req->input('sapDoc');
 
             $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
             for ($i = 0; $i < count($docId[0]); $i++){
                 $xmlRow = $xml->addChild("row");
                 $xmlRow->addChild("id", $docId[0][$i]);
-                $xmlRow->addChild("sapdoc", $sapDoc[0][$i]);
+                $xmlRow->addChild("docsap", $sapDoc[0][$i]);
             }
 
             $xmlString = $xml->asXML();
             $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
-            $queryStr = "data=".str_replace("\n",'',$xmlString);
+            $queryStr = str_replace("\n",'',$xmlString);
+
+            $permissionName = $req->permissionAuth;
+            $permissionID = UserPermission::getPermissionID($permissionName);
+            //dd( $queryStr);
+
             //$queryStr = "data=".$xmlString;
             // ======================================================================
             // CALL API
             // ======================================================================
-            $url = $this->ENDPOINT2 ."/". $queryStr;
-            dd($url);
-            $response = Http::get($url);
+            //$url = $this->ENDPOINT2 ."/". $queryStr;
             //dd($url);
+            //$response = Http::get($url);
+            //dd($url);
+            // ======================================================================
+            // CALL FUNCTION
+            // ======================================================================
+
+            // try {
+            //     NavigationGroup::create($request->all());
+            //     // return redirect()->route('navigationgroups.index')
+            //     return redirect()->route('Navigation-Group')
+            //                 ->with('success','Navigation group created successfully.');
+            // } catch (\Exception $e) {
+            //     // return redirect()->route('navigationgroups.index')
+            //     return redirect()->route('Navigation-Group')
+            //                 ->with('error',$e->getMessage());
+            // }
+
+            $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_update_doc_sap @data = '$queryStr'");
+            $result = json_encode($result);
+
             // ======================================================================
             // IF CALL SUCCCESS
             // ======================================================================
-            if ($response->status() == 200) {
-                $resultRes = json_decode($response->body(), true);
+            if (isset($result)) {
+                $resultRes  = json_decode($result, true);
                 if(!empty($resultRes)){
                     $keyArrayRes = array_keys($resultRes[0]);
                      //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' completed');
-                    return view('ifin-update-doc-interface', compact('resultRes', 'keyArrayRes','permissionName'));
-                }else{
-                    //need to return no data msg
-                    $keyArrayRes = [];
+                    return view('ifin-update-doc-interface', compact('resultRes','keyArrayRes','permissionName'));
                 }
             }
-            dd($response->status());
+            //dd($response->status());
             //Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
-            return view('ifin-update-doc-interface',compact('resultRes', 'keyArrayRes','permissionName'));
+            return view('ifin-update-doc-interface',compact('resultRes','keyArrayRes','permissionName'));
 
     }
 

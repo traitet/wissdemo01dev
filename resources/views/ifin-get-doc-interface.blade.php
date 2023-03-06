@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WISS 2022</title>
     @include('theme.header')
+
     <style>
         @import url(//fonts.googleapis.com/css?family=Lato:700);
         body {
@@ -102,7 +103,7 @@
                         {{-- SUBJECT --}}
                         {{-- ========================================================= --}}
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h5 mb-0 text-gray-800">【 GET DOC IFIN 】</h1>
+                            <h1 class="h5 mb-0 text-gray-800">【 DOCUMENT INTERFACE SAP 】</h1>
                         </div>
 
                         {{-- ========================================================= --}}
@@ -136,10 +137,23 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Error message --}}
+                        @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+                        {{-- End error message --}}
+
                     </div>
 
                 </form>
-
 
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
