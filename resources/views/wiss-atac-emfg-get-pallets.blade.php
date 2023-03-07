@@ -155,6 +155,10 @@
                                                     <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "1000") echo "selected"; ?> value="1000">1000</option>
                                                 </select>
 
+                                                &nbsp;&nbsp;
+                                                <button type="button" class="btn btn-secondary" id="button_upload" onclick="FunctionImportExcel()"><i class="bi bi-upload"></i> Upload</button>
+						                        <input type="file" id="import_excel" name="import_excel" style="display:none;">
+
                                             </div>
                                         </div>
                                         <div class="form-group">

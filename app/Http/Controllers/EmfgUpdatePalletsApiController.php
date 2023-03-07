@@ -116,11 +116,11 @@ class EmfgUpdatePalletsApiController extends Controller
             $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
             for ($i = 0; $i < count($PALLETCODE[0]); $i++){
                 $xmlRow = $xml->addChild("row");
-                $xmlRow->addChild("palletcode"  ,$PALLETCODE[0][$i]);
+                $xmlRow->addChild("palletcode",$PALLETCODE[0][$i]);
                 // $xmlRow->addChild("PALLETTYPE"  ,$PALLETTYPE[0][$i]);
                 // $xmlRow->addChild("LASTSTORELOC"  ,$LASTSTORELOC[0][$i]);
                 // $xmlRow->addChild("LOCCODE"  ,$LOCCODE[0][$i]);
-                $xmlRow->addChild("ENABLE",$ENABLE[0][$i]);
+                $xmlRow->addChild("enable",$ENABLE[0][$i]);
                 $optionValue .= $PALLETCODE[0][$i] . " ";
             }
 

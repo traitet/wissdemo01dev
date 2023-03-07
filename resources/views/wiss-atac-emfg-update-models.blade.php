@@ -151,14 +151,15 @@
                                                                 ?>
                                                                     <td>
                                                                         <?php
-                                                                        if($keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
+                                                                        if($keyRow == 'DESCRIPTION' or $keyRow == 'ENABLE'){
                                                                         ?>
-                                                                            <input type="hidden" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
-                                                                            {{$data}}
+                                                                            <input type="textbox" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
+
                                                                         <?php
                                                                         }else{
                                                                         ?>
-                                                                            <input type="textbox" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
+                                                                            <input type="hidden" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
+                                                                            {{$data}}
                                                                         <?php
                                                                         }
                                                                         ?>

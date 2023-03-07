@@ -151,7 +151,7 @@
                                                                 ?>
                                                                     <td>
                                                                         <?php
-                                                                        if($keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
+                                                                        if($keyRow == 'SHELFCODE' or $keyRow == 'SHELFNAME' or $keyRow == 'SLOCCODE' or $keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
                                                                         ?>
                                                                             <input type="hidden" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
                                                                             {{$data}}

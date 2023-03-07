@@ -348,25 +348,25 @@ Route::get('wiss_itss_satisfaction_each_department/{obj}', function ($obj) {
 //========================================================================
 // http://127.0.0.1:8000/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
 // http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
-Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
-    parse_str($obj,$myArray);
-    $doc_num = $myArray['doc_num'];
-    // $comment = $myArray['comment'];
-    //$doc_num = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
-    $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
-    return json_encode($result);
-});
+// Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
+//     parse_str($obj,$myArray);
+//     $doc_num = $myArray['doc_num'];
+//     // $comment = $myArray['comment'];
+//     //$doc_num = '<root><row><name>product1</name><qty>10</qty></row><row><name>product2</name><qty>20</qty></row></root>';
+//     $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
+//     return json_encode($result);
+// });
 
 //========================================================================
 // 22) wiss_sa_ifin_get_doc_interface  (sqlsrv_siam_laser_d01_db, AP_ITSS)
 //========================================================================
-// http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
-// Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
-//     parse_str($obj,$myArray);
-//     $doc_num = $myArray['doc_num'];
-//     $result = DB::connection('sqlsrv_siam_laser_d01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
-//     return json_encode($result);
-// });
+http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface/doc_num=AV21000068
+Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
+    parse_str($obj,$myArray);
+    $doc_num = $myArray['doc_num'];
+    $result = DB::connection('sqlsrv_siam_laser_d01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
+    return json_encode($result);
+});
 
 //========================================================================
 // 23) wiss_atac_emfg_get_dock  (sqlsrv_atac_arisa_d02_db, AP_ITSS)
