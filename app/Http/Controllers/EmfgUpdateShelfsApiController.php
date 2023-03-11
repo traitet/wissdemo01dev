@@ -37,7 +37,7 @@ class EmfgUpdateShelfsApiController extends Controller
             //'docNum' => 'required|size:10',
             'dateStart' => 'date_format:Y-m-d||nullable',
             'dateEnd' => 'date_format:Y-m-d||nullable',
-            'docNum' => 'required',
+            //'docNum' => 'required',
             'maxRecord' => 'string||nullable'
 
         ]);
@@ -160,35 +160,112 @@ class EmfgUpdateShelfsApiController extends Controller
 
             $permissionName = $req->permissionAuth;
             $permissionID = UserPermission::getPermissionID($permissionName);
-            $userName = Auth::user()->id;
+            $userName = Auth::user()->name;
 
             //dd($queryStr);
             // ======================================================================
             // CALL FUNCTION
             // ======================================================================
             try{
-            $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_shelf_xml @data = '$queryStr', @USERNAME = '$userName'");
-            $result = json_encode($result);
+                $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_shelf_xml @data = '$queryStr', @USERNAME = '$userName'");
+                $result = json_encode($result);
 
-            // ======================================================================
-            // IF CALL SUCCCESS
-            // ======================================================================
-            if (isset($result)) {
-                $resultRes  = json_decode($result, true);
-                if(!empty($resultRes)){
-                    $keyArrayRes = array_keys($resultRes[0]);
-                     Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
-                    return view('wiss-atac-emfg-update-shelfs', compact('resultRes','keyArrayRes','permissionName'));
+                // ======================================================================
+                // IF CALL SUCCCESS
+                // ======================================================================
+                if (isset($result)) {
+                    $resultRes  = json_decode($result, true);
+                    if(!empty($resultRes)){
+                        $keyArrayRes = array_keys($resultRes[0]);
+                        Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
+                        return view('wiss-atac-emfg-update-shelfs', compact('resultRes','keyArrayRes','permissionName'));
+                    }
                 }
-            }
             } catch (\Exception $e) {
                 $error = $e->getMessage();
                 Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
                 return view('wiss-atac-emfg-update-shelfs',compact('resultRes','keyArrayRes','permissionName','error'));
             }
+    } // END FUNCTION UPDATE
+    public function importExcel(Request $request)
+    {
+        if(!empty($request->file('import_excel'))){
+            $allowedFileType = [
+                'application/vnd.ms-excel',
+                'text/xls',
+                'text/xlsx',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            ];
 
+            if (in_array($request->file('import_excel')->getMimeType(), $allowedFileType)) {
+                $file = $request->file('import_excel');
+                $Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
-    }
+                $spreadSheet = $Reader->load($file);
+                $excelSheet = $spreadSheet->getActiveSheet();
+                //00 = A1 , 01 = B1 , 02 = C1
+                //10 = A2 , 11 = B2 , 12 = C2
+                $spreadSheetAry = $excelSheet->toArray();
+                $rowCount = count($spreadSheetAry);//จำนวน row
+                $columnCount = count($spreadSheetAry[0]); //จำนวน column
+
+                $optionValue = $file;
+                $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
+
+                for ($row = 1; $row <= $rowCount-1; $row ++) {//start row 2
+                    $column = 0;
+                    if(empty($spreadSheetAry[$row][$column]) || empty($spreadSheetAry[$row][$column]+1) || !is_numeric($spreadSheetAry[$row][$column+3]) || !is_numeric($spreadSheetAry[$row][$column+4]) ||
+                    !is_numeric($spreadSheetAry[$row][$column+5]) || !is_numeric($spreadSheetAry[$row][$column+6]) || !is_numeric($spreadSheetAry[$row][$column+7]) || !is_numeric($spreadSheetAry[$row][$column+8]) ||
+                    (($spreadSheetAry[$row][$column+12] <> "N") && ($spreadSheetAry[$row][$column+12] <> "Y")) || (($spreadSheetAry[$row][$column+13] <> "D") && ($spreadSheetAry[$row][$column+13] <> "Y"))) continue;
+                    $xmlRow = $xml->addChild("row");
+                    $xmlRow->addChild("SHELFCODE",$spreadSheetAry[$row][$column]);
+                    $xmlRow->addChild("SHELFNAME",$spreadSheetAry[$row][$column+1]);
+                    $xmlRow->addChild("SLOCCODE",$spreadSheetAry[$row][$column+2]);
+                    $xmlRow->addChild("BOXBALANCE",$spreadSheetAry[$row][$column+3]);
+                    $xmlRow->addChild("BOXMAX",$spreadSheetAry[$row][$column+4]);
+                    $xmlRow->addChild("BOXMIN",$spreadSheetAry[$row][$column+5]);
+                    $xmlRow->addChild("BOXTOTAL",$spreadSheetAry[$row][$column+6]);
+                    $xmlRow->addChild("PCSBALANCE",$spreadSheetAry[$row][$column+7]);
+                    $xmlRow->addChild("PCSMAX",$spreadSheetAry[$row][$column+8]);
+                    $xmlRow->addChild("DESCRIPTION",$spreadSheetAry[$row][$column+9]);
+                    $xmlRow->addChild("COMPCODE",$spreadSheetAry[$row][$column+10]);
+                    $xmlRow->addChild("PLANTCODE",$spreadSheetAry[$row][$column+11]);
+                    $xmlRow->addChild("STATUS",$spreadSheetAry[$row][$column+12]);
+                    $xmlRow->addChild("ENABLE",$spreadSheetAry[$row][$column+13]);
+                }
+                $xmlString = $xml->asXML();
+                $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
+                $queryStr = str_replace("\n",'',$xmlString);
+                //dd($queryStr);
+
+                $permissionName = $request->permissionAuth;
+                $permissionID = UserPermission::getPermissionID($permissionName);
+                $userName = Auth::user()->name;
+                // ======================================================================
+                // CALL FUNCTION
+                // ======================================================================
+                try{
+                    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_shelf_xml @data = '$queryStr', @USERNAME = '$userName'");
+                    $result = json_encode($result);
+                    // ======================================================================
+                    // IF CALL SUCCCESS
+                    // ======================================================================
+                    if (isset($result)) {
+                        $resultRes  = json_decode($result, true);
+                        if(!empty($resultRes)){
+                            $keyArrayRes = array_keys($resultRes[0]);
+                            Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
+                            return view('wiss-atac-emfg-update-shelfs', compact('resultRes','keyArrayRes','permissionName'));
+                        }
+                    }
+                } catch (\Exception $e) {
+                    $error = $e->getMessage();
+                    Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
+                    return view('wiss-atac-emfg-update-shelfs',compact('resultRes','keyArrayRes','permissionName','error'));
+                }
+            } // END IF ALLOW FILE TYPE
+        } // END IF CHECK EMPTY FILE
+    } // END PUBLIC FUNCTION IMPORT
 
 
 }

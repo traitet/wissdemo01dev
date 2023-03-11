@@ -109,13 +109,14 @@ class IFinUpdateDocApiController extends Controller
             $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
             $queryStr = str_replace("\n",'',$xmlString);
 
+            //dd($queryStr);
             $permissionName = $req->permissionAuth;
             $permissionID = UserPermission::getPermissionID($permissionName);
             // ======================================================================
             // CALL FUNCTION
             // ======================================================================
             try{
-            $result = DB::connection('sqlsrv_siam_laser_q01_db')->select("EXEC wiss_sa_ifin_update_doc_sap @data = '$queryStr'");
+            $result = DB::connection('sqlsrv_siam_laser_d01_db')->select("EXEC wiss_sa_ifin_update_doc_sap @data = '$queryStr'");
             $result = json_encode($result);
 
             // ======================================================================

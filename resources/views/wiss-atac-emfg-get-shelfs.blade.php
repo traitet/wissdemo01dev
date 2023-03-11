@@ -92,11 +92,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 @include('theme.navbar')
-                {{-- =============================================================== --}}
-                {{-- FORM  ACTION = VIEW --}}
-                {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('EmfgUpdateShelfsATAC.show', $permissionName) }}" id="myForm">
-                    @csrf
+
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
@@ -115,6 +111,20 @@
                             <div class="col-xl-12 col-lg-12">
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
+                                        <div class="form-group float-right">
+                                            <div>
+                                                <form action="{{ route('EmfgUpdateShelfsATAC.import', $permissionName) }}" method="POST" name="form" id="import_excel_form" enctype="multipart/form-data">
+                                                @csrf
+                                                    <button type="button" class="btn btn-success" id="button_upload" onclick="FunctionImportExcel()"><i class="bi bi-upload"></i> Excel File</button>
+                                                    <input type="file" id="import_excel" name="import_excel" style="display:none;">
+                                                </form>
+                                            </div>
+                                        </div>
+                                        {{-- =============================================================== --}}
+                                        {{-- FORM  ACTION = VIEW --}}
+                                        {{-- =============================================================== --}}
+                                        <form method="POST" action="{{ route('EmfgUpdateShelfsATAC.show', $permissionName) }}" id="myForm">
+                                            @csrf
                                         <div class="form-group">
                                             <div class="form-group form-inline">
                                                 <label for="docNum">Doc Num: </label>
@@ -161,6 +171,7 @@
                                             <button type="submit" class="btn btn-primary">Search</button>
                                             <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
                                         </div>
+                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +256,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+
 
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
@@ -291,5 +302,16 @@
 {{-- INCLUDE FOOTER THEME --}}
 {{-- =============================================================== --}}
         @include('theme.footer')
+        <script>
+            // ================================================================
+            // UPLOAD EXCEL FILE
+            // ================================================================
+            function FunctionImportExcel(){
+                $('#import_excel').click();
+            }
+            $( "#import_excel" ).change(function() {
+                $( "#import_excel_form" ).submit();
+            });
+        </script>
 </body>
 </html>

@@ -179,6 +179,7 @@ Route::get('report_budget_checking_obj/{obj}/{search}', function ($obj,$search) 
 //========================================================================
 // 10) emfg_shipping_order_status (sqlsrv_shipping_db,SIAM_SHIPPINGDB)
 //========================================================================
+// http://127.0.0.1:8000/api/emfg_shipping_order_status_obj/start_date=20210101&end_date=20230310&doc_num=716BAIAP/0803&max_record=10
 // http://10.100.1.94:8080/wissdemo01/public/api/emfg_shipping_order_status_obj/start_date=20210101&end_date=20220225&doc_num=SA11AP1M0147&max_record=100
 Route::get('emfg_shipping_order_status_obj/{obj}', function ($obj) {
     parse_str($obj,$myArray);

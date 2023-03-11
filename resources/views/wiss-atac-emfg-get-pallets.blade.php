@@ -80,6 +80,7 @@
                 console.log('toggle')
             );
         }
+
     </script>
 </head>
 
@@ -92,11 +93,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 @include('theme.navbar')
-                {{-- =============================================================== --}}
-                {{-- FORM  ACTION = VIEW --}}
-                {{-- =============================================================== --}}
-                <form method="POST" action="{{ route('EmfgUpdatePalletsATAC.show', $permissionName) }}" id="myForm">
-                    @csrf
+
                     <div class="container-fluid">
                         {{-- ========================================================= --}}
                         {{-- SUBJECT --}}
@@ -104,7 +101,6 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h5 mb-0 text-gray-800">【 E-MFG UPDATE PALLETS 】</h1>
                         </div>
-
                         {{-- ========================================================= --}}
                         {{-- SERCH PARAMTER --}}
                         {{-- ========================================================= --}}
@@ -114,58 +110,69 @@
                             {{-- ========================================================= --}}
                             <div class="col-xl-12 col-lg-12">
                                 <div class="card shadow mb-4">
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <div class="form-group form-inline">
-                                                <label for="docNum">Doc Num: </label>
-                                                <input class="form-control" type="text" class="" id="docNum" name="docNum"
-                                                value="<?php
-                                                    if (isset($docNumRtv)) {
-                                                        echo $docNumRtv;
-                                                    }
-                                                ?>"
-                                                >&nbsp;&nbsp;
-                                                <label for="dateStart">Date Start: </label>
-                                                <input class="form-control" type="date" class="" id="dateStart" name="dateStart"
-                                                value="<?php
-                                                    if (isset($dateStartRtv)) {
-                                                        echo $dateStartRtv;
-                                                    }else{
-                                                        echo date("Y-m-d");
-                                                    }
-                                                    ?>"
-                                                >
-                                                &nbsp;&nbsp;
-                                                <label for="dateEnd">Date End: </label>
-                                                <input class="form-control" type="date" class="" id="dateEnd" name="dateEnd"
-                                                value="<?php
-                                                    if (isset($dateEndRtv)) {
-                                                        echo $dateEndRtv;
-                                                    }else{
-                                                        echo date("Y-m-d");
-                                                    }
-                                                    ?>"
-                                                >
-                                                &nbsp;&nbsp;
-
-                                                <label for="record">Record: </label>
-                                                <select class="form-control" id="maxRecord" name="maxRecord">
-                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "10") echo "selected"; ?> value="10"  >10</option>
-                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "100") echo "selected"; ?> value="100" >100</option>
-                                                    <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "1000") echo "selected"; ?> value="1000">1000</option>
-                                                </select>
-
-                                                &nbsp;&nbsp;
-                                                <button type="button" class="btn btn-secondary" id="button_upload" onclick="FunctionImportExcel()"><i class="bi bi-upload"></i> Upload</button>
-						                        <input type="file" id="import_excel" name="import_excel" style="display:none;">
-
+                                        <div class="card-body">
+                                            <div class="form-group float-right">
+                                                <div>
+                                                    <form action="{{ route('EmfgUpdatePalletsATAC.import', $permissionName) }}" method="POST" name="form" id="import_excel_form" enctype="multipart/form-data">
+                                                    @csrf
+                                                        <button type="button" class="btn btn-success" id="button_upload" onclick="FunctionImportExcel()"><i class="bi bi-upload"></i> Excel File</button>
+                                                        <input type="file" id="import_excel" name="import_excel" style="display:none;">
+                                                    </form>
+                                                </div>
                                             </div>
+                                    {{-- =============================================================== --}}
+                                    {{-- FORM  ACTION = VIEW --}}
+                                    {{-- =============================================================== --}}
+                                        <form method="POST" action="{{ route('EmfgUpdatePalletsATAC.show', $permissionName) }}" id="myForm">
+                                                @csrf
+                                            <div class="form-group">
+                                                <div class="form-group form-inline">
+                                                    <label for="docNum">Doc Num: </label>
+                                                    <input class="form-control" type="text" class="" id="docNum" name="docNum"
+                                                    value="<?php
+                                                        if (isset($docNumRtv)) {
+                                                            echo $docNumRtv;
+                                                        }
+                                                    ?>"
+                                                    >&nbsp;&nbsp;
+                                                    <label for="dateStart">Date Start: </label>
+                                                    <input class="form-control" type="date" class="" id="dateStart" name="dateStart"
+                                                    value="<?php
+                                                        if (isset($dateStartRtv)) {
+                                                            echo $dateStartRtv;
+                                                        }else{
+                                                            echo date("Y-m-d");
+                                                        }
+                                                        ?>"
+                                                    >
+                                                    &nbsp;&nbsp;
+                                                    <label for="dateEnd">Date End: </label>
+                                                    <input class="form-control" type="date" class="" id="dateEnd" name="dateEnd"
+                                                    value="<?php
+                                                        if (isset($dateEndRtv)) {
+                                                            echo $dateEndRtv;
+                                                        }else{
+                                                            echo date("Y-m-d");
+                                                        }
+                                                        ?>"
+                                                    >
+                                                    &nbsp;&nbsp;
+                                                    <label for="record">Record: </label>
+                                                    <select class="form-control" id="maxRecord" name="maxRecord">
+                                                        <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "10") echo "selected"; ?> value="10"  >10</option>
+                                                        <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "100") echo "selected"; ?> value="100" >100</option>
+                                                        <option <?php if(isset($maxRecordRtv) and $maxRecordRtv == "1000") echo "selected"; ?> value="1000">1000</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary">Search</button>
+                                                <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+                                            </div>
+                                        </form>
                                         </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary">Search</button>
-                                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -192,7 +199,6 @@
                         @endif
                         {{-- End error message --}}
                     </div>
-
 
 {{-- ========================================================= --}}
 {{-- SEARCH OUTPUT --}}
@@ -249,7 +255,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+
 
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
@@ -295,5 +301,16 @@
 {{-- INCLUDE FOOTER THEME --}}
 {{-- =============================================================== --}}
         @include('theme.footer')
+        <script>
+            // ================================================================
+            // UPLOAD EXCEL FILE
+            // ================================================================
+            function FunctionImportExcel(){
+                $('#import_excel').click();
+            }
+            $( "#import_excel" ).change(function() {
+                $( "#import_excel_form" ).submit();
+            });
+        </script>
 </body>
 </html>
