@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 // ==========================================================================
 // IMPORT
 // ==========================================================================
@@ -93,6 +92,7 @@ class EmfgUpdatePalletsApiController extends Controller
             Log::insertLog(Auth::user()->id, $permissionID,'Search '.$permissionName.' '.$optionValue.' not found');
             return view('wiss-atac-emfg-get-pallets', compact('result', 'keyArray', 'docNumRtv', 'dateStartRtv', 'dateEndRtv', 'maxRecordRtv', 'permissionName','error'));
     }
+
     function update(Request $req)
     {
         // ======================================================================
@@ -156,9 +156,8 @@ class EmfgUpdatePalletsApiController extends Controller
                 Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
                 return view('wiss-atac-emfg-update-pallets',compact('resultRes','keyArrayRes','permissionName','error'));
             }
-
-
     }//EDN FUNCTIION UPDATE
+
     public function importExcel(Request $request)
     {
         if(!empty($request->file('import_excel'))){
