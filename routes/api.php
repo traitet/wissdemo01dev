@@ -365,7 +365,7 @@ http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_sa_ifin_get_doc_interface/
 Route::get('wiss_sa_ifin_get_doc_interface/{obj}', function ($obj) {
     parse_str($obj,$myArray);
     $doc_num = $myArray['doc_num'];
-    $result = DB::connection('sqlsrv_siam_laser_d01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
+    $result = DB::connection('sqlsrv_siam_laser_p01_db')->select("EXEC wiss_sa_ifin_get_doc_interface @doc_num = '$doc_num'");
     return json_encode($result);
 });
 
