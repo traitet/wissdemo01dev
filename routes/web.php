@@ -312,18 +312,25 @@ Route::get('wiss-atac-emfg-update-docks/{permissionName}', [AuthenticationAPICon
 Route::post('wiss-atac-emfg-update-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'getData'])->name('EmfgUpdateDocksATAC.show');
 Route::post('wiss-atac-emfg-store-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'update'])->name('EmfgUpdateDocksATAC.update');
 Route::post('wiss-atac-emfg-import-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'importExcel'])->name('EmfgUpdateDocksATAC.import');
+Route::post('wiss-atac-emfg-export-docks/{permissionAuth}', [EmfgUpdateDocksApiController::class, 'exportExcel'])->name('EmfgUpdateDocksATAC.export');
+
 Route::get('wiss-atac-emfg-update-shelfs/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateShelfsAPI'])->name("Update-Shelfs-ATAC");
 Route::post('wiss-atac-emfg-update-shelfs/{permissionAuth}', [EmfgUpdateShelfsApiController::class, 'getData'])->name('EmfgUpdateShelfsATAC.show');
 Route::post('wiss-atac-emfg-store-shelfs/{permissionAuth}', [EmfgUpdateShelfsApiController::class, 'update'])->name('EmfgUpdateShelfsATAC.update');
 Route::post('wiss-atac-emfg-import-shelfs/{permissionAuth}', [EmfgUpdateShelfsApiController::class, 'importExcel'])->name('EmfgUpdateShelfsATAC.import');
+Route::post('wiss-atac-emfg-export-shelfs/{permissionAuth}', [EmfgUpdateShelfsApiController::class, 'exportExcel'])->name('EmfgUpdateShelfsATAC.export');
+
 Route::get('wiss-atac-emfg-update-models/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdateModelsAPI'])->name("Update-Models-ATAC");
 Route::post('wiss-atac-emfg-update-models/{permissionAuth}', [EmfgUpdateModelsApiController::class, 'getData'])->name('EmfgUpdateModelsATAC.show');
 Route::post('wiss-atac-emfg-store-models/{permissionAuth}', [EmfgUpdateModelsApiController::class, 'update'])->name('EmfgUpdateModelsATAC.update');
-Route::post('wiss-atac-emfg-import-modelss/{permissionAuth}', [EmfgUpdateModelsApiController::class, 'importExcel'])->name('EmfgUpdateModelsATAC.import');
+Route::post('wiss-atac-emfg-import-models/{permissionAuth}', [EmfgUpdateModelsApiController::class, 'importExcel'])->name('EmfgUpdateModelsATAC.import');
+Route::post('wiss-atac-emfg-export-models/{permissionAuth}', [EmfgUpdateModelsApiController::class, 'exportExcel'])->name('EmfgUpdateModelsATAC.export');
+
 Route::get('wiss-atac-emfg-update-pallets/{permissionName}', [AuthenticationAPIController::class, 'getAuthenticateUpdatePalletsAPI'])->name("Update-Pallets-ATAC");
 Route::post('wiss-atac-emfg-update-pallets/{permissionAuth}', [EmfgUpdatePalletsApiController::class, 'getData'])->name('EmfgUpdatePalletsATAC.show');
 Route::post('wiss-atac-emfg-store-pallets/{permissionAuth}', [EmfgUpdatePalletsApiController::class, 'update'])->name('EmfgUpdatePalletsATAC.update');
 Route::post('wiss-atac-emfg-import-pallets/{permissionAuth}', [EmfgUpdatePalletsApiController::class, 'importExcel'])->name('EmfgUpdatePalletsATAC.import');
+Route::post('wiss-atac-emfg-export-pallets/{permissionAuth}', [EmfgUpdatePalletsApiController::class, 'exportExcel'])->name('EmfgUpdatePalletsATAC.export');
 
 // ========================================================================================================================
 //                                                    ROUTE GET/POST "Logs"

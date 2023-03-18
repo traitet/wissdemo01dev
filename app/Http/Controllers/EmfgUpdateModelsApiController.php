@@ -194,56 +194,76 @@ class EmfgUpdateModelsApiController extends Controller
                 $columnCount = count($spreadSheetAry[0]); //จำนวน column
 
                 $optionValue = $file;
-                $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
-
-                for ($row = 1; $row <= $rowCount-1; $row ++) {//start row 2
-                    $column = 0;
-                    if(empty($spreadSheetAry[$row][$column]) || empty($spreadSheetAry[$row][$column+1]) ||
-                    (($spreadSheetAry[$row][$column+7] <> "D") && ($spreadSheetAry[$row][$column+7] <> "Y"))) continue;
-                    $xmlRow = $xml->addChild("row");
-                    $xmlRow->addChild("MODELCODE",$spreadSheetAry[$row][$column]);
-                    $xmlRow->addChild("MODELNAME",$spreadSheetAry[$row][$column+1]);
-                    $xmlRow->addChild("DESCRIPTION",$spreadSheetAry[$row][$column+2]);
-                    $xmlRow->addChild("PDTGRPCODE",$spreadSheetAry[$row][$column+3]);
-                    $xmlRow->addChild("COMPCODE",$spreadSheetAry[$row][$column+4]);
-                    $xmlRow->addChild("PLANTCODE",$spreadSheetAry[$row][$column+5]);
-                    $xmlRow->addChild("STATUS",$spreadSheetAry[$row][$column+6]);
-                    $xmlRow->addChild("ENABLE",$spreadSheetAry[$row][$column+7]);
-                }
-                $xmlString = $xml->asXML();
-                $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
-                $queryStr = str_replace("\n",'',$xmlString);
-                //dd($queryStr);
-
                 $permissionName = $request->permissionAuth;
                 $permissionID = UserPermission::getPermissionID($permissionName);
                 $userName = Auth::user()->name;
-                // ======================================================================
-                // CALL FUNCTION
-                // ======================================================================
-                try{
-                    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_models_xml @data = '$queryStr', @USERNAME = '$userName'");
-                    $result = json_encode($result);
+
+                //VALIDATE INTERNAL FILE
+                if(($columnCount > 8) || empty($spreadSheetAry[0][0]) || ($spreadSheetAry[0][0] <> "MODELCODE")
+                || empty($spreadSheetAry[0][1]) || ($spreadSheetAry[0][1] <> "MODELNAME")
+                || empty($spreadSheetAry[0][2]) || ($spreadSheetAry[0][2] <> "DESCRIPTION")
+                || empty($spreadSheetAry[0][3]) || ($spreadSheetAry[0][3] <> "PDTGRPCODE")
+                || empty($spreadSheetAry[0][4]) || ($spreadSheetAry[0][4] <> "COMPCODE")
+                || empty($spreadSheetAry[0][5]) || ($spreadSheetAry[0][5] <> "PLANTCODE")
+                || empty($spreadSheetAry[0][6]) || ($spreadSheetAry[0][6] <> "STATUS")
+                || empty($spreadSheetAry[0][7]) || ($spreadSheetAry[0][7] <> "ENABLE")){
+                    $error = "Excel template incorrect!";
+                    Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
+                    return view('wiss-atac-emfg-update-models',compact('permissionName','error'));
+                }else{
+                    $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
+
+                    for ($row = 1; $row <= $rowCount-1; $row ++) {//start row 2
+                        $column = 0;
+                        if(empty($spreadSheetAry[$row][$column]) || empty($spreadSheetAry[$row][$column+1]) ||
+                        (($spreadSheetAry[$row][$column+7] <> "D") && ($spreadSheetAry[$row][$column+7] <> "N") && ($spreadSheetAry[$row][$column+7] <> "Y"))) continue;
+                        $xmlRow = $xml->addChild("row");
+                        $xmlRow->addChild("MODELCODE",$spreadSheetAry[$row][$column]);
+                        $xmlRow->addChild("MODELNAME",$spreadSheetAry[$row][$column+1]);
+                        $xmlRow->addChild("DESCRIPTION",$spreadSheetAry[$row][$column+2]);
+                        $xmlRow->addChild("PDTGRPCODE",$spreadSheetAry[$row][$column+3]);
+                        $xmlRow->addChild("COMPCODE",$spreadSheetAry[$row][$column+4]);
+                        $xmlRow->addChild("PLANTCODE",$spreadSheetAry[$row][$column+5]);
+                        $xmlRow->addChild("STATUS",$spreadSheetAry[$row][$column+6]);
+                        $xmlRow->addChild("ENABLE",$spreadSheetAry[$row][$column+7]);
+                    }
+                    $xmlString = $xml->asXML();
+                    $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
+                    $queryStr = str_replace("\n",'',$xmlString);
+                    //dd($queryStr);
 
                     // ======================================================================
-                    // IF CALL SUCCCESS
+                    // CALL FUNCTION
                     // ======================================================================
-                    if (isset($result)) {
-                        $resultRes  = json_decode($result, true);
-                        if(!empty($resultRes)){
-                            $keyArrayRes = array_keys($resultRes[0]);
-                            Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
-                            return view('wiss-atac-emfg-update-models', compact('resultRes','keyArrayRes','permissionName'));
+                    try{
+                        $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_models_xml @data = '$queryStr', @USERNAME = '$userName'");
+                        $result = json_encode($result);
+
+                        // ======================================================================
+                        // IF CALL SUCCCESS
+                        // ======================================================================
+                        if (isset($result)) {
+                            $resultRes  = json_decode($result, true);
+                            if(!empty($resultRes)){
+                                $keyArrayRes = array_keys($resultRes[0]);
+                                Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
+                                return view('wiss-atac-emfg-update-models', compact('resultRes','keyArrayRes','permissionName'));
+                            }
                         }
+                    } catch (\Exception $e) {
+                        $error = $e->getMessage();
+                        Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
+                        return view('wiss-atac-emfg-update-models',compact('resultRes','keyArrayRes','permissionName','error'));
                     }
-                } catch (\Exception $e) {
-                    $error = $e->getMessage();
-                    Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
-                    return view('wiss-atac-emfg-update-models',compact('resultRes','keyArrayRes','permissionName','error'));
                 }
 
             } // END IF ALLOW FILE TYPE
         } // END IF CHECK EMPTY FILE
     } // END PUBLIC FUNCTION IMPORT
 
+    public function exportExcel()
+    {
+    	$file= public_path(). "/download/Model Master.xlsx";
+    	return response()->download($file);
+    }
 }

@@ -191,14 +191,12 @@
                                             {{-- ========================================================= --}}
                                         </div>
                                         <br>
-                                        <?php if (isset($result)) {
-                                            ?>
                                         <div class="form-group">
+                                            @if(isset($result))
                                             <button type="submit" class="btn btn-primary">Update</button>
-                                            <a class="btn btn-primary" href="{{ route('Update-Pallets-ATAC','Update-Pallets-ATAC') }}">Back</a>
+                                            @endif
+                                            <a class="btn btn-primary" href="{{ route('Update-Pallets-ATAC','Update-Pallets-ATAC') }}">Back to UPDATE PALLETS</a>
                                         </div>
-                                        <?php }
-                                        ?>
                                     </div>
                                 </div>
                             </div>

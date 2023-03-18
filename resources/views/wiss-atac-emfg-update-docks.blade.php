@@ -190,14 +190,12 @@
                                             {{-- ========================================================= --}}
                                         </div>
                                         <br>
-                                        <?php if (isset($result)) {
-                                            ?>
                                         <div class="form-group">
+                                            @if(isset($result))
                                             <button type="submit" class="btn btn-primary">Update</button>
-                                            <a class="btn btn-primary" href="{{ route('Update-Docks-ATAC','Update-Docks-ATAC') }}">Back</a>
+                                            @endif
+                                            <a class="btn btn-primary" href="{{ route('Update-Docks-ATAC','Update-Docks-ATAC') }}">Back to UPDATE DOCKS</a>
                                         </div>
-                                        <?php }
-                                        ?>
                                     </div>
                                 </div>
                             </div>

@@ -151,7 +151,7 @@
                                                                 ?>
                                                                     <td>
                                                                         <?php
-                                                                        if($keyRow == 'DESCRIPTION' or $keyRow == 'ENABLE'){
+                                                                        if($keyRow == 'ENABLE'){
                                                                         ?>
                                                                             <input type="textbox" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
 
@@ -191,14 +191,12 @@
                                             {{-- ========================================================= --}}
                                         </div>
                                         <br>
-                                        <?php if (isset($result)) {
-                                            ?>
                                         <div class="form-group">
+                                            @if(isset($result))
                                             <button type="submit" class="btn btn-primary">Update</button>
-                                            <a class="btn btn-primary" href="{{ route('Update-Models-ATAC','Update-Models-ATAC') }}">Back</a>
+                                            @endif
+                                            <a class="btn btn-primary" href="{{ route('Update-Models-ATAC','Update-Models-ATAC') }}">Back to UPDATE MODELS</a>
                                         </div>
-                                        <?php }
-                                        ?>
                                     </div>
                                 </div>
                             </div>

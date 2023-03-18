@@ -181,50 +181,64 @@ class EmfgUpdatePalletsApiController extends Controller
                 $columnCount = count($spreadSheetAry[0]); //จำนวน column
 
                 $optionValue = $file;
-                $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
-
-                for ($row = 1; $row <= $rowCount-1; $row ++) {//start row 2
-                    $column = 0;
-                    if(empty($spreadSheetAry[$row][$column]) || (($spreadSheetAry[$row][$column+1] <> "D") && ($spreadSheetAry[$row][$column+1] <> "Y"))) continue;
-                    $xmlRow = $xml->addChild("row");
-                    $xmlRow->addChild("palletcode",$spreadSheetAry[$row][$column]);
-                    $xmlRow->addChild("enable",$spreadSheetAry[$row][$column+1]);
-                }
-                $xmlString = $xml->asXML();
-                $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
-                $queryStr = str_replace("\n",'',$xmlString);
-                //dd($queryStr);
-
                 $permissionName = $request->permissionAuth;
                 $permissionID = UserPermission::getPermissionID($permissionName);
                 $userName = Auth::user()->name;
-                // ======================================================================
-                // CALL FUNCTION
-                // ======================================================================
-                try{
-                    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_pallets_xml @data = '$queryStr', @USERNAME = '$userName'");
-                    $result = json_encode($result);
 
-                    // ======================================================================
-                    // IF CALL SUCCCESS
-                    // ======================================================================
-                    if (isset($result)) {
-                        $resultRes  = json_decode($result, true);
-                        if(!empty($resultRes)){
-                            $keyArrayRes = array_keys($resultRes[0]);
-                            Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
-                            return view('wiss-atac-emfg-update-pallets', compact('resultRes','keyArrayRes','permissionName'));
-                        }
-                    }
-                } catch (\Exception $e) {
-                    $error = $e->getMessage();
+                //VALIDATE INTERNAL FILE
+                if(($columnCount > 2) || empty($spreadSheetAry[0][0]) || ($spreadSheetAry[0][0] <> "Pallet No")
+                || empty($spreadSheetAry[0][1]) || ($spreadSheetAry[0][1] <> "Enable")){
+                    $error = "Excel template incorrect!";
                     Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
-                    return view('wiss-atac-emfg-update-pallets',compact('resultRes','keyArrayRes','permissionName','error'));
-                }
+                    return view('wiss-atac-emfg-update-pallets',compact('permissionName','error'));
+                }else{
+                    $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
 
+                    for ($row = 1; $row <= $rowCount-1; $row ++) {//start row 2
+                        $column = 0;
+                        if(empty($spreadSheetAry[$row][$column]) || (($spreadSheetAry[$row][$column+1] <> "D") && ($spreadSheetAry[$row][$column+1] <> "N") && ($spreadSheetAry[$row][$column+1] <> "Y" ))) continue;
+                        $xmlRow = $xml->addChild("row");
+                        $xmlRow->addChild("palletcode",$spreadSheetAry[$row][$column]);
+                        $xmlRow->addChild("enable",$spreadSheetAry[$row][$column+1]);
+                    }
+                    $xmlString = $xml->asXML();
+                    $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
+                    $queryStr = str_replace("\n",'',$xmlString);
+                    //dd($queryStr);
+
+                    // ======================================================================
+                    // CALL FUNCTION
+                    // ======================================================================
+                    try{
+                        $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_pallets_xml @data = '$queryStr', @USERNAME = '$userName'");
+                        $result = json_encode($result);
+
+                        // ======================================================================
+                        // IF CALL SUCCCESS
+                        // ======================================================================
+                        if (isset($result)) {
+                            $resultRes  = json_decode($result, true);
+                            if(!empty($resultRes)){
+                                $keyArrayRes = array_keys($resultRes[0]);
+                                Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
+                                return view('wiss-atac-emfg-update-pallets', compact('resultRes','keyArrayRes','permissionName'));
+                            }
+                        }
+                    } catch (\Exception $e) {
+                        $error = $e->getMessage();
+                        Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
+                        return view('wiss-atac-emfg-update-pallets',compact('resultRes','keyArrayRes','permissionName','error'));
+                    }
+                }
             } // END IF ALLOW FILE TYPE
         } // END IF CHECK EMPTY FILE
     } // END PUBLIC FUNCTION IMPORT
+
+    public function exportExcel()
+    {
+    	$file= public_path(). "/download/Pallet Master.xlsx";
+    	return response()->download($file);
+    }
 
 
 }

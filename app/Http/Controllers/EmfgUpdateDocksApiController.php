@@ -207,61 +207,86 @@ class EmfgUpdateDocksApiController extends Controller
                 $columnCount = count($spreadSheetAry[0]); //จำนวน column
 
                 $optionValue = $file;
-                $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
-
-                for ($row = 1; $row <= $rowCount-1; $row ++) {//start row 2
-                    $column = 0;
-                    if(empty($spreadSheetAry[$row][$column]) || empty($spreadSheetAry[$row][$column+1]) || (($spreadSheetAry[$row][$column+13] <> "D") && ($spreadSheetAry[$row][$column+13] <> "Y"))) continue;
-                    $xmlRow = $xml->addChild("row");
-                    $xmlRow->addChild("DOCKCODE", $spreadSheetAry[$row][$column]);
-                    $xmlRow->addChild("CUSTCODE", $spreadSheetAry[$row][$column+1]);
-                    $xmlRow->addChild("ROUTECODE",$spreadSheetAry[$row][$column+2]);
-                    $xmlRow->addChild("ORDERTYPE",$spreadSheetAry[$row][$column+3]);
-                    $xmlRow->addChild("ISSHIPPING",$spreadSheetAry[$row][$column+4]);
-                    $xmlRow->addChild("ISPACKINGLINE",$spreadSheetAry[$row][$column+5]);
-                    $xmlRow->addChild("ISSERVICEPART",$spreadSheetAry[$row][$column+6]);
-                    $xmlRow->addChild("ISEXPORT",$spreadSheetAry[$row][$column+7]);
-                    $xmlRow->addChild("PALLETBALANCE",$spreadSheetAry[$row][$column+8]);
-                    $xmlRow->addChild("TRIPPERDAY",$spreadSheetAry[$row][$column+9]);
-                    $xmlRow->addChild("CTSPSHOP",$spreadSheetAry[$row][$column+10]);
-                    $xmlRow->addChild("CTSTACKPKLTOPLANE",$spreadSheetAry[$row][$column+11]);
-                    $xmlRow->addChild("CTLOADING",$spreadSheetAry[$row][$column+12]);
-                    $xmlRow->addChild("ENABLE",$spreadSheetAry[$row][$column+13]);
-                }
-                $xmlString = $xml->asXML();
-                $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
-                $queryStr = str_replace("\n",'',$xmlString);
-                //dd($queryStr);
-
                 $permissionName = $request->permissionAuth;
                 $permissionID = UserPermission::getPermissionID($permissionName);
                 $userName = Auth::user()->name;
-                // ======================================================================
-                // CALL FUNCTION
-                // ======================================================================
-                try{
-                    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_docks_xml @data = '$queryStr', @USERNAME = '$userName'");
-                    $result = json_encode($result);
+
+                //VALIDATE INTERNAL FILE
+                if(($columnCount > 14) || empty($spreadSheetAry[0][0]) || ($spreadSheetAry[0][0] <> "DOCKCODE")
+                || empty($spreadSheetAry[0][1]) || ($spreadSheetAry[0][1] <> "CUSTCODE")
+                || empty($spreadSheetAry[0][2]) || ($spreadSheetAry[0][2] <> "ROUTECODE")
+                || empty($spreadSheetAry[0][3]) || ($spreadSheetAry[0][3] <> "ORDERTYPE")
+                || empty($spreadSheetAry[0][4]) || ($spreadSheetAry[0][4] <> "ISSHIPPING")
+                || empty($spreadSheetAry[0][5]) || ($spreadSheetAry[0][5] <> "ISPACKINGLINE")
+                || empty($spreadSheetAry[0][6]) || ($spreadSheetAry[0][6] <> "ISSERVICEPART")
+                || empty($spreadSheetAry[0][7]) || ($spreadSheetAry[0][7] <> "ISEXPORT")
+                || empty($spreadSheetAry[0][8]) || ($spreadSheetAry[0][8] <> "PALLETBALANCE")
+                || empty($spreadSheetAry[0][9]) || ($spreadSheetAry[0][9] <> "TRIPPERDAY")
+                || empty($spreadSheetAry[0][10]) || ($spreadSheetAry[0][10] <> "CTSPSHOP")
+                || empty($spreadSheetAry[0][11]) || ($spreadSheetAry[0][11] <> "CTSTACKPKLTOPLANE")
+                || empty($spreadSheetAry[0][12]) || ($spreadSheetAry[0][12] <> "CTLOADING")
+                || empty($spreadSheetAry[0][13]) || ($spreadSheetAry[0][13] <> "ENABLE")){
+                    $error = "Excel template incorrect!";
+                    Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
+                    return view('wiss-atac-emfg-update-docks',compact('permissionName','error'));
+                }else{
+                    $xml = new SimpleXMLElement("<?xml version='1.0'?><root></root>");
+
+                    for ($row = 1; $row <= $rowCount-1; $row ++) {//start row 2
+                        $column = 0;
+                        if(empty($spreadSheetAry[$row][$column]) || empty($spreadSheetAry[$row][$column+1]) || (($spreadSheetAry[$row][$column+13] <> "D") && ($spreadSheetAry[$row][$column+13] <> "Y"))) continue;
+                        $xmlRow = $xml->addChild("row");
+                        $xmlRow->addChild("DOCKCODE", $spreadSheetAry[$row][$column]);
+                        $xmlRow->addChild("CUSTCODE", $spreadSheetAry[$row][$column+1]);
+                        $xmlRow->addChild("ROUTECODE",$spreadSheetAry[$row][$column+2]);
+                        $xmlRow->addChild("ORDERTYPE",$spreadSheetAry[$row][$column+3]);
+                        $xmlRow->addChild("ISSHIPPING",$spreadSheetAry[$row][$column+4]);
+                        $xmlRow->addChild("ISPACKINGLINE",$spreadSheetAry[$row][$column+5]);
+                        $xmlRow->addChild("ISSERVICEPART",$spreadSheetAry[$row][$column+6]);
+                        $xmlRow->addChild("ISEXPORT",$spreadSheetAry[$row][$column+7]);
+                        $xmlRow->addChild("PALLETBALANCE",$spreadSheetAry[$row][$column+8]);
+                        $xmlRow->addChild("TRIPPERDAY",$spreadSheetAry[$row][$column+9]);
+                        $xmlRow->addChild("CTSPSHOP",$spreadSheetAry[$row][$column+10]);
+                        $xmlRow->addChild("CTSTACKPKLTOPLANE",$spreadSheetAry[$row][$column+11]);
+                        $xmlRow->addChild("CTLOADING",$spreadSheetAry[$row][$column+12]);
+                        $xmlRow->addChild("ENABLE",$spreadSheetAry[$row][$column+13]);
+                    }
+                    $xmlString = $xml->asXML();
+                    $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
+                    $queryStr = str_replace("\n",'',$xmlString);
+                    //dd($queryStr);
 
                     // ======================================================================
-                    // IF CALL SUCCCESS
+                    // CALL FUNCTION
                     // ======================================================================
-                    if (isset($result)) {
-                        $resultRes  = json_decode($result, true);
-                        if(!empty($resultRes)){
-                            $keyArrayRes = array_keys($resultRes[0]);
-                            Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
-                            return view('wiss-atac-emfg-update-docks', compact('resultRes','keyArrayRes','permissionName'));
+                    try{
+                        $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_docks_xml @data = '$queryStr', @USERNAME = '$userName'");
+                        $result = json_encode($result);
+
+                        // ======================================================================
+                        // IF CALL SUCCCESS
+                        // ======================================================================
+                        if (isset($result)) {
+                            $resultRes  = json_decode($result, true);
+                            if(!empty($resultRes)){
+                                $keyArrayRes = array_keys($resultRes[0]);
+                                Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' completed');
+                                return view('wiss-atac-emfg-update-docks', compact('resultRes','keyArrayRes','permissionName'));
+                            }
                         }
-                    }
-                    } catch (\Exception $e) {
-                        $error = $e->getMessage();
-                        Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
-                        return view('wiss-atac-emfg-update-docks',compact('resultRes','keyArrayRes','permissionName','error'));
-                    }
-
+                        } catch (\Exception $e) {
+                            $error = $e->getMessage();
+                            Log::insertLog(Auth::user()->id, $permissionID,'Update '.$permissionName.' '.$optionValue.' not completed');
+                            return view('wiss-atac-emfg-update-docks',compact('resultRes','keyArrayRes','permissionName','error'));
+                        }
+                }
             } // END IF ALLOW FILE TYPE
         } // END IF CHECK EMPTY FILE
     } // END PUBLIC FUNCTION IMPORT
 
+    public function exportExcel()
+    {
+    	$file= public_path(). "/download/Dock Master.xlsx";
+    	return response()->download($file);
+    }
 }

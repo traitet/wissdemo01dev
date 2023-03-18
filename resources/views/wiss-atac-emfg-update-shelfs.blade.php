@@ -151,7 +151,7 @@
                                                                 ?>
                                                                     <td>
                                                                         <?php
-                                                                        if($keyRow == 'SHELFCODE' or $keyRow == 'SHELFNAME' or $keyRow == 'SLOCCODE' or $keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
+                                                                        if($keyRow == 'SHELFCODE' or $keyRow == 'SHELFNAME' or $keyRow == 'SLOCCODE' or $keyRow == 'DESCRIPTION' or $keyRow == 'COMPCODE' or $keyRow == 'PLANTCODE' or $keyRow == 'EDITBY' or $keyRow == 'EDITDATE' or $keyRow == 'EDITTIME'){
                                                                         ?>
                                                                             <input type="hidden" id="textbox" name="{{$keyRow}}[]" value="{{$data}}">
                                                                             {{$data}}
@@ -190,14 +190,12 @@
                                             {{-- ========================================================= --}}
                                         </div>
                                         <br>
-                                        <?php if (isset($result)) {
-                                            ?>
                                         <div class="form-group">
+                                            @if(isset($result))
                                             <button type="submit" class="btn btn-primary">Update</button>
-                                            <a class="btn btn-primary" href="{{ route('Update-Shelfs-ATAC','Update-Shelfs-ATAC') }}">Back</a>
+                                            @endif
+                                            <a class="btn btn-primary" href="{{ route('Update-Shelfs-ATAC','Update-Shelfs-ATAC') }}">Back to UPDATE SHELFS</a>
                                         </div>
-                                        <?php }
-                                        ?>
                                     </div>
                                 </div>
                             </div>

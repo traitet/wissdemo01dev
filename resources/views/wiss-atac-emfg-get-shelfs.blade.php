@@ -112,11 +112,15 @@
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
                                         <div class="form-group float-right">
-                                            <div>
+                                            <div class="row">
                                                 <form action="{{ route('EmfgUpdateShelfsATAC.import', $permissionName) }}" method="POST" name="form" id="import_excel_form" enctype="multipart/form-data">
                                                 @csrf
-                                                    <button type="button" class="btn btn-success" id="button_upload" onclick="FunctionImportExcel()"><i class="bi bi-upload"></i> Excel File</button>
+                                                    <button type="button" class="btn btn-success" id="button_upload" onclick="FunctionImportExcel()"><i class="bi bi-upload"></i> Import Shelfs </button>
                                                     <input type="file" id="import_excel" name="import_excel" style="display:none;">
+                                                </form>&nbsp&nbsp;
+                                                <form action="{{ route('EmfgUpdateShelfsATAC.export', $permissionName) }}" method="POST" name="form" id="export_excel_form">
+                                                    @csrf
+                                                        <button type="submit" class="btn btn-primary"><i class="bi bi-upload"></i> Excel Template </button>
                                                 </form>
                                             </div>
                                         </div>
@@ -310,7 +314,10 @@
                 $('#import_excel').click();
             }
             $( "#import_excel" ).change(function() {
-                $( "#import_excel_form" ).submit();
+                let text = "Do you want to upload the master?";
+                if (confirm(text) == true) {
+                    $( "#import_excel_form" ).submit();
+                }
             });
         </script>
 </body>
