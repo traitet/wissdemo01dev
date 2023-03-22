@@ -116,7 +116,7 @@ class IFinUpdateDocApiController extends Controller
             // CALL FUNCTION
             // ======================================================================
             try{
-            $result = DB::connection('sqlsrv_siam_laser_d01_db')->select("EXEC wiss_sa_ifin_update_doc_sap @data = '$queryStr'");
+            $result = DB::connection('sqlsrv_siam_laser_p01_db')->select("EXEC wiss_sa_ifin_update_doc_sap @data = '$queryStr'");
             $result = json_encode($result);
 
             // ======================================================================
