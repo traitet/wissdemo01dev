@@ -27,7 +27,7 @@ class EmfgUpdateModelsApiController extends Controller
 // DECLARE END POINT
 // ==========================================================================
     //private $ENDPOINT = 'http://localhost:8000/api/wiss_sa_ifin_get_doc_interface';
-    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01dev/public/api/wiss_atac_emfg_get_model';
+    private $ENDPOINT = 'http://10.100.1.94:8080/wissdemo01/public/api/wiss_atac_emfg_get_model';
 // ==========================================================================
 // GET DATA
 // ==========================================================================
@@ -149,7 +149,7 @@ class EmfgUpdateModelsApiController extends Controller
             // CALL FUNCTION
             // ======================================================================
             try{
-                $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_models_xml @data = '$queryStr', @USERNAME = '$userName'");
+                $result = DB::connection('sqlsrv_atac_arisa_p02_db')->select("EXEC wiss_atac_emfg_maintain_models_xml @data = '$queryStr', @USERNAME = '$userName'");
                 $result = json_encode($result);
 
                 // ======================================================================
@@ -236,7 +236,7 @@ class EmfgUpdateModelsApiController extends Controller
                     // CALL FUNCTION
                     // ======================================================================
                     try{
-                        $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_maintain_models_xml @data = '$queryStr', @USERNAME = '$userName'");
+                        $result = DB::connection('sqlsrv_atac_arisa_p02_db')->select("EXEC wiss_atac_emfg_maintain_models_xml @data = '$queryStr', @USERNAME = '$userName'");
                         $result = json_encode($result);
 
                         // ======================================================================

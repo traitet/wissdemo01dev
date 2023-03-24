@@ -109,7 +109,7 @@ class IFinUpdateDocApiController extends Controller
             $xmlString = str_replace("<?xml version=\"1.0\"?>\n", '', $xmlString);
             $queryStr = str_replace("\n",'',$xmlString);
 
-            //dd($queryStr);
+            dd($queryStr);
             $permissionName = $req->permissionAuth;
             $permissionID = UserPermission::getPermissionID($permissionName);
             // ======================================================================

@@ -380,7 +380,7 @@ Route::get('wiss_atac_emfg_get_dock/{obj}', function ($obj) {
     $start_date = $myArray['start_date'];
     $end_date = $myArray['end_date'];
     $max_record = $myArray['max_record'];
-    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_get_dock '$start_date','$end_date','$doc_num',$max_record");
+    $result = DB::connection('sqlsrv_atac_arisa_p02_db')->select("EXEC wiss_atac_emfg_get_dock '$start_date','$end_date','$doc_num',$max_record");
     return json_encode($result);
 });
 
@@ -395,7 +395,7 @@ Route::get('wiss_atac_emfg_get_model/{obj}', function ($obj) {
     $start_date = $myArray['start_date'];
     $end_date = $myArray['end_date'];
     $max_record = $myArray['max_record'];
-    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_get_model '$start_date','$end_date','$model_name',$max_record");
+    $result = DB::connection('sqlsrv_atac_arisa_p02_db')->select("EXEC wiss_atac_emfg_get_model '$start_date','$end_date','$model_name',$max_record");
     return json_encode($result);
 });
 
@@ -410,7 +410,7 @@ Route::get('wiss_atac_emfg_get_pallet/{obj}', function ($obj) {
     $start_date = $myArray['start_date'];
     $end_date = $myArray['end_date'];
     $max_record = $myArray['max_record'];
-    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_get_pallet '$start_date','$end_date','$pallet_code',$max_record");
+    $result = DB::connection('sqlsrv_atac_arisa_p02_db')->select("EXEC wiss_atac_emfg_get_pallet '$start_date','$end_date','$pallet_code',$max_record");
     return json_encode($result);
 });
 
@@ -425,7 +425,7 @@ Route::get('wiss_atac_emfg_get_shelf/{obj}', function ($obj) {
     $start_date = $myArray['start_date'];
     $end_date = $myArray['end_date'];
     $max_record = $myArray['max_record'];
-    $result = DB::connection('sqlsrv_atac_arisa_d02_db')->select("EXEC wiss_atac_emfg_get_shelf '$start_date','$end_date','$doc_num',$max_record");
+    $result = DB::connection('sqlsrv_atac_arisa_p02_db')->select("EXEC wiss_atac_emfg_get_shelf '$start_date','$end_date','$doc_num',$max_record");
     return json_encode($result);
 });
 
